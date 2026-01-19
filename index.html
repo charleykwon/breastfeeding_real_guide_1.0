@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="모유수유 리얼 가이드 1.0 - 15년 경험과 IBCLC 전문 지식">
+<meta name="theme-color" content="#4A90A4">
+<title>모유수유 리얼 가이드 1.0</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+:root {
+    --primary: #4A90A4;
+    --primary-light: #E6F3FF;
+    --accent: #FF6B9D;
+    --accent-light: #FFF0F5;
+    --text: #333333;
+    --text-light: #666666;
+    --bg: #FFFFFF;
+    --bg-gray: #F8FAFC;
+    --orange: #FFA726;
+    --blue: #42A5F5;
+    --purple: #7E57C2;
+    --teal: #26A69A;
+    --pink: #EC407A;
+    --green: #66BB6A;
+    --red: #EF5350;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    background: var(--bg);
+}
+
+/* 헤더 */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-logo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.menu-btn {
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary);
+}
+
+/* 사이드바 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100%;
+    background: var(--bg);
+    z-index: 2000;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+}
+
+.sidebar.open { right: 0; }
+
+.sidebar-header {
+    position: sticky;
+    top: 0;
+    height: 56px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 10;
+}
+
+.sidebar-title { color: #fff; font-weight: 700; }
+
+.close-btn {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sidebar-content { padding: 16px; }
+
+.toc-part-link {
+    display: block;
+    padding: 12px 14px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    margin: 16px 0 8px 0;
+    cursor: pointer;
+}
+
+.toc-chapter-link {
+    display: block;
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 0.85rem;
+    border-radius: 8px;
+    margin-left: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.toc-section-link {
+    display: block;
+    padding: 10px 14px;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.toc-chapter-link:hover, .toc-section-link:hover, .toc-part-link:hover {
+    background: var(--primary-light);
+}
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.overlay.show { opacity: 1; visibility: visible; }
+
+/* 프로그레스 바 */
+.progress-bar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    height: 3px;
+    background: var(--primary);
+    z-index: 999;
+    transition: width 0.1s;
+}
+
+/* 커버 */
+.cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 80px 24px 40px;
+    background: linear-gradient(180deg, var(--primary-light) 0%, var(--accent-light) 50%, var(--bg) 100%);
+}
+
+.cover-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover-emoji { font-size: 4rem; margin-bottom: 24px; }
+
+.cover-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.cover-title span { display: block; }
+
+.cover-middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.cover-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    line-height: 1.7;
+    max-width: 320px;
+}
+
+.cover-cta {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(74,144,164,0.3);
+    cursor: pointer;
+    border: none;
+}
+
+.cover-cta:hover { transform: scale(1.02); }
+
+.cover-bottom {
+    padding-top: 30px;
+    border-top: 1px solid rgba(74,144,164,0.2);
+    width: 100%;
+}
+
+.cover-authors {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.8;
+}
+
+.cover-authors strong { color: var(--primary); }
+
+.cover-year {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* 목차 섹션 */
+.toc-section {
+    padding: 50px 16px;
+    background: var(--bg-gray);
+}
+
+.toc-section h2 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.toc-card {
+    background: var(--bg);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.toc-card h3 {
+    color: var(--primary);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.toc-card-link {
+    display: block;
+    padding: 10px 0;
+    color: var(--text);
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+
+.toc-card-link:last-child { border-bottom: none; }
+.toc-card-link:hover { color: var(--primary); background: var(--primary-light); margin: 0 -10px; padding: 10px; border-radius: 8px; }
+
+/* 메인 콘텐츠 */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+/* PART */
+.part {
+    margin-top: 60px;
+    padding-top: 30px;
+}
+
+.part h1, .part-title {
+    font-size: 1.3rem;
+    color: var(--primary);
+    text-align: center;
+    padding: 24px 16px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    border-radius: 16px;
+    border-top: 4px solid var(--primary);
+}
+
+/* CHAPTER */
+.chapter {
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+}
+
+.chapter h1, .chapter-title {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--primary-light);
+}
+
+h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 30px 0 16px;
+    padding-left: 14px;
+    border-left: 4px solid var(--primary);
+}
+
+h3 { font-size: 1rem; font-weight: 600; color: var(--text-light); margin: 24px 0 12px; }
+h4 { font-size: 0.95rem; font-weight: 600; margin: 20px 0 10px; }
+p { margin-bottom: 14px; }
+
+/* 팁 박스 */
+.tip-box {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    padding: 18px 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    border-left: 5px solid var(--primary);
+}
+
+/* 체크박스 */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin: 8px 0;
+    background: var(--bg-gray);
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.checkbox:hover { background: var(--primary-light); }
+
+.checkbox input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border: 3px solid var(--primary);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+}
+
+.checkbox input[type="checkbox"]:checked { background: var(--primary); }
+
+.checkbox input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.checkbox span { flex: 1; font-size: 0.9rem; line-height: 1.5; }
+.checkbox.checked { background: #E8F5E9; border-color: #A5D6A7; }
+.checkbox.checked span { color: #2E7D32; }
+
+/* 테이블 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.85rem;
+    display: block;
+    overflow-x: auto;
+}
+
+th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    min-width: 80px;
+}
+
+th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) { background: var(--bg-gray); }
+
+/* 리스트 */
+ul, ol { margin: 16px 0; padding-left: 24px; }
+li { margin-bottom: 8px; font-size: 0.95rem; }
+
+/* 인용 */
+blockquote {
+    margin: 20px 0;
+    padding: 18px 20px;
+    background: #FFF9E6;
+    border-left: 5px solid #FFC107;
+    border-radius: 0 14px 14px 0;
+}
+
+blockquote p { margin: 0; }
+
+/* 강조 */
+strong { color: var(--primary); font-weight: 700; }
+
+/* 구분선 */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    margin: 35px 0;
+}
+
+/* 체크리스트 카드 */
+.checklist-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
+}
+
+.checklist-card h2 {
+    border: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.checklist-card table th {
+    font-size: 0.8rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+.grid-item {
+    background: var(--primary-light);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.grid-item .icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.grid-item .label { font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.3rem; }
+.grid-item .value { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+.grid-item .note { font-size: 0.7rem; color: var(--text-light); margin-top: 0.2rem; }
+
+.alert-box {
+    background: #FFEBEE;
+    border: 1px solid #FFCDD2;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.alert-box h4 { color: var(--red); margin-bottom: 0.5rem; }
+.alert-box li { font-size: 0.85rem; }
+
+.tip-box-small {
+    background: #E8F5E9;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.tip-box-small h4 { color: var(--green); margin-bottom: 0.5rem; }
+
+/* 푸터 */
+.footer {
+    text-align: center;
+    padding: 50px 16px;
+    background: var(--bg-gray);
+    margin-top: 60px;
+}
+
+.footer p { color: var(--text-light); font-size: 0.85rem; margin-bottom: 8px; }
+
+/* 스크롤 탑 버튼 */
+.scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.scroll-top.show { opacity: 1; visibility: visible; }
+
+/* 인쇄 스타일 */
+@media print {
+    .header, .sidebar, .overlay, .scroll-top, .progress-bar, .cover-cta, .menu-btn { display: none !important; }
+    body { padding: 0; font-size: 12pt; }
+    .cover { min-height: auto; padding: 40px 20px; page-break-after: always; }
+    .toc-section { page-break-after: always; }
+    .part { page-break-before: always; }
+    .chapter { page-break-before: always; }
+    .checklist-card { page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    main { padding: 20px; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width: 0%"></div>
+
+<header class="header">
+    <span class="header-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">🤱 모유수유 가이드</span>
+    <button class="menu-btn" onclick="openMenu()">☰</button>
+</header>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <span class="sidebar-title">📚 목차</span>
+        <button class="close-btn" onclick="closeMenu()">✕</button>
+    </div>
+    <div class="sidebar-content">
+        <div class="toc-section-link" onclick="goTo('cover')">표지</div>
+        <div class="toc-section-link" onclick="goTo('toc')">목차</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-1')">PART 1. 출산 전 준비</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-1')">CH1. 출산 전 알아야할 5가지</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-2')">CH2. 모유수유 선택</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-3')">CH3. 초보 엄마 TOP 10 질문</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-4')">CH4. 수유 계획 세우기</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-2')">PART 2. 생존 모드</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-5')">CH5. 출산 직후 72시간</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-6')">CH6. 모자동실</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-7')">CH7. 첫 수유자세 4가지</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-8')">CH8. 함몰유두·편평유두</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-3')">PART 3. 적응기</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-9')">CH9~17</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-4')">PART 4. 안정기</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-18')">CH18~21</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-5')">PART 5. 직장맘</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-22')">CH22~25</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-6')">PART 6. 단유</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-26')">CH26~29</div>
+        
+        <div class="toc-part-link" onclick="goTo('part-7')">PART 7. 특수 상황</div>
+        <div class="toc-chapter-link" onclick="goTo('ch-30')">CH30~36</div>
+        
+        <div class="toc-part-link" onclick="goTo('appendix')">부록</div>
+        <div class="toc-chapter-link" onclick="goTo('checklist-1')">체크리스트 1. 배변</div>
+        <div class="toc-chapter-link" onclick="goTo('checklist-2')">체크리스트 2. 수유량</div>
+        <div class="toc-chapter-link" onclick="goTo('checklist-3')">체크리스트 3. 수면</div>
+        <div class="toc-chapter-link" onclick="goTo('checklist-4')">체크리스트 4. 모유 보관</div>
+        <div class="toc-chapter-link" onclick="goTo('checklist-5')">체크리스트 5. 상담 전 기록</div>
+    </div>
+</nav>
+
+<!-- 커버 -->
+<section class="cover" id="cover">
+    <div class="cover-top">
+        <div class="cover-emoji">🤱</div>
+        <h1 class="cover-title">
+            <span>모유수유</span>
+            <span>리얼 가이드 1.0</span>
+        </h1>
+    </div>
+    
+    <div class="cover-middle">
+        <p class="cover-subtitle">병원에서 알려주지 않는 것들:<br>통증·모유량·밤수유·복직,<br>현실 육아의 모든 순간</p>
+        <button class="cover-cta" onclick="goTo('toc')">📖 읽기 시작하기</button>
+    </div>
+    
+    <div class="cover-bottom">
+        <div class="cover-authors">
+            <strong>권의철, 최소라</strong> [바비즈코리아·mothersbaby(CEO)]<br>
+            <strong>박보림</strong>(국제모유수유전문가 (IBCLC)) 공저
+        </div>
+        <p class="cover-year">2026</p>
+    </div>
+</section>
+
+<!-- 목차 -->
+<section class="toc-section" id="toc">
+    <h2>📚 목차</h2>
+    <div class="toc-grid">
+        <div class="toc-card">
+            <h3>PART 1. 출산 전 준비</h3>
+            <div class="toc-card-link" onclick="goTo('ch-1')">CH1. 출산 전 알아야할 5가지</div>
+            <div class="toc-card-link" onclick="goTo('ch-2')">CH2. 모유수유 선택</div>
+            <div class="toc-card-link" onclick="goTo('ch-3')">CH3. 초보 엄마 TOP 10 질문</div>
+            <div class="toc-card-link" onclick="goTo('ch-4')">CH4. 수유 계획 세우기</div>
+        </div>
+        <div class="toc-card">
+            <h3>PART 2. 생존 모드</h3>
+            <div class="toc-card-link" onclick="goTo('ch-5')">CH5. 출산 직후 72시간</div>
+            <div class="toc-card-link" onclick="goTo('ch-6')">CH6. 모자동실</div>
+            <div class="toc-card-link" onclick="goTo('ch-7')">CH7. 첫 수유자세 4가지</div>
+            <div class="toc-card-link" onclick="goTo('ch-8')">CH8. 함몰유두·편평유두</div>
+        </div>
+        <div class="toc-card">
+            <h3>PART 3~7 & 부록</h3>
+            <div class="toc-card-link" onclick="goTo('part-3')">PART 3. 적응기 (2주~3개월)</div>
+            <div class="toc-card-link" onclick="goTo('part-4')">PART 4. 안정기 (3~6개월)</div>
+            <div class="toc-card-link" onclick="goTo('part-5')">PART 5. 직장맘 복직</div>
+            <div class="toc-card-link" onclick="goTo('part-6')">PART 6. 단유 가이드</div>
+            <div class="toc-card-link" onclick="goTo('part-7')">PART 7. 특수 상황</div>
+            <div class="toc-card-link" onclick="goTo('appendix')">부록: A4 체크리스트</div>
+        </div>
+    </div>
+</section>
+
+<main>
+
+<!-- PART 1 -->
+<section class="part" id="part-1">
+<h1 class="part-title">PART 1. 출산 전 준비 (임신 중 4가지 체크)</h1>
+</section>
+
+<section class="chapter" id="ch-1">
+<h1 class="chapter-title">CHAPTER 1. 출산 전 알아야할 5가지</h1>
+<div class="tip-box">
+<strong>🎯 CHAPTER 1 미션</strong><br>
+출산 후 1시간 골든타임 이해하기 / 모유수유 성공률 높이는 5가지 알기 / 출산 계획서에 수유 계획 추가하기
+</div>
+
+<h2>1. 출산 직후 1시간이 골든타임</h2>
+<p>출산 후 1시간 이내에 첫 수유를 시작하면 모유수유 성공률이 높아집니다. 아기는 태어난 직후 1-2시간 동안 가장 깨어있고 반응이 좋습니다.</p>
+
+<h2>2. 초유의 중요성</h2>
+<p>초유는 양은 적지만 면역 물질이 농축되어 있어 "아기의 첫 번째 예방접종"이라고 불립니다. 처음 며칠간 나오는 소량의 초유가 정상입니다.</p>
+
+<h2>3. 빈번한 수유가 젖양을 늘린다</h2>
+<p>수요와 공급의 원리: 아기가 자주 빨수록 더 많은 젖이 만들어집니다. 초기에는 하루 8-12회 수유가 정상입니다.</p>
+
+<h2>4. 올바른 젖물림이 핵심</h2>
+<p>통증 없는 수유의 비결은 올바른 젖물림입니다. 아기가 유두뿐 아니라 유륜까지 깊게 물어야 합니다.</p>
+
+<h2>5. 도움 요청은 빠를수록 좋다</h2>
+<p>어려움이 생기면 바로 도움을 요청하세요. 병원의 수유 상담사, IBCLC 전문가의 도움을 받을 수 있습니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 1 읽기 완료</span></label>
+</section>
+
+<section class="chapter" id="ch-2">
+<h1 class="chapter-title">CHAPTER 2. 모유수유 선택: 엄마의 결정이 우선입니다</h1>
+<p>모유수유는 선택입니다. 완전 모유수유, 혼합수유, 분유수유 모두 괜찮습니다. 중요한 것은 엄마와 아기에게 맞는 방법을 찾는 것입니다.</p>
+
+<h2>모유수유의 장점</h2>
+<ul>
+<li>아기: 면역력 강화, 알레르기 감소, 인지 발달</li>
+<li>엄마: 산후 회복, 유방암/난소암 위험 감소</li>
+</ul>
+
+<h2>현실적인 기대</h2>
+<p>처음부터 완벽할 필요 없습니다. 시행착오가 정상이며, 점차 나아집니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 2 읽기 완료</span></label>
+</section>
+
+<section class="chapter" id="ch-3">
+<h1 class="chapter-title">CHAPTER 3. 초보 엄마 TOP 10 질문과 답변</h1>
+<p>병원에서 꼭 물어보세요!</p>
+
+<h2>Q1. 젖이 안 나오는 것 같아요</h2>
+<p>출산 후 2-5일에 젖이 돌기 시작합니다. 초유는 양이 적지만 충분합니다.</p>
+
+<h2>Q2. 얼마나 자주 먹여야 하나요?</h2>
+<p>신생아는 2-3시간마다, 하루 8-12회가 정상입니다.</p>
+
+<h2>Q3. 아기가 충분히 먹고 있는지 어떻게 알죠?</h2>
+<p>하루 6회 이상 젖은 기저귀, 체중 증가로 확인합니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 3 읽기 완료</span></label>
+</section>
+
+<section class="chapter" id="ch-4">
+<h1 class="chapter-title">CHAPTER 4. 우리 가족 수유 계획 세우기</h1>
+<p>아빠와 함께 작성하는 체크리스트</p>
+
+<h2>출산 전 준비 체크리스트</h2>
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>수유 쿠션 준비</span></label>
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>수유 브라 준비</span></label>
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>유축기 알아보기</span></label>
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>IBCLC 연락처 확인</span></label>
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>출산 계획서에 수유 계획 추가</span></label>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 4 읽기 완료</span></label>
+</section>
+
+<!-- PART 2 -->
+<section class="part" id="part-2">
+<h1 class="part-title">PART 2. 생존 모드: 출산 후 1주 (병원·조리원)</h1>
+</section>
+
+<section class="chapter" id="ch-5">
+<h1 class="chapter-title">CHAPTER 5. "이게 정상인가요?" 출산 직후 72시간의 현실</h1>
+
+<h2>Day 1: 출산 당일</h2>
+<p>아기는 깨어있고 반응이 좋습니다. 초유가 조금씩 나옵니다. 수유 시도 횟수가 중요합니다.</p>
+
+<h2>Day 2: 아기가 많이 자요</h2>
+<p>정상입니다. 깨워서라도 3시간마다 수유하세요.</p>
+
+<h2>Day 3: 젖이 불어요 (젖몸살)</h2>
+<p>젖이 돌기 시작합니다. 자주 수유해서 울혈을 예방하세요.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 5 읽기 완료</span></label>
+</section>
+
+<section class="chapter" id="ch-6">
+<h1 class="chapter-title">CHAPTER 6. 모자동실, 꼭 해야 하나요?</h1>
+<p>모자동실은 모유수유 성공률을 높이지만, 엄마의 회복도 중요합니다. 상황에 맞게 선택하세요.</p>
+
+<h2>모자동실의 장점</h2>
+<ul>
+<li>아기의 배고픔 신호를 바로 알 수 있음</li>
+<li>수유 횟수 증가 → 젖양 증가</li>
+<li>아기와 유대감 형성</li>
+</ul>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 6 읽기 완료</span></label>
+</section>
+
+<section class="chapter" id="ch-7">
+<h1 class="chapter-title">CHAPTER 7. 첫 수유자세 4가지 마스터</h1>
+
+<h2>1. 요람 자세 (Cradle Hold)</h2>
+<p>가장 기본적인 자세. 아기 머리를 팔꿈치 안쪽에 두고 몸 전체를 엄마 쪽으로 향하게 합니다.</p>
+
+<h2>2. 교차 요람 자세 (Cross-Cradle)</h2>
+<p>초보 엄마에게 추천. 반대쪽 손으로 아기 머리를 지지해 젖물림 조절이 쉽습니다.</p>
+
+<h2>3. 풋볼 자세 (Football Hold)</h2>
+<p>제왕절개 엄마에게 추천. 아기를 옆구리에 끼듯이 안습니다.</p>
+
+<h2>4. 누워서 수유 (Side-Lying)</h2>
+<p>밤수유에 좋습니다. 엄마와 아기 모두 옆으로 눕습니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 7 읽기 완료</span></label>
+</section>
+
+<section class="chapter" id="ch-8">
+<h1 class="chapter-title">CHAPTER 8. 함몰유두·편평유두 수유 방법</h1>
+<p>유두 모양이 달라도 수유는 가능합니다!</p>
+
+<h2>함몰유두 대처법</h2>
+<ul>
+<li>수유 직전 유두 자극하기</li>
+<li>유두 보호기 활용</li>
+<li>깊은 젖물림 유도</li>
+</ul>
+
+<h2>편평유두 대처법</h2>
+<ul>
+<li>아기가 유륜까지 깊게 물도록</li>
+<li>다양한 수유 자세 시도</li>
+</ul>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>CHAPTER 8 읽기 완료</span></label>
+</section>
+
+<!-- PART 3-7 요약 -->
+<section class="part" id="part-3">
+<h1 class="part-title">PART 3. 적응기: 2주~3개월</h1>
+<p style="text-align:center; padding: 20px;">CH9. 집에서 돌아온 첫 3일 / CH10. 아기 수유 리듬 / CH11. 모유가 부족한 걸까? / CH12. 체중·기저귀·배변 / CH13. 유두 통증 / CH14. 유선염·울혈·뭉침 / CH15. 유두 혼란 / CH16. 모유 보관·해동 / CH17. 수유 아이템</p>
+</section>
+
+<section class="chapter" id="ch-9">
+<h1 class="chapter-title">CHAPTER 9~17 핵심 요약</h1>
+
+<h2>CH9. 집에서 돌아온 첫 3일</h2>
+<p>퇴원 후 가장 중요한 것: 수유 횟수 유지 (8-12회/일), 기저귀 개수 확인, 충분한 휴식</p>
+
+<h2>CH13. 유두 통증 해결</h2>
+<p>대부분 젖물림 문제입니다. 아기가 유륜까지 깊게 물도록 하고, 라놀린 크림을 사용하세요.</p>
+
+<h2>CH14. 유선염·울혈 예방</h2>
+<p>자주 수유하기, 젖이 고이지 않게 하기, 따뜻한 찜질 후 수유</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>PART 3 읽기 완료</span></label>
+</section>
+
+<section class="part" id="part-4">
+<h1 class="part-title">PART 4. 3~6개월 안정기</h1>
+</section>
+
+<section class="chapter" id="ch-18">
+<h1 class="chapter-title">CHAPTER 18~21 핵심 요약</h1>
+
+<h2>CH18. 낮과 밤 수유 패턴</h2>
+<p>3-4개월이 되면 밤수유 횟수가 줄기 시작합니다. 낮에 충분히 먹이세요.</p>
+
+<h2>CH20. 첫 이유식 (만 6개월)</h2>
+<p>이유식은 모유를 대체하는 것이 아니라 보완하는 것입니다. 모유수유를 계속하면서 시작하세요.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>PART 4 읽기 완료</span></label>
+</section>
+
+<section class="part" id="part-5">
+<h1 class="part-title">PART 5. 직장맘 복직 전략</h1>
+</section>
+
+<section class="chapter" id="ch-22">
+<h1 class="chapter-title">CHAPTER 22~25 핵심 요약</h1>
+
+<h2>CH23. 직장 내 유축</h2>
+<p>3-4시간마다 유축하기, 모유 보관 용기 준비, 보냉백 활용</p>
+
+<h2>CH25. 복직 후 모유량 유지</h2>
+<p>아침저녁 직접 수유 + 직장에서 유축으로 모유수유를 이어갈 수 있습니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>PART 5 읽기 완료</span></label>
+</section>
+
+<section class="part" id="part-6">
+<h1 class="part-title">PART 6. 단유 가이드</h1>
+</section>
+
+<section class="chapter" id="ch-26">
+<h1 class="chapter-title">CHAPTER 26~29 핵심 요약</h1>
+
+<h2>CH26. 완모에 집착하지 않아도 괜찮아요</h2>
+<p>어떤 형태의 수유든 엄마와 아기에게 맞는 방법이 최선입니다.</p>
+
+<h2>CH27. 계획하는 단유</h2>
+<p>2-4주에 걸쳐 서서히 수유 횟수를 줄여가세요. 갑작스러운 단유는 유선염 위험이 있습니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>PART 6 읽기 완료</span></label>
+</section>
+
+<section class="part" id="part-7">
+<h1 class="part-title">PART 7. 특수 상황 완전 정복</h1>
+</section>
+
+<section class="chapter" id="ch-30">
+<h1 class="chapter-title">CHAPTER 30~36 핵심 요약</h1>
+
+<h2>특수 상황에서도 모유수유는 가능합니다</h2>
+<ul>
+<li>CH30. 이른둥이·NICU 아기</li>
+<li>CH31. 쌍둥이·다둥이</li>
+<li>CH32. 아기의 질환</li>
+<li>CH33. 엄마의 질병·약물</li>
+<li>CH34. 구순구개열</li>
+<li>CH35. 재임신·피임</li>
+<li>CH36. 엄마의 정신건강</li>
+</ul>
+
+<p>전문가(IBCLC)의 도움을 받으면 대부분의 상황에서 모유수유를 이어갈 수 있습니다.</p>
+
+<label class="checkbox"><input type="checkbox" onchange="saveProgress(this)"><span>PART 7 읽기 완료</span></label>
+</section>
+
+<!-- 부록: 체크리스트 -->
+<section class="part" id="appendix">
+<h1 class="part-title">부록. A4 기록 체크리스트</h1>
+<p style="text-align:center; padding: 10px; color: var(--text-light);">인쇄하여 냉장고에 붙여두세요!</p>
+</section>
+
+<!-- 체크리스트 1: 배변 -->
+<section class="chapter" id="checklist-1">
+<div class="checklist-card" style="border-left: 5px solid var(--orange);">
+<h2 style="color: var(--orange);">💩 1. 배변 체크리스트</h2>
+<p><strong>아기가 '먹고 있다'는 가장 정직한 신호</strong></p>
+
+<h4>📋 사용법</h4>
+<ul>
+<li>하루 단위로 봅니다</li>
+<li><strong>정답이 아니라 흐름</strong>을 확인합니다</li>
+<li>🟢 기준충족 🟡 주의 🔴 확인필요</li>
+</ul>
+
+<h4>📊 첫 7일 최소 기준 (모유수유)</h4>
+<table>
+<thead><tr><th style="background:var(--orange);">일차</th><th style="background:var(--orange);">젖은 기저귀💧</th><th style="background:var(--orange);">대변💩</th></tr></thead>
+<tbody>
+<tr><td><strong>Day 1</strong></td><td>1</td><td>1</td></tr>
+<tr><td><strong>Day 2</strong></td><td>2</td><td>3</td></tr>
+<tr><td><strong>Day 3</strong></td><td>5</td><td>3</td></tr>
+<tr><td><strong>Day 4</strong></td><td>6</td><td>3</td></tr>
+<tr><td><strong>Day 5-7</strong></td><td>6</td><td>3</td></tr>
+</tbody>
+</table>
+
+<h4>🎨 대변 색 변화 (정상)</h4>
+<p style="text-align:center; padding: 10px; background: #fafafa; border-radius: 10px;">
+<span style="display:inline-block;width:30px;height:30px;background:#2e2e2e;border-radius:50%;vertical-align:middle;"></span> 태변
+→ <span style="display:inline-block;width:30px;height:30px;background:#6b8e23;border-radius:50%;vertical-align:middle;"></span> 초록
+→ <span style="display:inline-block;width:30px;height:30px;background:#ffd54f;border-radius:50%;vertical-align:middle;"></span> 노란색
+</p>
+
+<div class="alert-box">
+<h4>🚨 바로 확인 필요</h4>
+<ul>
+<li>Day 4-5 이후 젖은 기저귀 증가 없음</li>
+<li>대변 급감 + 아기가 처져 보임</li>
+<li>소변 색이 진하고 냄새 강함</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- 체크리스트 2: 수유량 -->
+<section class="chapter" id="checklist-2">
+<div class="checklist-card" style="border-left: 5px solid var(--blue);">
+<h2 style="color: var(--blue);">🍼 2. 수유량 체크리스트</h2>
+<p><strong>'ml'보다 '신호 + 하루 지표'</strong></p>
+
+<h4>✅ 수유량 체크 포인트</h4>
+<table>
+<thead><tr><th style="background:var(--blue);">구분</th><th style="background:var(--blue);">확인 사항</th></tr></thead>
+<tbody>
+<tr><td><strong>수유 중/후</strong></td><td>• 깊은 물림 • 삼킴 소리 • 수유 후 안정 • 통증 완화</td></tr>
+<tr><td><strong>하루 지표</strong></td><td>• 젖은 기저귀 흐름 유지 • 대변 색 전환 • 체중은 경향으로</td></tr>
+<tr><td style="color:var(--red);"><strong>위험 신호</strong></td><td style="color:var(--red);">• Day 4 이후 기저귀 6개 미만 • 계속 불편 • 통증 지속</td></tr>
+</tbody>
+</table>
+
+<h4>📝 7일 수유 기록표</h4>
+<table>
+<thead><tr><th style="background:var(--blue);">날짜</th><th style="background:var(--blue);">시간</th><th style="background:var(--blue);">L/R</th><th style="background:var(--blue);">총</th></tr></thead>
+<tbody>
+<tr><td>Day 1</td><td>____</td><td>L / R</td><td>____</td></tr>
+<tr><td>Day 2</td><td>____</td><td>L / R</td><td>____</td></tr>
+<tr><td>Day 3</td><td>____</td><td>L / R</td><td>____</td></tr>
+<tr><td>Day 4</td><td>____</td><td>L / R</td><td>____</td></tr>
+<tr><td>Day 5</td><td>____</td><td>L / R</td><td>____</td></tr>
+<tr><td>Day 6</td><td>____</td><td>L / R</td><td>____</td></tr>
+<tr><td>Day 7</td><td>____</td><td>L / R</td><td>____</td></tr>
+</tbody>
+</table>
+<p><strong>작성법:</strong> 시간 1개 기록 / L/R 체크 / 총 횟수</p>
+</div>
+</section>
+
+<!-- 체크리스트 3: 수면 -->
+<section class="chapter" id="checklist-3">
+<div class="checklist-card" style="border-left: 5px solid var(--purple);">
+<h2 style="color: var(--purple);">😴 3. 수면 체크리스트</h2>
+<p><strong>통잠이 아니라 '다시 잠드는 구조'</strong></p>
+
+<h4>📋 사용법</h4>
+<ul>
+<li><strong>밤 수면 기준</strong>으로 기록합니다</li>
+<li>가장 긴 블록은 시간 단위로 (예: 3시간)</li>
+</ul>
+
+<h4>📝 일주일 수면 기록표</h4>
+<table>
+<thead><tr><th style="background:var(--purple);">날짜</th><th style="background:var(--purple);">잠든 시간</th><th style="background:var(--purple);">깬 시간</th><th style="background:var(--purple);">깬 횟수</th><th style="background:var(--purple);">최장 블록</th><th style="background:var(--purple);">형태</th></tr></thead>
+<tbody>
+<tr><td>Day 1</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+<tr><td>Day 2</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+<tr><td>Day 3</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+<tr><td>Day 4</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+<tr><td>Day 5</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+<tr><td>Day 6</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+<tr><td>Day 7</td><td>____</td><td>____</td><td>____</td><td>____</td><td>통잠/자주깸</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box-small">
+<h4>💡 TIP</h4>
+<p>"깨더라도 다시 잘 잠드는가"를 봐주세요. 패턴이 보이면 그게 우리 아기 수면 리듬입니다.</p>
+</div>
+</div>
+</section>
+
+<!-- 체크리스트 4: 모유 보관 -->
+<section class="chapter" id="checklist-4">
+<div class="checklist-card" style="border-left: 5px solid var(--teal);">
+<h2 style="color: var(--teal);">🧊 4. 모유 보관·해동 A4 요약</h2>
+<p><strong>냉장고에 붙여두는 기준</strong></p>
+
+<h4>📦 보관 기준</h4>
+<div class="grid-2">
+<div class="grid-item" style="background:#E0F2F1;">
+<div class="icon">🌡️</div>
+<div class="label">실온 (서늘한 곳)</div>
+<div class="value" style="color:var(--teal);">최대 4시간</div>
+</div>
+<div class="grid-item" style="background:#E0F2F1;">
+<div class="icon">❄️</div>
+<div class="label">냉장</div>
+<div class="value" style="color:var(--teal);">최대 4일</div>
+</div>
+<div class="grid-item" style="background:#E0F2F1;">
+<div class="icon">🧊</div>
+<div class="label">냉동</div>
+<div class="value" style="color:var(--teal);">6개월</div>
+<div class="note">(12개월 허용)</div>
+</div>
+<div class="grid-item" style="background:#E0F2F1;">
+<div class="icon">🎒</div>
+<div class="label">이동 (보냉백)</div>
+<div class="value" style="color:var(--teal);">최대 24시간</div>
+</div>
+</div>
+
+<h4>🔥 해동 및 가열 기준</h4>
+<table>
+<thead><tr><th style="background:var(--teal);">항목</th><th style="background:var(--teal);">기준</th></tr></thead>
+<tbody>
+<tr><td>해동 방법</td><td>냉장 해동 또는 미지근한 물에 해동</td></tr>
+<tr><td style="color:var(--red);font-weight:600;">금지 사항</td><td style="color:var(--red);">전자레인지 사용 금지 ❌</td></tr>
+<tr><td>해동 후 사용</td><td>완전 해동 후 <strong>24시간 내</strong> 사용</td></tr>
+<tr><td>데운 모유</td><td>데운 뒤 <strong>2시간 내</strong> 사용</td></tr>
+<tr><td style="color:var(--red);font-weight:600;">재냉동</td><td style="color:var(--red);">재냉동 금지 ❌</td></tr>
+</tbody>
+</table>
+
+<div class="alert-box" style="border: 2px solid var(--red);">
+<h4>🚫 절대 하면 안 되는 것</h4>
+<ul>
+<li>❌ 전자레인지로 데우기</li>
+<li>❌ 해동한 모유 재냉동</li>
+<li>❌ 끓는 물에 데우기</li>
+<li>❌ 실온에 4시간 이상 방치</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- 체크리스트 5: 상담 전 기록 -->
+<section class="chapter" id="checklist-5">
+<div class="checklist-card" style="border-left: 5px solid var(--pink);">
+<h2 style="color: var(--pink);">📝 5. 상담 전 7일 기록 템플릿</h2>
+<p><strong>상담을 '짧고 정확하게' 만드는 준비</strong></p>
+
+<h4>📋 사용법</h4>
+<ul>
+<li>7일간 패턴 파악 / 상담 시 지참</li>
+<li><strong>완벽하게 채울 필요 없음</strong> - 기억나는 대로 기록</li>
+</ul>
+
+<h4>📊 7일 기록표</h4>
+<table>
+<thead><tr><th style="background:var(--pink);">날짜</th><th style="background:var(--pink);">기저귀/대변</th><th style="background:var(--pink);">밤수면</th><th style="background:var(--pink);">통증(0~10)</th><th style="background:var(--pink);">가장 힘든 점</th></tr></thead>
+<tbody>
+<tr><td>Day 1</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+<tr><td>Day 2</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+<tr><td>Day 3</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+<tr><td>Day 4</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+<tr><td>Day 5</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+<tr><td>Day 6</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+<tr><td>Day 7</td><td>____</td><td>____</td><td>____</td><td>________________</td></tr>
+</tbody>
+</table>
+
+<h4>📋 7일 요약</h4>
+<table>
+<thead><tr><th style="background:var(--pink);width:40%;">항목</th><th style="background:var(--pink);">기록</th></tr></thead>
+<tbody>
+<tr><td><strong>가장 힘든 시간대</strong></td><td>________________________________</td></tr>
+<tr><td><strong>반복되는 문제</strong></td><td>________________________________</td></tr>
+<tr><td><strong>기저귀 흐름</strong></td><td>유지 / 감소 / 들쑥날쑥</td></tr>
+<tr><td><strong>열·오한</strong></td><td>있음 / 없음</td></tr>
+<tr><td><strong>엄마 컨디션</strong></td><td>괜찮음 / 버티는 중 / 한계</td></tr>
+<tr><td><strong>이미 시도한 것</strong></td><td>________________________________</td></tr>
+<tr><td><strong>상담 시 질문</strong></td><td>________________________________</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+</main>
+
+<!-- 푸터 -->
+<footer class="footer">
+    <p><strong>모유수유 리얼 가이드 1.0</strong></p>
+    <p>권의철, 최소라 | 박보림 공저</p>
+    <p>© 2026 바비즈코리아·mothersbaby</p>
+</footer>
+
+<!-- 스크롤 탑 버튼 -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// 메뉴 열기/닫기
+function openMenu() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+// 스크롤 이동
+function goTo(id) {
+    closeMenu();
+    var el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+}
+
+// 스크롤 이벤트
+window.addEventListener('scroll', function() {
+    // 스크롤 탑 버튼
+    var btn = document.getElementById('scrollTop');
+    if (window.scrollY > 500) {
+        btn.classList.add('show');
+    } else {
+        btn.classList.remove('show');
+    }
+    
+    // 프로그레스 바
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    document.getElementById('progressBar').style.width = scrolled + '%';
+});
+
+// 체크박스 저장
+function saveProgress(checkbox) {
+    var checks = JSON.parse(localStorage.getItem('moyusuyu_progress') || '{}');
+    var id = checkbox.parentElement.querySelector('span').textContent;
+    checks[id] = checkbox.checked;
+    
+    if (checkbox.checked) {
+        checkbox.parentElement.classList.add('checked');
+    } else {
+        checkbox.parentElement.classList.remove('checked');
+    }
+    
+    localStorage.setItem('moyusuyu_progress', JSON.stringify(checks));
+}
+
+// 체크박스 로드
+function loadProgress() {
+    var checks = JSON.parse(localStorage.getItem('moyusuyu_progress') || '{}');
+    document.querySelectorAll('.checkbox').forEach(function(label) {
+        var text = label.querySelector('span').textContent;
+        var input = label.querySelector('input');
+        if (checks[text]) {
+            input.checked = true;
+            label.classList.add('checked');
+        }
+    });
+}
+
+// 페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', loadProgress);
+</script>
+</body>
+</html>
