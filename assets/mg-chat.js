@@ -163,7 +163,35 @@ button.mgq.pcq{
 }
 details{margin-top:10px}
 summary{cursor:pointer;font-weight:800}
-  `;
+/* ===== 입력창 하단 고정 ===== */
+#mgChat{
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+#mgBody{
+  flex:1 1 auto !important;
+  overflow:auto !important;
+  padding-bottom: 96px !important; /* 입력창 높이만큼 */
+  -webkit-overflow-scrolling: touch;
+}
+
+#mgForm{
+  position:sticky !important;
+  bottom:0 !important;
+  left:0; right:0;
+  z-index:10 !important;
+  background:#fff !important;
+  border-top:1px solid rgba(0,0,0,.06) !important;
+  box-shadow: 0 -10px 22px rgba(0,0,0,.06);
+}
+
+@media (max-width: 768px){
+  #mgForm{
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+`;
   document.head.appendChild(style);
 
   const btn = document.createElement("button");
@@ -245,7 +273,7 @@ summary{cursor:pointer;font-weight:800}
     d.className = "mgMsg";
     d.innerHTML = html;
     body.appendChild(d);
-    body.scrollTop = body.scrollHeight;
+    body.scrollTop = body.scrollHeight + 9999;  // ✅ 끝까지 확실히
   };
 
   function renderPhoneEscalationCard() {
