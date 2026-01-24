@@ -159,7 +159,13 @@ body.addEventListener("click", (e) => {
   input.value = q;
   form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
 });
-  async function ask(q) {
+// ✅ precheck가 끝나기 전엔 질문을 보내지 않음
+if (precheck.step < precheckQuestions.length) {
+  add(`<div class="mgCard">답변 전에 3가지만 먼저 확인할게요.</div>`);
+  showPrecheckQuestion();
+  return;
+}
+async function ask(q) {
     add(`<b>나</b><div>${esc(q)}</div>`);
     add(`<b>맘곁</b><div class="mgCard">찾는 중…</div>`);
 
