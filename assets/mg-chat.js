@@ -213,8 +213,16 @@ summary{cursor:pointer;font-weight:800}
     </div>
     <div id="mgBody">
       <div class="mgMsg">
-        지금 상황을 혼자 견디지 않아도 돼요.<br/>
-        제가 옆에서 하나씩 같이 볼게요.
+        <div class="mgCard">지금 상황을 혼자 견디지 않아도 돼요. 제가 옆에서 하나씩 같이 볼게요.</div>
+      </div>
+      <div class="mgMsg">
+        <b>아기가 태어난 지 얼마나 되었나요?</b>
+      </div>
+      <div class="mgMsg">
+        <button class="mgq pcq" data-precheck="baby_age" data-value="신생아 (0–4주)">신생아 (0–4주)</button>
+        <button class="mgq pcq" data-precheck="baby_age" data-value="1–3개월">1–3개월</button>
+        <button class="mgq pcq" data-precheck="baby_age" data-value="4–6개월">4–6개월</button>
+        <button class="mgq pcq" data-precheck="baby_age" data-value="6개월 이상">6개월 이상</button>
       </div>
     </div>
     <form id="mgForm">
@@ -379,28 +387,42 @@ summary{cursor:pointer;font-weight:800}
     }
   }
 
-  // (A) precheck 질문 표시 함수 - btn.onclick에서만 호출됨
   function showPrecheckQuestion() {
     const q = precheckQuestions[precheck.step];
     if (!q) return;
 
-    let html = `<div class="mgMsg"><b>${q.text}</b></div><div class="mgMsg">`;
+    add(`<b>${esc(q.text)}</b>`);
+    let btns = "";
     q.options.forEach(opt => {
-      html += `<button class="mgq pcq" data-precheck="${q.key}" data-value="${opt}">${opt}</button>`;
+      btns += `<button class="mgq pcq" data-precheck="${q.key}" data-value="${esc(opt)}">${esc(opt)}</button>`;
     });
-    html += `</div>`;
-    add(html);
+    add(btns);
+  }
+
+  function resetToFirstQuestion() {
+    precheck.step = 0;
+    precheck.answers = {};
+
+    body.innerHTML = `
+      <div class="mgMsg">
+        <div class="mgCard">지금 상황을 혼자 견디지 않아도 돼요. 제가 옆에서 하나씩 같이 볼게요.</div>
+      </div>
+      <div class="mgMsg">
+        <b>아기가 태어난 지 얼마나 되었나요?</b>
+      </div>
+      <div class="mgMsg">
+        <button class="mgq pcq" data-precheck="baby_age" data-value="신생아 (0–4주)">신생아 (0–4주)</button>
+        <button class="mgq pcq" data-precheck="baby_age" data-value="1–3개월">1–3개월</button>
+        <button class="mgq pcq" data-precheck="baby_age" data-value="4–6개월">4–6개월</button>
+        <button class="mgq pcq" data-precheck="baby_age" data-value="6개월 이상">6개월 이상</button>
+      </div>
+    `;
   }
 
   btn.onclick = () => {
-    chat.style.display = "flex";
+    chat.style.display = "block";
     input.focus();
-
-    try { precheck.step = 0; precheck.answers = {}; } catch(e){}
-    try { body.innerHTML = ""; } catch(e){}
-
-    add(`<div class="mgCard">지금 상황을 혼자 견디지 않아도 돼요. 제가 옆에서 하나씩 같이 볼게요.</div>`);
-    showPrecheckQuestion();
+    resetToFirstQuestion();
   };
 
   chat.querySelector("#mgClose").onclick = () => {
