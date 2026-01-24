@@ -504,6 +504,60 @@
     }
 }
 
+
+/* iPhone Pro 최적화 (393-430px) */
+@media (max-width: 430px) {
+    body {
+        font-size: 15px !important;
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    .container, .part-intro, .chapter-content {
+        padding: 16px !important;
+    }
+    
+    h1 { font-size: 1.4rem !important; }
+    h2 { font-size: 1.2rem !important; }
+    h3 { font-size: 1.05rem !important; }
+    
+    /* 터치 영역 확대 */
+    .chapter-item, .part-header, .btn-primary, .btn-part {
+        min-height: 48px;
+        padding: 14px 16px !important;
+    }
+    
+    /* 입력 필드 */
+    input, textarea, select {
+        font-size: 16px !important;
+        padding: 14px !important;
+        border-radius: 12px !important;
+    }
+    
+    /* 버튼 */
+    button, .btn-primary, .btn-ghost {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        border-radius: 12px !important;
+    }
+    
+    /* 카드/박스 */
+    .info-box, .tip-box, .warning-box, .mission-box {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
+    
+    /* Safe area 지원 */
+    .book-nav {
+        padding-top: max(12px, env(safe-area-inset-top)) !important;
+        padding-left: max(16px, env(safe-area-inset-left)) !important;
+        padding-right: max(16px, env(safe-area-inset-right)) !important;
+    }
+    
+    .scroll-top-btn {
+        right: max(16px, env(safe-area-inset-right)) !important;
+        bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px)) !important;
+    }
+}
 /* 체크박스 리스트 - 클릭 가능하게 + 짙은 차콜 브라운 */
 .checkbox-list li {
     cursor: pointer;

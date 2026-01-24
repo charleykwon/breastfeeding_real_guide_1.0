@@ -160,8 +160,53 @@ button.mgq.pcq{
   #mgChat{
     left:0; right:0; bottom:0;
     width:100vw;
-    height:74vh;
+    height:85vh;
     border-radius:18px 18px 0 0;
+  }
+  #mgChatBtn{
+    right:12px; bottom:12px;
+    width:56px; height:56px;
+    font-size:20px;
+  }
+}
+@media (max-width: 430px){
+  #mgChat{
+    height:90vh;
+    max-height:90vh;
+  }
+  #mgHead{
+    padding:14px 12px 12px 12px;
+    font-size:14px;
+  }
+  #mgHead span{
+    font-size:14px;
+  }
+  #mgHead span::before{
+    width:20px; height:20px;
+  }
+  #mgClose, #mgExpertBtn{
+    font-size:12px !important;
+    padding:6px 10px !important;
+  }
+  .mgCard{
+    padding:14px !important;
+    font-size:14px !important;
+    line-height:1.6 !important;
+  }
+  #mgInput{
+    font-size:16px !important;
+    padding:14px !important;
+  }
+  #mgSend{
+    padding:14px 16px !important;
+    font-size:14px !important;
+  }
+  .mgPrecheckCard{
+    padding:16px !important;
+  }
+  .mgPrecheckCard button{
+    padding:12px 14px !important;
+    font-size:14px !important;
   }
 }
 details{margin-top:10px}
@@ -175,7 +220,7 @@ summary{cursor:pointer;font-weight:800}
 #mgBody{
   flex:1 1 auto !important;
   overflow:auto !important;
-  padding-bottom: 96px !important; /* 입력창 높이만큼 */
+  padding-bottom: 96px !important;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -192,6 +237,18 @@ summary{cursor:pointer;font-weight:800}
 @media (max-width: 768px){
   #mgForm{
     padding-bottom: env(safe-area-inset-bottom);
+  }
+  #mgBody{
+    padding-bottom: 110px !important;
+  }
+}
+@media (max-width: 430px){
+  #mgForm{
+    padding:10px 12px !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+  }
+  #mgBody{
+    padding-bottom: 120px !important;
   }
 }
 `;
