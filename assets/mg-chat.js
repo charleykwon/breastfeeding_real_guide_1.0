@@ -298,6 +298,10 @@ summary{cursor:pointer;font-weight:800}
           <b>접수는 언제든 가능</b>하지만, <b>콜백은 평일에만</b> 진행돼요.
         </div>
 
+        <div style="margin-top:12px; padding:10px 14px; background:rgba(143,175,154,.15); border-radius:10px; font-size:13px; font-weight:600; color:#5a7d63; text-align:center;">
+          (최대 24시간 안에 연락 드립니다.)
+        </div>
+
         <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
           <input id="mgPhone" placeholder="전화번호 (예: 010-1234-5678)"
             style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
