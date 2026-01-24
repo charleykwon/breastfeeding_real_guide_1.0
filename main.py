@@ -345,5 +345,89 @@ def escalate():
         "message": user_message
     }), 200
 
+EXPERT_KEY = os.environ.get("EXPERT_KEY", "")
+
+def check_expert_key(key):
+    return key and key == EXPERT_KEY
+
+@app.get("/expert")
+def expert_page():
+    key = request.args.get("key", "")
+    if not check_expert_key(key):
+        return "<h2>접근 권한이 없습니다.</h2>", 403
+    return send_file("expert.html")
+
+@app.get("/api/expert/cases")
+def get_expert_cases():
+    key = request.args.get("key", "")
+    if not check_expert_key(key):
+        return jsonify({"error": "unauthorized"}), 403
+    
+    cases = []
+    notes_by_case = {}
+    
+    if os.path.exists("logs/expert_notes.jsonl"):
+        with open("logs/expert_notes.jsonl", "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        note = json.loads(line)
+                        cid = note.get("case_id")
+                        if cid:
+                            if cid not in notes_by_case:
+                                notes_by_case[cid] = []
+                            notes_by_case[cid].append(note)
+                    except:
+                        pass
+    
+    if os.path.exists("logs/escalations.jsonl"):
+        with open("logs/escalations.jsonl", "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        case = json.loads(line)
+                        cid = case.get("case_id")
+                        if cid and cid in notes_by_case:
+                            latest_note = notes_by_case[cid][-1]
+                            if latest_note.get("status"):
+                                case["status"] = latest_note["status"]
+                            case["notes"] = notes_by_case[cid]
+                        cases.append(case)
+                    except:
+                        pass
+    
+    cases.sort(key=lambda x: x.get("ts", ""), reverse=True)
+    return jsonify(cases), 200
+
+@app.post("/api/expert/note")
+def save_expert_note():
+    key = request.args.get("key", "")
+    if not check_expert_key(key):
+        return jsonify({"error": "unauthorized"}), 403
+    
+    data = request.get_json() or {}
+    case_id = data.get("case_id")
+    status = data.get("status")
+    note = data.get("note", "")
+    
+    if not case_id:
+        return jsonify({"error": "missing_case_id"}), 400
+    
+    record = {
+        "ts": datetime.utcnow().isoformat() + "Z",
+        "case_id": case_id,
+        "status": status,
+        "note": note
+    }
+    
+    os.makedirs("logs", exist_ok=True)
+    with open("logs/expert_notes.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    
+    return jsonify({"ok": True, "saved": record}), 200
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
