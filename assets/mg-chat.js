@@ -57,7 +57,8 @@
   // ====== Pre-check Questions ======
   const precheck = {
     step: 0,
-    answers: {}
+    answers: {},
+    started: false
   };
 
   const precheckQuestions = [
@@ -219,7 +220,8 @@
     chat.style.display = "block";
     input.focus();
 
-    if (precheck.step === 0) {
+    if (!precheck.started && precheck.step === 0) {
+      precheck.started = true;
       showPrecheckQuestion();
     }
   };
@@ -348,7 +350,8 @@
   window.mgChat.open = () => {
     chat.style.display = "block";
     input.focus();
-    if (precheck.step === 0) {
+    if (!precheck.started && precheck.step === 0) {
+      precheck.started = true;
       showPrecheckQuestion();
     }
   };
@@ -361,7 +364,8 @@
       form.dispatchEvent(
         new Event("submit", { cancelable: true, bubbles: true })
       );
-    } else if (precheck.step === 0) {
+    } else if (!precheck.started && precheck.step === 0) {
+      precheck.started = true;
       showPrecheckQuestion();
     }
   };
