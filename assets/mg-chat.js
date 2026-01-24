@@ -120,3 +120,23 @@
     ask(q);
   });
 })();
+// ===============================
+// 외부(전자책/SOS 버튼)에서 챗봇 제어용 API
+// ===============================
+window.mgChat = window.mgChat || {};
+
+window.mgChat.open = () => {
+  chat.style.display = "block";
+  input.focus();
+};
+
+window.mgChat.openWith = (q) => {
+  chat.style.display = "block";
+  input.focus();
+  if (q) {
+    input.value = q;
+    form.dispatchEvent(
+      new Event("submit", { cancelable: true, bubbles: true })
+    );
+  }
+};
