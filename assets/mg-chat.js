@@ -1,6 +1,6 @@
 // Momgyeot Chat Widget (isolated)
 (function () {
-  const MG_BASE = "https://24909645-4f9f-4168-80dc-0820106f38bf-00-en1n9q11juye.spock.replit.dev";
+  const MG_BASE = "";
 
   // ---------- UI ----------
   const style = document.createElement("style");
