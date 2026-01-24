@@ -392,15 +392,15 @@ summary{cursor:pointer;font-weight:800}
     add(html);
   }
 
-  // (A) precheck는 btn.onclick에서만 시작 - 초기 로드 시 자동 실행 안 함
   btn.onclick = () => {
-    chat.style.display = "block";
+    chat.style.display = "flex";
     input.focus();
 
-    if (!precheck.started && precheck.step === 0) {
-      precheck.started = true;
-      showPrecheckQuestion();
-    }
+    try { precheck.step = 0; precheck.answers = {}; } catch(e){}
+    try { body.innerHTML = ""; } catch(e){}
+
+    add(`<div class="mgCard">지금 상황을 혼자 견디지 않아도 돼요. 제가 옆에서 하나씩 같이 볼게요.</div>`);
+    showPrecheckQuestion();
   };
 
   chat.querySelector("#mgClose").onclick = () => {
