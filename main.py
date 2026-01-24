@@ -356,7 +356,7 @@ def check_expert_key(key):
 def expert_page():
     key = request.args.get("key", "")
     if not check_expert_key(key):
-        return "<h2>접근 권한이 없습니다.</h2>", 403
+        return send_file("expert_login.html")
     return send_file("expert.html")
 
 @app.get("/api/expert/cases")
