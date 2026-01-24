@@ -248,15 +248,15 @@ summary{cursor:pointer;font-weight:800}
     body.scrollTop = body.scrollHeight;
   };
 
-  function renderPhoneEscalationCard(payload) {
+  function renderPhoneEscalationCard() {
     if (document.getElementById("mgEscalateCard")) return;
 
     add(`
       <div id="mgEscalateCard" class="mgCard" style="border:1px solid rgba(143,175,154,.55); background:rgba(143,175,154,.08);">
-        <div style="font-weight:800; margin-bottom:6px;">전화상담이 도움이 될 수 있어요</div>
-        <div style="opacity:.9; line-height:1.5;">
-          원하시면 <b>24시간 내</b> 전화로 답변을 드릴게요.<br/>
-          (방문 상담은 추후 제공 예정이에요)
+        <div style="font-weight:900; margin-bottom:6px;">전문가에게 전화로 한 번 더 물어볼까요?</div>
+        <div style="opacity:.9; line-height:1.55;">
+          원하시면 <b>전화 상담</b>으로 조용히 도와드릴게요.<br/>
+          <b>접수는 언제든 가능</b>하지만, <b>콜백은 평일에만</b> 진행돼요.
         </div>
 
         <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
@@ -275,7 +275,7 @@ summary{cursor:pointer;font-weight:800}
         <div style="margin-top:10px; display:flex; gap:8px;">
           <button id="mgRequestCall"
             style="flex:1; padding:10px 12px; border-radius:12px; border:0; cursor:pointer; font-weight:900; background:#8FAF9A; color:white;">
-            전화상담 요청하기 (24시간 내 콜백)
+            전화 상담 요청하기 (평일 콜백)
           </button>
 
           <button id="mgNoCall"
@@ -472,10 +472,7 @@ summary{cursor:pointer;font-weight:800}
       `);
 
       if (data && data.suggest_escalation === true) {
-        renderPhoneEscalationCard({
-          context: precheck?.answers || {},
-          question: q
-        });
+        renderPhoneEscalationCard();
       }
     } catch (err) {
       body.lastChild.remove();

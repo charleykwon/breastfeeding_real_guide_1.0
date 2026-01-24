@@ -4,6 +4,10 @@ import json
 import os
 from datetime import datetime
 import uuid
+try:
+    from zoneinfo import ZoneInfo
+except Exception:
+    ZoneInfo = None
 
 app = Flask(__name__)
 
@@ -290,6 +294,14 @@ def query_legacy():
 
     return jsonify(resp), 200
 
+def is_weekend_seoul():
+    if ZoneInfo:
+        now = datetime.now(ZoneInfo("Asia/Seoul"))
+    else:
+        now = datetime.utcnow()
+    return now.weekday() >= 5
+
+
 @app.post("/api/escalate")
 def escalate():
     data = request.get_json() or {}
@@ -301,27 +313,36 @@ def escalate():
     source = data.get("source") or "ebook"
 
     if not phone:
-        return jsonify({"error": "missing_phone"}), 400
+        return jsonify({"ok": False, "error": "missing_phone"}), 400
 
     case_id = f"MB-{uuid.uuid4().hex[:8].upper()}"
+
+    weekend = is_weekend_seoul()
+    callback_policy = "weekday_only"
+    user_message = (
+        "접수 완료. 평일에 전화로 조용히 연락드릴게요."
+        if not weekend
+        else "접수 완료. 주말에는 접수만 가능하며, 평일에 순차적으로 연락드릴게요."
+    )
 
     record = {
         "ts": datetime.utcnow().isoformat() + "Z",
         "case_id": case_id,
         "source": source,
+        "callback_policy": callback_policy,
+        "weekend_received": weekend,
         "contact_phone": phone,
         "preferred_time": preferred_time,
         "question": question,
         "context": context,
-        "status": "received",
-        "note": "phone_callback_within_24h"
+        "status": "received"
     }
     save_escalation(record)
 
     return jsonify({
         "ok": True,
         "case_id": case_id,
-        "message": "received"
+        "message": user_message
     }), 200
 
 if __name__ == "__main__":

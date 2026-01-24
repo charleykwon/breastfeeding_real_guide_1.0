@@ -1,0 +1,236 @@
+좋아. 아래는 그대로 복붙해서 바로 작동하는 코드 세트야.
+(1) Replit main.py에 /api/escalate 추가
+(2) GitHub assets/mg-chat.js에 전화상담 카드(평일 콜백 정책) 추가
+
+⸻
+
+1) Replit main.py 코드: /api/escalate 추가
+
+✅ 어디에 붙여?
+	•	main.py에서 /api/query 아래(또는 파일 맨 아래)로 내려가서
+그대로 붙여넣기
+
+✅ 먼저 import 확인
+
+파일 상단에 아래가 없으면 추가:
+
+import os, json, uuid
+from datetime import datetime
+try:
+    from zoneinfo import ZoneInfo  # py3.9+
+except Exception:
+    ZoneInfo = None
+
+✅ /api/escalate 엔드포인트 (복붙)
+
+def save_escalation(record: dict):
+    os.makedirs("logs", exist_ok=True)
+    with open("logs/escalations.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+
+def is_weekend_seoul():
+    # 한국 시간 기준으로 주말 판단
+    if ZoneInfo:
+        now = datetime.now(ZoneInfo("Asia/Seoul"))
+    else:
+        now = datetime.utcnow()  # fallback (정확도 낮음)
+    return now.weekday() >= 5  # 5=Sat, 6=Sun
+
+
+@app.post("/api/escalate")
+def escalate():
+    data = request.get_json() or {}
+
+    phone = (data.get("contact_phone") or "").strip()
+    preferred_time = (data.get("preferred_time") or "").strip()
+    context = data.get("context") or {}
+    question = (data.get("question") or "").strip()
+    source = data.get("source") or "ebook"
+
+    if not phone:
+        return jsonify({"ok": False, "error": "missing_phone"}), 400
+
+    case_id = f"MB-{uuid.uuid4().hex[:8].upper()}"
+
+    weekend = is_weekend_seoul()
+    callback_policy = "weekday_only"
+    user_message = (
+        "접수 완료. 평일에 전화로 조용히 연락드릴게요."
+        if not weekend
+        else "접수 완료. 주말에는 접수만 가능하며, 평일에 순차적으로 연락드릴게요."
+    )
+
+    record = {
+        "ts": datetime.utcnow().isoformat() + "Z",
+        "case_id": case_id,
+        "source": source,
+        "callback_policy": callback_policy,
+        "weekend_received": weekend,
+        "contact_phone": phone,
+        "preferred_time": preferred_time,
+        "question": question,
+        "context": context,
+        "status": "received"
+    }
+
+    # ✅ 개인정보 포함(전화번호)은 escalation 전용 로그에만 저장
+    save_escalation(record)
+
+    return jsonify({
+        "ok": True,
+        "case_id": case_id,
+        "message": user_message
+    }), 200
+
+✅ 여기까지 하면 서버는 끝.
+(필요하면 Republish)
+
+⸻
+
+2) GitHub assets/mg-chat.js: “전화상담(평일 콜백)” 카드 UI
+
+✅ 어디에 붙여?
+
+mg-chat.js에서 아래 2군데만 작업하면 돼.
+
+⸻
+
+(A) 상단 설정값 1줄 추가
+
+파일 상단에 MG_BASE가 있는 근처에 추가:
+
+const ESCALATE_PATH = "/api/escalate";
+
+
+⸻
+
+(B) 카드 렌더 함수 추가 (복붙)
+
+add() 함수가 정의된 이후 아무 곳에 붙여도 돼(보통 유틸 함수 근처).
+
+function renderPhoneEscalationCard() {
+  // 중복 방지
+  if (document.getElementById("mgEscalateCard")) return;
+
+  add(`
+    <div id="mgEscalateCard" class="mgCard" style="border:1px solid rgba(143,175,154,.55); background:rgba(143,175,154,.08);">
+      <div style="font-weight:900; margin-bottom:6px;">전문가에게 전화로 한 번 더 물어볼까요?</div>
+      <div style="opacity:.9; line-height:1.55;">
+        원하시면 <b>전화 상담</b>으로 조용히 도와드릴게요.<br/>
+        <b>접수는 언제든 가능</b>하지만, <b>콜백은 평일에만</b> 진행돼요.
+      </div>
+
+      <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+        <input id="mgPhone" placeholder="전화번호 (예: 010-1234-5678)"
+          style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
+
+        <input id="mgTime" placeholder="연락 가능한 시간 (선택)"
+          style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
+      </div>
+
+      <label style="display:block; margin-top:10px; font-size:12px; opacity:.85;">
+        <input id="mgConsent" type="checkbox" />
+        전화상담을 위해 연락처 제공에 동의해요.
+      </label>
+
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button id="mgRequestCall"
+          style="flex:1; padding:10px 12px; border-radius:12px; border:0; cursor:pointer; font-weight:900; background:#8FAF9A; color:white;">
+          전화 상담 요청하기 (평일 콜백)
+        </button>
+
+        <button id="mgNoCall"
+          style="flex:1; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18); cursor:pointer; background:white; font-weight:800;">
+          지금은 괜찮아요
+        </button>
+      </div>
+
+      <div style="margin-top:8px; font-size:12px; opacity:.75;">
+        ※ 응급 상황(고열·오한·심한 통증)은 의료기관 도움을 우선 고려해요.
+      </div>
+    </div>
+  `);
+
+  const btnNo = document.getElementById("mgNoCall");
+  if (btnNo) {
+    btnNo.onclick = () => {
+      document.getElementById("mgEscalateCard")?.remove();
+      add(`<div class="mgCard">알겠어요. 맘곁이 옆에서 계속 같이 볼게요.</div>`);
+    };
+  }
+
+  const btnReq = document.getElementById("mgRequestCall");
+  if (btnReq) {
+    btnReq.onclick = async () => {
+      const phone = (document.getElementById("mgPhone")?.value || "").trim();
+      const time = (document.getElementById("mgTime")?.value || "").trim();
+      const consent = document.getElementById("mgConsent")?.checked;
+
+      if (!consent) {
+        add(`<div class="mgCard">연락처 제공 동의에 체크해주시면 요청을 진행할 수 있어요.</div>`);
+        return;
+      }
+      if (!phone) {
+        add(`<div class="mgCard">전화번호를 한 번만 적어주세요.</div>`);
+        return;
+      }
+
+      add(`<div class="mgCard">좋아요. 요청 내용을 조용히 전달했어요. 평일에 전화로 연락드릴게요.</div>`);
+
+      try {
+        const res = await fetch(MG_BASE + ESCALATE_PATH, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contact_phone: phone,
+            preferred_time: time,
+            context: precheck?.answers || {},
+            question: window.__mgLastQuestion || "",
+            source: "ebook"
+          })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          const caseId = data.case_id ? ` (접수번호: ${esc(data.case_id)})` : "";
+          const msg = data.message ? esc(data.message) : "접수 완료. 평일에 전화로 연락드릴게요.";
+          add(`<div class="mgCard">${msg}${caseId}</div>`);
+          document.getElementById("mgEscalateCard")?.remove();
+        } else {
+          add(`<div class="mgCard">요청 처리 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.</div>`);
+        }
+      } catch (e) {
+        add(`<div class="mgCard">연결 상태를 확인한 뒤 다시 시도해 주세요.</div>`);
+      }
+    };
+  }
+}
+
+
+⸻
+
+(C) ask(q)에 “마지막 질문 저장 + 조건부 노출” 추가
+
+async function ask(q) 시작 부분에 1줄:
+
+window.__mgLastQuestion = q;
+
+그리고 서버 응답을 받은 뒤(답변 렌더링 후) 아래를 추가:
+
+if (data && data.suggest_escalation === true) {
+  renderPhoneEscalationCard();
+}
+
+✅ 이것으로 “전문가 상담 요청은 챗봇 안에서만” 구현 완료.
+
+⸻
+
+3) 테스트 체크리스트 (2분 컷)
+	1.	전자책 페이지 열기 ?v=20260124-1 같은 값 붙이기
+	2.	precheck에서 risk 항목 2개 이상 선택
+	3.	질문 입력 → 답변 아래에 “전화 상담 요청(평일 콜백)” 카드가 뜨는지 확인
+	4.	전화번호 넣고 요청 → 접수번호/문구가 뜨는지 확인
+	5.	Replit logs/escalations.jsonl에 기록 쌓이는지 확인
+
