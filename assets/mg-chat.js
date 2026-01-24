@@ -51,7 +51,7 @@
 }
 #mgHead{
   position:relative;
-  padding:14px 14px 12px 14px;
+  padding:12px 12px 10px 12px;
   font-weight:900;
   display:flex;
   justify-content:space-between;
@@ -101,8 +101,8 @@
   padding:14px;
   height:404px;
   overflow:auto;
-  font-size:14px;
-  line-height:1.65;
+  font-size:13px;
+  line-height:1.55;
   background: var(--mb-cream);
 }
 .mgMsg{ margin:10px 0; }
@@ -110,16 +110,17 @@
   background:#fff;
   border:1px solid rgba(0,0,0,.08);
   border-radius:14px;
-  padding:12px 12px;
+  padding:10px 10px;
   box-shadow: 0 8px 18px rgba(0,0,0,.06);
 }
 button.mgq{
-  padding:10px 12px;
-  border-radius:14px;
+  padding:8px 10px;
+  border-radius:12px;
   border:1px solid rgba(0,0,0,.14);
   background:#fff;
   cursor:pointer;
   font-weight:800;
+  font-size:13px;
   margin:6px 6px 0 0;
 }
 button.mgq:hover{
@@ -138,19 +139,21 @@ button.mgq.pcq{
 }
 #mgInput{
   flex:1;
-  padding:12px 12px;
+  padding:10px 10px;
   border-radius:14px;
   border:1px solid rgba(0,0,0,.16);
   outline:none;
+  font-size:13px;
 }
 #mgSend{
-  padding:12px 14px;
+  padding:10px 12px;
   border-radius:14px;
   border:0;
   background: var(--mb-sage);
   color:#fff;
   cursor:pointer;
   font-weight:900;
+  font-size:13px;
 }
 #mgSend:hover{ filter: brightness(0.98); }
 @media (max-width: 768px){
