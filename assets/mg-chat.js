@@ -167,7 +167,7 @@ button.mgq.pcq{
 details{margin-top:10px}
 summary{cursor:pointer;font-weight:800}
 /* ===== 입력창 하단 고정 ===== */
-#mgChat{
+#mgChat.open{
   display:flex !important;
   flex-direction:column !important;
 }
@@ -420,25 +420,35 @@ summary{cursor:pointer;font-weight:800}
   }
 
   btn.onclick = () => {
-    chat.style.display = "block";
+    chat.classList.add("open");
     input.focus();
     resetToFirstQuestion();
   };
 
-  chat.querySelector("#mgClose").onclick = () => {
-    chat.style.display = "none";
-  };
-
-  chat.querySelector("#mgRoadmapBtn").onclick = () => {
-    chat.style.display = "none";
-    if (typeof window.openModal === "function") {
-      window.openModal("roadmapModal");
-    } else {
-      location.hash = "#roadmap";
-      const el = document.getElementById("roadmap");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+  // 헤더 버튼들 이벤트 위임
+  chat.querySelector("#mgHead").addEventListener("click", (e) => {
+    const target = e.target;
+    
+    if (target.id === "mgClose" || target.closest("#mgClose")) {
+      e.preventDefault();
+      e.stopPropagation();
+      chat.classList.remove("open");
+      return;
     }
-  };
+    
+    if (target.id === "mgRoadmapBtn" || target.closest("#mgRoadmapBtn")) {
+      e.preventDefault();
+      e.stopPropagation();
+      chat.classList.remove("open");
+      if (typeof window.openModal === "function") {
+        window.openModal("roadmapModal");
+      } else {
+        location.hash = "#roadmap";
+        const el = document.getElementById("roadmap");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  });
 
   // body 클릭 핸들러
   body.addEventListener("click", (e) => {
