@@ -26718,7 +26718,10 @@ init();
         }
     }
     </style>
-    
+    /* ✅ 전자책 페이지의 바깥 SOS 플로팅 버튼 숨김 */
+#sosBtn, .sos-btn, .floating-sos, .btn-sos, .sos {
+  display: none !important;
+}   
     <script>
     // 플로팅 도움말 메뉴 토글
     document.getElementById('helpToggle').addEventListener('click', function() {
