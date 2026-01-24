@@ -1,0 +1,179 @@
+style.textContent = `
+:root{
+  --mb-sage:#8FAF9A;
+  --mb-blush:#E8C9C1;
+  --mb-cream:#FBF7F3;
+  --mb-text:#2F2F2F;
+  --mb-sub:#6F6F6F;
+  --mb-line:rgba(0,0,0,.10);
+  --mb-shadow:0 12px 30px rgba(0,0,0,.14);
+  --mb-radius:18px;
+}
+
+/* ✅ 챗봇 버튼(말풍선) 더 강조 */
+#mgChatBtn{
+  position:fixed; right:16px; bottom:16px; z-index:999999;
+  width:64px; height:64px;
+  border-radius:20px;
+  border:0;
+  cursor:pointer;
+  box-shadow:var(--mb-shadow);
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f6f0ee 40%, #e9d6d0 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+}
+#mgChatBtn::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  border:2px solid rgba(143,175,154,.35);
+  pointer-events:none;
+}
+#mgChatBtn:hover{
+  transform: translateY(-1px);
+}
+
+/* ✅ 채팅 패널 */
+#mgChat{
+  position:fixed; right:16px; bottom:92px; z-index:999999;
+  width:380px; max-width:92vw;
+  height:560px; max-height:74vh;
+  background:#fff;
+  border:1px solid var(--mb-line);
+  border-radius:var(--mb-radius);
+  box-shadow:var(--mb-shadow);
+  display:none;
+  overflow:hidden;
+}
+
+/* ✅ 헤더: 컬러 바 + 제목 강조 */
+#mgHead{
+  position:relative;
+  padding:14px 14px 12px 14px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background: linear-gradient(90deg, rgba(232,201,193,.95), rgba(143,175,154,.20));
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+#mgHead::before{
+  content:"";
+  position:absolute; left:0; top:0; right:0;
+  height:6px;
+  background: linear-gradient(90deg, var(--mb-blush), var(--mb-sage));
+}
+#mgHead span{
+  display:flex; align-items:center; gap:10px;
+  color:var(--mb-text);
+}
+
+/* ✅ 헤더 왼쪽 아이콘(하트) 강조 */
+#mgHead span::before{
+  content:"";
+  width:22px; height:22px;
+  border-radius:8px;
+  background: rgba(255,255,255,.65);
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+  display:inline-block;
+}
+
+/* ✅ 헤더 오른쪽 '도움 로드맵' 링크 */
+#mgRoadmapBtn{
+  font-size:12px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.6);
+  cursor:pointer;
+}
+#mgRoadmapBtn:hover{ background: rgba(255,255,255,.85); }
+
+#mgClose{
+  width:34px; height:34px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.55);
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* 바디 */
+#mgBody{
+  padding:14px;
+  height:404px;
+  overflow:auto;
+  font-size:14px;
+  line-height:1.65;
+  background: var(--mb-cream);
+}
+
+/* 메시지 카드 */
+.mgMsg{ margin:10px 0; }
+.mgCard{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  padding:12px 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
+
+/* 버튼(선택지) */
+button.mgq{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.14);
+  background:#fff;
+  cursor:pointer;
+  font-weight:800;
+  margin:6px 6px 0 0;
+}
+button.mgq:hover{
+  border-color: rgba(143,175,154,.55);
+  box-shadow: 0 10px 20px rgba(0,0,0,.06);
+}
+
+/* precheck 버튼(pcq)은 살짝 강조 */
+button.mgq.pcq{
+  border-color: rgba(143,175,154,.55);
+}
+
+/* 입력 영역 */
+#mgForm{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid rgba(0,0,0,.06);
+  background:#fff;
+}
+#mgInput{
+  flex:1;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.16);
+  outline:none;
+}
+#mgSend{
+  padding:12px 14px;
+  border-radius:14px;
+  border:0;
+  background: var(--mb-sage);
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+}
+#mgSend:hover{ filter: brightness(0.98); }
+
+/* 모바일: 바텀시트 느낌 */
+@media (max-width: 768px){
+  #mgChat{
+    left:0; right:0; bottom:0;
+    width:100vw;
+    height:74vh;
+    border-radius:18px 18px 0 0;
+  }
+}
+`;

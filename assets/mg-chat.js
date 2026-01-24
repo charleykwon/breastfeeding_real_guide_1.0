@@ -6,20 +6,163 @@
   // ---------- UI ----------
   const style = document.createElement("style");
   style.textContent = `
-  #mgChatBtn{position:fixed;right:16px;bottom:16px;z-index:9999;width:56px;height:56px;border-radius:16px;border:0;font-size:22px;cursor:pointer}
-  #mgChat{position:fixed;right:16px;bottom:82px;z-index:9999;width:360px;max-width:92vw;height:520px;max-height:72vh;background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.18);display:none;overflow:hidden}
-  #mgHead{padding:12px 14px;font-weight:800;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,0,0,.08)}
-  #mgBody{padding:12px 14px;height:390px;overflow:auto;font-size:14px;line-height:1.5}
-  #mgForm{display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(0,0,0,.08)}
-  #mgInput{flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(0,0,0,.18)}
-  #mgSend{padding:10px 12px;border-radius:12px;border:0;cursor:pointer;font-weight:800}
-  .mgMsg{margin:10px 0}
-  .mgCard{padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.04);margin-top:6px}
-  .mgq{display:inline-block;margin:4px;padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,.15);background:#fff;cursor:pointer}
-  .mgq:hover{background:rgba(0,0,0,.05)}
-  .mgq.pcq{background:#f0f7ff;border-color:#4a90d9}
-  details{margin-top:10px}
-  summary{cursor:pointer;font-weight:800}
+:root{
+  --mb-sage:#8FAF9A;
+  --mb-blush:#E8C9C1;
+  --mb-cream:#FBF7F3;
+  --mb-text:#2F2F2F;
+  --mb-sub:#6F6F6F;
+  --mb-line:rgba(0,0,0,.10);
+  --mb-shadow:0 12px 30px rgba(0,0,0,.14);
+  --mb-radius:18px;
+}
+#mgChatBtn{
+  position:fixed; right:16px; bottom:16px; z-index:999999;
+  width:64px; height:64px;
+  border-radius:20px;
+  border:0;
+  cursor:pointer;
+  box-shadow:var(--mb-shadow);
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f6f0ee 40%, #e9d6d0 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+}
+#mgChatBtn::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  border:2px solid rgba(143,175,154,.35);
+  pointer-events:none;
+}
+#mgChatBtn:hover{
+  transform: translateY(-1px);
+}
+#mgChat{
+  position:fixed; right:16px; bottom:92px; z-index:999999;
+  width:380px; max-width:92vw;
+  height:560px; max-height:74vh;
+  background:#fff;
+  border:1px solid var(--mb-line);
+  border-radius:var(--mb-radius);
+  box-shadow:var(--mb-shadow);
+  display:none;
+  overflow:hidden;
+}
+#mgHead{
+  position:relative;
+  padding:14px 14px 12px 14px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background: linear-gradient(90deg, rgba(232,201,193,.95), rgba(143,175,154,.20));
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+#mgHead::before{
+  content:"";
+  position:absolute; left:0; top:0; right:0;
+  height:6px;
+  background: linear-gradient(90deg, var(--mb-blush), var(--mb-sage));
+}
+#mgHead span{
+  display:flex; align-items:center; gap:10px;
+  color:var(--mb-text);
+}
+#mgHead span::before{
+  content:"";
+  width:22px; height:22px;
+  border-radius:8px;
+  background: rgba(255,255,255,.65);
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+  display:inline-block;
+}
+#mgRoadmapBtn{
+  font-size:12px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.6);
+  cursor:pointer;
+}
+#mgRoadmapBtn:hover{ background: rgba(255,255,255,.85); }
+#mgClose{
+  width:34px; height:34px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.55);
+  cursor:pointer;
+  font-size:18px;
+  display:flex; align-items:center; justify-content:center;
+}
+#mgBody{
+  padding:14px;
+  height:404px;
+  overflow:auto;
+  font-size:14px;
+  line-height:1.65;
+  background: var(--mb-cream);
+}
+.mgMsg{ margin:10px 0; }
+.mgCard{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  padding:12px 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
+button.mgq{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.14);
+  background:#fff;
+  cursor:pointer;
+  font-weight:800;
+  margin:6px 6px 0 0;
+}
+button.mgq:hover{
+  border-color: rgba(143,175,154,.55);
+  box-shadow: 0 10px 20px rgba(0,0,0,.06);
+}
+button.mgq.pcq{
+  border-color: rgba(143,175,154,.55);
+}
+#mgForm{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid rgba(0,0,0,.06);
+  background:#fff;
+}
+#mgInput{
+  flex:1;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.16);
+  outline:none;
+}
+#mgSend{
+  padding:12px 14px;
+  border-radius:14px;
+  border:0;
+  background: var(--mb-sage);
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+}
+#mgSend:hover{ filter: brightness(0.98); }
+@media (max-width: 768px){
+  #mgChat{
+    left:0; right:0; bottom:0;
+    width:100vw;
+    height:74vh;
+    border-radius:18px 18px 0 0;
+  }
+}
+details{margin-top:10px}
+summary{cursor:pointer;font-weight:800}
   `;
   document.head.appendChild(style);
 
@@ -33,8 +176,8 @@
     <div id="mgHead">
       <span>맘곁 모유수유 동반자</span>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button id="mgRoadmap" style="border:0;background:transparent;font-size:12px;cursor:pointer;color:#8FAF9A;font-weight:600;">도움 로드맵</button>
-        <button id="mgClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">✕</button>
+        <button id="mgRoadmapBtn">도움 로드맵</button>
+        <button id="mgClose">✕</button>
       </div>
     </div>
     <div id="mgBody">
@@ -233,7 +376,7 @@
     chat.style.display = "none";
   };
 
-  chat.querySelector("#mgRoadmap").onclick = () => {
+  chat.querySelector("#mgRoadmapBtn").onclick = () => {
     chat.style.display = "none";
     if (typeof window.openModal === "function") {
       window.openModal("roadmapModal");
