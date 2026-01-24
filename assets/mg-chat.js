@@ -207,8 +207,8 @@ summary{cursor:pointer;font-weight:800}
     <div id="mgHead">
       <span>맘곁 모유수유 동반자</span>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button id="mgRoadmapBtn">도움 로드맵</button>
-        <button id="mgClose">✕</button>
+        <button type="button" id="mgRoadmapBtn">도움 로드맵</button>
+        <button type="button" id="mgClose">✕</button>
       </div>
     </div>
     <div id="mgBody">
