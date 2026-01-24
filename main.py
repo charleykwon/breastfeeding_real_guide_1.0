@@ -43,6 +43,11 @@ def log_analytics(payload: dict):
     with open("logs/analytics.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(log, ensure_ascii=False) + "\n")
 
+def save_escalation(record: dict):
+    os.makedirs("logs", exist_ok=True)
+    with open("logs/escalations.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
 RISK_TRIGGERS = [
     "38도 이상 발열",
     "가슴이 심하게 붓고 열감",
@@ -288,19 +293,35 @@ def query_legacy():
 @app.post("/api/escalate")
 def escalate():
     data = request.get_json() or {}
-    context = data.get("context", {})
-    reason = data.get("reason", "사용자 요청")
+
+    phone = (data.get("contact_phone") or "").strip()
+    preferred_time = (data.get("preferred_time") or "").strip()
+    context = data.get("context") or {}
+    question = (data.get("question") or "").strip()
+    source = data.get("source") or "ebook"
+
+    if not phone:
+        return jsonify({"error": "missing_phone"}), 400
+
+    case_id = f"MB-{uuid.uuid4().hex[:8].upper()}"
+
+    record = {
+        "ts": datetime.utcnow().isoformat() + "Z",
+        "case_id": case_id,
+        "source": source,
+        "contact_phone": phone,
+        "preferred_time": preferred_time,
+        "question": question,
+        "context": context,
+        "status": "received",
+        "note": "phone_callback_within_24h"
+    }
+    save_escalation(record)
 
     return jsonify({
-        "message": "전문가 연결이 필요한 상황으로 기록되었습니다.",
-        "action": "nearest_ibclc",
-        "escalation_type": "phone_24h",
-        "context_summary": {
-            "baby_age": context.get("baby_age", "미입력"),
-            "main_issue": context.get("main_issue", "미입력"),
-            "risk_factors": context.get("risk_check", "해당 없음")
-        },
-        "reason": reason
+        "ok": True,
+        "case_id": case_id,
+        "message": "received"
     }), 200
 
 if __name__ == "__main__":

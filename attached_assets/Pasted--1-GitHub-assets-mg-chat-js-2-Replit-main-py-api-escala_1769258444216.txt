@@ -1,0 +1,258 @@
+
+	1.	**GitHub assets/mg-chat.js**에 넣는 코드
+	2.	**Replit main.py**에 넣는 코드 (/api/escalate)
+
+⸻
+
+(3) ✅ mg-chat.js 복붙 코드
+
+목표
+	•	서버 응답에 suggest_escalation: true가 오면
+👉 채팅 안에 조용한 콜백 안내 카드 + 전화번호 입력 폼을 띄움
+	•	사용자가 “요청하기” 누르면 /api/escalate로 POST
+
+⸻
+
+3-1) 상단 설정값 추가
+
+mg-chat.js 상단에 MG_BASE가 있지? 그 아래에 이것을 추가해.
+
+// ✅ Replit API 베이스 (현재 쓰는 MG_BASE 그대로 사용)
+const ESCALATE_PATH = "/api/escalate"; // 서버 경로가 다르면 여기만 수정
+
+
+⸻
+
+3-2) CTA 카드 + 입력폼 렌더 함수 추가
+
+add() 함수가 정의된 아래쪽(또는 유틸 함수들 있는 곳)에 그대로 붙여넣어.
+
+function renderPhoneEscalationCard(payload) {
+  // 중복 방지
+  if (document.getElementById("mgEscalateCard")) return;
+
+  add(`
+    <div id="mgEscalateCard" class="mgCard" style="border:1px solid rgba(143,175,154,.55); background:rgba(143,175,154,.08);">
+      <div style="font-weight:800; margin-bottom:6px;">전화상담이 도움이 될 수 있어요</div>
+      <div style="opacity:.9; line-height:1.5;">
+        원하시면 <b>24시간 내</b> 전화로 답변을 드릴게요.<br/>
+        (방문 상담은 추후 제공 예정이에요)
+      </div>
+
+      <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+        <input id="mgPhone" placeholder="전화번호 (예: 010-1234-5678)"
+          style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
+
+        <input id="mgTime" placeholder="연락 가능한 시간 (선택)"
+          style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
+      </div>
+
+      <label style="display:block; margin-top:10px; font-size:12px; opacity:.85;">
+        <input id="mgConsent" type="checkbox" />
+        전화상담을 위해 연락처 제공에 동의해요.
+      </label>
+
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button id="mgRequestCall"
+          style="flex:1; padding:10px 12px; border-radius:12px; border:0; cursor:pointer; font-weight:900; background:#8FAF9A; color:white;">
+          전화상담 요청하기 (24시간 내 콜백)
+        </button>
+
+        <button id="mgNoCall"
+          style="flex:1; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18); cursor:pointer; background:white; font-weight:800;">
+          지금은 괜찮아요
+        </button>
+      </div>
+
+      <div style="margin-top:8px; font-size:12px; opacity:.75;">
+        ※ 응급 상황(고열·오한·심한 통증)은 의료기관 도움을 우선 고려해요.
+      </div>
+    </div>
+  `);
+
+  // 버튼 이벤트 바인딩 (한 번만)
+  const btnReq = document.getElementById("mgRequestCall");
+  const btnNo = document.getElementById("mgNoCall");
+
+  if (btnNo) {
+    btnNo.onclick = () => {
+      const card = document.getElementById("mgEscalateCard");
+      if (card) card.remove();
+      add(`<div class="mgCard">알겠어요. 지금은 맘곁이 옆에서 계속 같이 볼게요.</div>`);
+    };
+  }
+
+  if (btnReq) {
+    btnReq.onclick = async () => {
+      const phone = (document.getElementById("mgPhone")?.value || "").trim();
+      const time = (document.getElementById("mgTime")?.value || "").trim();
+      const consent = document.getElementById("mgConsent")?.checked;
+
+      if (!consent) {
+        add(`<div class="mgCard">연락처 제공 동의에 체크해주시면 요청을 진행할 수 있어요.</div>`);
+        return;
+      }
+      if (!phone) {
+        add(`<div class="mgCard">전화번호를 한 번만 적어주세요.</div>`);
+        return;
+      }
+
+      add(`<div class="mgCard">좋아요. 요청 내용을 조용히 전달하고, 24시간 내 전화로 답변드릴게요.</div>`);
+
+      try {
+        const res = await fetch(MG_BASE + ESCALATE_PATH, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contact_phone: phone,
+            preferred_time: time,
+            // 상담 맥락
+            context: precheck?.answers || {},
+            question: window.__mgLastQuestion || "",
+            source: "ebook"
+          })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          const caseId = data.case_id ? ` (접수번호: ${esc(data.case_id)})` : "";
+          add(`<div class="mgCard">접수 완료${caseId}. 곧 연락드릴게요.</div>`);
+          // 카드 제거
+          const card = document.getElementById("mgEscalateCard");
+          if (card) card.remove();
+        } else {
+          add(`<div class="mgCard">요청을 처리하는 중 문제가 생겼어요. 잠시 후 다시 시도해주셔도 괜찮아요.</div>`);
+        }
+      } catch (e) {
+        add(`<div class="mgCard">연결 상태를 확인한 뒤 다시 시도해 주세요.</div>`);
+      }
+    };
+  }
+}
+
+
+⸻
+
+3-3) ask(q)에서 마지막 질문 저장 & escalation 카드 호출
+
+async function ask(q) 시작 부분에 아래 한 줄을 추가해(질문 저장용):
+
+window.__mgLastQuestion = q;
+
+그리고 서버 응답 처리 후, data.suggest_escalation === true면 카드 띄우기:
+
+data.answer를 렌더링하는 코드 아래에 이 블록을 추가해.
+
+// ✅ 서버가 고위험/연결 권장을 보내면 (조용히) 전화상담 카드 표시
+if (data && data.suggest_escalation === true) {
+  renderPhoneEscalationCard({
+    context: precheck?.answers || {},
+    question: q
+  });
+}
+
+이렇게 하면 “조용히”, 하지만 “명확하게” 전화상담 요청 UI가 뜬다.
+
+⸻
+
+(4) ✅ Replit main.py: /api/escalate 복붙 코드
+
+목표
+	•	전화번호/시간대/질문/context를 받아서
+	•	logs/escalations.jsonl에 저장
+	•	분석 로그(analytics.jsonl)에는 전화번호 절대 저장하지 않음
+
+⸻
+
+4-1) imports에 추가
+
+main.py 상단에 import uuid from datetime import datetime import os import json가 없으면 추가:
+
+import os, json, uuid
+from datetime import datetime
+
+
+⸻
+
+4-2) escalation 저장 함수 + 엔드포인트 추가
+
+/api/query 아래쪽 아무 곳에 붙여도 되지만, 보통 health/query 아래가 깔끔해.
+
+def save_escalation(record: dict):
+    os.makedirs("logs", exist_ok=True)
+    with open("logs/escalations.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+
+@app.post("/api/escalate")
+def escalate():
+    data = request.get_json() or {}
+
+    phone = (data.get("contact_phone") or "").strip()
+    preferred_time = (data.get("preferred_time") or "").strip()
+    context = data.get("context") or {}
+    question = (data.get("question") or "").strip()
+    source = data.get("source") or "ebook"
+
+    if not phone:
+        return jsonify({"error": "missing_phone"}), 400
+
+    case_id = f"MB-{uuid.uuid4().hex[:8].upper()}"
+
+    # ✅ 개인정보 포함 로그: escalation 전용 파일로만 저장
+    record = {
+        "ts": datetime.utcnow().isoformat() + "Z",
+        "case_id": case_id,
+        "source": source,
+        "contact_phone": phone,
+        "preferred_time": preferred_time,
+        "question": question,
+        "context": context,
+        "status": "received",
+        "note": "phone_callback_within_24h"
+    }
+    save_escalation(record)
+
+    # ✅ 분석 로그에는 전화번호 절대 저장하지 않음
+    # (원하면 analytics에 case_id만 연결해도 됨)
+    # log_analytics({ ... "case_id": case_id ... })  # ← phone 포함 금지
+
+    return jsonify({
+        "ok": True,
+        "case_id": case_id,
+        "message": "received"
+    }), 200
+
+
+⸻
+
+4-3) 운영 메모 (지금은 1인 전문가)
+	•	logs/escalations.jsonl을 열어서
+	•	case_id
+	•	질문/컨텍스트
+	•	전화번호/시간대
+를 보고 직접 콜백하면 됨.
+
+나중에:
+	•	Slack 알림
+	•	이메일 알림
+	•	캘린더 예약
+이건 추가로 붙이면 끝.
+
+⸻
+
+✅ 적용 순서 (실수 방지)
+	1.	Replit main.py에 /api/escalate 추가 → Deploy/Republish
+	2.	GitHub mg-chat.js에 renderPhoneEscalationCard + ask() 호출부 추가 → Commit
+	3.	전자책 페이지에서 ?v=새값으로 열어 테스트
+	4.	고위험 체크(2개 이상) 만들어서 전화상담 카드가 뜨는지 확인
+	5.	전화번호 입력 → 접수번호(case_id) 메시지 뜨는지 확인
+
+⸻
+
+테스트 팁(빠르게 고위험 만들기)
+
+precheck에서 risk_check를 2개 이상 선택하도록 유도하면 바로 suggest_escalation=true가 뜨게 할 수 있어(서버 규칙이 2개 이상일 때 true니까).
+
+⸻

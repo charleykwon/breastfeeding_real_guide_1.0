@@ -1,6 +1,7 @@
 // Momgyeot Chat Widget (isolated)
 (function () {
   const MG_BASE = "";
+  const ESCALATE_PATH = "/api/escalate";
 
   // ---------- UI ----------
   const style = document.createElement("style");
@@ -100,6 +101,106 @@
     body.scrollTop = body.scrollHeight;
   };
 
+  function renderPhoneEscalationCard(payload) {
+    if (document.getElementById("mgEscalateCard")) return;
+
+    add(`
+      <div id="mgEscalateCard" class="mgCard" style="border:1px solid rgba(143,175,154,.55); background:rgba(143,175,154,.08);">
+        <div style="font-weight:800; margin-bottom:6px;">전화상담이 도움이 될 수 있어요</div>
+        <div style="opacity:.9; line-height:1.5;">
+          원하시면 <b>24시간 내</b> 전화로 답변을 드릴게요.<br/>
+          (방문 상담은 추후 제공 예정이에요)
+        </div>
+
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <input id="mgPhone" placeholder="전화번호 (예: 010-1234-5678)"
+            style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
+
+          <input id="mgTime" placeholder="연락 가능한 시간 (선택)"
+            style="flex:1; min-width:220px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18);" />
+        </div>
+
+        <label style="display:block; margin-top:10px; font-size:12px; opacity:.85;">
+          <input id="mgConsent" type="checkbox" />
+          전화상담을 위해 연락처 제공에 동의해요.
+        </label>
+
+        <div style="margin-top:10px; display:flex; gap:8px;">
+          <button id="mgRequestCall"
+            style="flex:1; padding:10px 12px; border-radius:12px; border:0; cursor:pointer; font-weight:900; background:#8FAF9A; color:white;">
+            전화상담 요청하기 (24시간 내 콜백)
+          </button>
+
+          <button id="mgNoCall"
+            style="flex:1; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,0,0,.18); cursor:pointer; background:white; font-weight:800;">
+            지금은 괜찮아요
+          </button>
+        </div>
+
+        <div style="margin-top:8px; font-size:12px; opacity:.75;">
+          ※ 응급 상황(고열·오한·심한 통증)은 의료기관 도움을 우선 고려해요.
+        </div>
+      </div>
+    `);
+
+    const btnReq = document.getElementById("mgRequestCall");
+    const btnNo = document.getElementById("mgNoCall");
+
+    if (btnNo) {
+      btnNo.onclick = () => {
+        const card = document.getElementById("mgEscalateCard");
+        if (card) card.remove();
+        add(`<div class="mgCard">알겠어요. 지금은 맘곁이 옆에서 계속 같이 볼게요.</div>`);
+      };
+    }
+
+    if (btnReq) {
+      btnReq.onclick = async () => {
+        const phone = (document.getElementById("mgPhone")?.value || "").trim();
+        const time = (document.getElementById("mgTime")?.value || "").trim();
+        const consent = document.getElementById("mgConsent")?.checked;
+
+        if (!consent) {
+          add(`<div class="mgCard">연락처 제공 동의에 체크해주시면 요청을 진행할 수 있어요.</div>`);
+          return;
+        }
+        if (!phone) {
+          add(`<div class="mgCard">전화번호를 한 번만 적어주세요.</div>`);
+          return;
+        }
+
+        add(`<div class="mgCard">좋아요. 요청 내용을 조용히 전달하고, 24시간 내 전화로 답변드릴게요.</div>`);
+
+        try {
+          const res = await fetch(MG_BASE + ESCALATE_PATH, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contact_phone: phone,
+              preferred_time: time,
+              context: precheck?.answers || {},
+              question: window.__mgLastQuestion || "",
+              source: "ebook"
+            })
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok) {
+            const caseId = data.case_id ? ` (접수번호: ${esc(data.case_id)})` : "";
+            add(`<div class="mgCard">접수 완료${caseId}. 곧 연락드릴게요.</div>`);
+            const card = document.getElementById("mgEscalateCard");
+            if (card) card.remove();
+          } else {
+            add(`<div class="mgCard">요청을 처리하는 중 문제가 생겼어요. 잠시 후 다시 시도해주셔도 괜찮아요.</div>`);
+          }
+        } catch (e) {
+          add(`<div class="mgCard">연결 상태를 확인한 뒤 다시 시도해 주세요.</div>`);
+        }
+      };
+    }
+  }
+
   // (A) precheck 질문 표시 함수 - btn.onclick에서만 호출됨
   function showPrecheckQuestion() {
     const q = precheckQuestions[precheck.step];
@@ -107,7 +208,6 @@
 
     let html = `<div class="mgMsg"><b>${q.text}</b></div><div class="mgMsg">`;
     q.options.forEach(opt => {
-      // (C) precheck 버튼: class="mgq pcq" + data-precheck/data-value
       html += `<button class="mgq pcq" data-precheck="${q.key}" data-value="${opt}">${opt}</button>`;
     });
     html += `</div>`;
@@ -119,7 +219,6 @@
     chat.style.display = "block";
     input.focus();
 
-    // 첫 번째 클릭 시에만 precheck 시작
     if (precheck.step === 0) {
       showPrecheckQuestion();
     }
@@ -134,27 +233,22 @@
     const b = e.target.closest("button.mgq");
     if (!b) return;
 
-    // (C) Precheck 버튼인지 확인 (dataset.precheck가 있으면 precheck 버튼)
     const key = b.dataset.precheck;
     const val = b.dataset.value;
 
     if (key) {
-      // precheck 버튼: 저장 → step 증가 → 다음 질문 렌더만 (submit 안 함)
       precheck.answers[key] = val;
 
-      // risk_check에서 "해당 없음" 아니면 고위험 플래그
       if (key === "risk_check" && val !== "해당 없음") {
         precheck.answers.risk_flag = true;
       }
 
       precheck.step += 1;
 
-      // 다음 질문 또는 종료
       if (precheck.step < precheckQuestions.length) {
         showPrecheckQuestion();
       } else {
         add(`<div class="mgCard">좋아요. 이제 궁금한 점을 편하게 적어주세요.</div>`);
-        // 빠른 질문 버튼 표시 (일반 질문 버튼: class="mgq" + data-q)
         add(`<div class="mgMsg">
           <button class="mgq" data-q="초유가 안 나와요">초유가 안 나와요</button>
           <button class="mgq" data-q="젖물림이 안 돼요">젖물림이 안 돼요</button>
@@ -164,23 +258,21 @@
       return;
     }
 
-    // (B) precheck가 끝나기 전에는 질문 전송하지 않음 (가드)
     if (precheck.step < precheckQuestions.length) {
       add(`<div class="mgCard">답변 전에 3가지만 먼저 확인할게요.</div>`);
       showPrecheckQuestion();
       return;
     }
 
-    // (C) 일반 질문 버튼: class="mgq" + data-q 사용
     const q = b.dataset.q || b.textContent.trim();
     if (!q) return;
 
-    // precheck 완료 후에만 submit dispatch
     input.value = q;
     form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
   });
 
   async function ask(q) {
+    window.__mgLastQuestion = q;
     add(`<b>나</b><div>${esc(q)}</div>`);
     add(`<b>맘곁</b><div class="mgCard">찾는 중…</div>`);
 
@@ -219,6 +311,13 @@
           </ul>
         </div>
       `);
+
+      if (data && data.suggest_escalation === true) {
+        renderPhoneEscalationCard({
+          context: precheck?.answers || {},
+          question: q
+        });
+      }
     } catch (err) {
       body.lastChild.remove();
       add(`<div class="mgCard">연결에 문제가 있어요. 잠시 후 다시 시도해주세요.</div>`);
@@ -229,7 +328,6 @@
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // (B) precheck가 끝나기 전에는 질문 전송하지 않음
     if (precheck.step < precheckQuestions.length) {
       add(`<div class="mgCard">답변 전에 3가지만 먼저 확인할게요.</div>`);
       showPrecheckQuestion();
@@ -250,7 +348,6 @@
   window.mgChat.open = () => {
     chat.style.display = "block";
     input.focus();
-    // precheck 시작 (아직 안 했으면)
     if (precheck.step === 0) {
       showPrecheckQuestion();
     }
@@ -259,14 +356,12 @@
   window.mgChat.openWith = (q) => {
     chat.style.display = "block";
     input.focus();
-    // precheck 완료 후에만 질문 전송
     if (precheck.step >= precheckQuestions.length && q) {
       input.value = q;
       form.dispatchEvent(
         new Event("submit", { cancelable: true, bubbles: true })
       );
     } else if (precheck.step === 0) {
-      // precheck 먼저 진행
       showPrecheckQuestion();
     }
   };
