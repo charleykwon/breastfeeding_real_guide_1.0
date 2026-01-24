@@ -64,8 +64,10 @@
         }
         .case-item:hover { background: #f9f9f9; }
         .case-item.active { background: #e8f5e9; border-left: 3px solid #8FAF9A; }
-        .case-item .case-id { font-weight: 700; color: #8FAF9A; }
-        .case-item .case-time { font-size: 0.8rem; color: #999; }
+        .case-item .case-name { font-weight: 700; color: #333; font-size: 1rem; }
+        .case-item .case-phone { font-size: 0.85rem; color: #666; margin-top: 2px; }
+        .case-item .case-issue { font-size: 0.8rem; color: #888; margin-top: 4px; }
+        .case-item .case-time { font-size: 0.75rem; color: #aaa; margin-top: 4px; }
         .case-item .case-status {
             display: inline-block;
             padding: 2px 8px;
@@ -75,7 +77,6 @@
             margin-left: 8px;
         }
         .status-received { background: #fff3e0; color: #e65100; }
-        .status-in_call { background: #e3f2fd; color: #1565c0; }
         .status-closed { background: #e8f5e9; color: #2e7d32; }
         
         .detail-empty {
@@ -93,6 +94,12 @@
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        .name-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
         }
         .phone-display {
             font-size: 1.8rem;
@@ -120,36 +127,13 @@
         .info-label { color: #666; }
         .info-value { font-weight: 600; }
         
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .btn {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
+        .question-box {
+            background: #fff8e1;
+            padding: 15px;
             border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            font-size: 0.95rem;
+            border-left: 3px solid #ffc107;
         }
-        .btn-primary {
-            background: #8FAF9A;
-            color: white;
-        }
-        .btn-primary:hover { background: #7a9a85; }
-        .btn-secondary {
-            background: #e0e0e0;
-            color: #333;
-        }
-        .btn-secondary:hover { background: #d0d0d0; }
-        .btn-success {
-            background: #4caf50;
-            color: white;
-        }
-        .btn-success:hover { background: #43a047; }
         
         .note-input {
             width: 100%;
@@ -158,13 +142,47 @@
             border-radius: 8px;
             font-size: 0.9rem;
             resize: vertical;
-            min-height: 80px;
-            margin-bottom: 10px;
+            min-height: 100px;
+            margin-bottom: 15px;
         }
         .note-input:focus {
             outline: none;
             border-color: #8FAF9A;
         }
+        
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .checkbox-row label {
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-save {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #4caf50;
+            color: white;
+        }
+        .btn-save:hover { background: #43a047; }
+        .btn-save:disabled { background: #ccc; cursor: not-allowed; }
         
         .notes-history {
             margin-top: 15px;
@@ -173,12 +191,13 @@
         }
         .note-entry {
             background: #f9f9f9;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border-radius: 6px;
             margin-bottom: 8px;
             font-size: 0.85rem;
         }
-        .note-entry .note-time { color: #999; font-size: 0.75rem; }
+        .note-entry .note-time { color: #999; font-size: 0.75rem; margin-bottom: 4px; }
+        .note-entry .note-text { color: #333; }
         
         .loading { text-align: center; padding: 40px; color: #999; }
         .error { color: #d32f2f; text-align: center; padding: 20px; }
@@ -220,7 +239,7 @@
         async function loadCases() {
             const listEl = document.getElementById('caseList');
             try {
-                const res = await fetch(`/api/expert/cases?key=${encodeURIComponent(EXPERT_KEY)}`);
+                const res = await fetch('/api/expert/cases?key=' + encodeURIComponent(EXPERT_KEY));
                 if (!res.ok) throw new Error('Failed to load');
                 cases = await res.json();
                 renderCaseList();
@@ -239,37 +258,40 @@
                 return;
             }
             
-            countEl.textContent = `(${cases.length}건)`;
+            countEl.textContent = '(' + cases.length + '건)';
             
-            listEl.innerHTML = `<ul class="case-list">${cases.map((c, i) => `
-                <li class="case-item ${selectedCase && selectedCase.case_id === c.case_id ? 'active' : ''}" onclick="selectCase(${i})">
-                    <div>
-                        <span class="case-id">${c.case_id || 'N/A'}</span>
-                        <span class="case-status status-${c.status || 'received'}">${getStatusLabel(c.status)}</span>
-                    </div>
-                    <div class="case-time">${formatTime(c.ts)}</div>
-                </li>
-            `).join('')}</ul>`;
+            let html = '<ul class="case-list">';
+            cases.forEach(function(c, i) {
+                const isActive = selectedCase && selectedCase.case_id === c.case_id;
+                const ctx = c.context || {};
+                html += '<li class="case-item ' + (isActive ? 'active' : '') + '" onclick="selectCase(' + i + ')">';
+                html += '<div>';
+                html += '<span class="case-name">' + (c.name || '이름 없음') + '</span>';
+                html += '<span class="case-status status-' + (c.status || 'received') + '">' + getStatusLabel(c.status) + '</span>';
+                html += '</div>';
+                html += '<div class="case-phone">' + (c.contact_phone || '') + '</div>';
+                html += '<div class="case-issue">' + (ctx.main_issue || '이슈 미지정') + '</div>';
+                html += '<div class="case-time">' + formatTime(c.ts) + '</div>';
+                html += '</li>';
+            });
+            html += '</ul>';
+            listEl.innerHTML = html;
         }
         
         function getStatusLabel(status) {
-            const labels = {
-                'received': '접수됨',
-                'in_call': '통화중',
-                'closed': '완료'
-            };
-            return labels[status] || '접수됨';
+            if (status === 'closed') return '완료';
+            return '접수됨';
         }
         
         function formatTime(ts) {
             if (!ts) return '';
             try {
-                const d = new Date(ts);
+                var d = new Date(ts);
                 return d.toLocaleString('ko-KR', { 
                     month: 'short', day: 'numeric', 
                     hour: '2-digit', minute: '2-digit' 
                 });
-            } catch { return ts; }
+            } catch (e) { return ts; }
         }
         
         function selectCase(index) {
@@ -288,100 +310,84 @@
             
             const c = selectedCase;
             const ctx = c.context || {};
+            const isResolved = c.status === 'closed';
             
-            detailEl.innerHTML = `
-                <div class="detail-section">
-                    <h3>전화번호</h3>
-                    <div class="phone-display">${c.contact_phone || '없음'}</div>
-                </div>
-                
-                <div class="detail-section">
-                    <h3>케이스 정보</h3>
-                    <div class="info-box">
-                        <div class="info-row">
-                            <span class="info-label">케이스 ID</span>
-                            <span class="info-value">${c.case_id || 'N/A'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">접수 시간</span>
-                            <span class="info-value">${formatTime(c.ts)}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">희망 시간</span>
-                            <span class="info-value">${c.preferred_time || '미지정'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">현재 상태</span>
-                            <span class="info-value">${getStatusLabel(c.status)}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="detail-section">
-                    <h3>Precheck 정보</h3>
-                    <div class="info-box">
-                        <div class="info-row">
-                            <span class="info-label">아기 나이</span>
-                            <span class="info-value">${ctx.baby_age || '미입력'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">주요 고민</span>
-                            <span class="info-value">${ctx.main_issue || '미입력'}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">위험 신호</span>
-                            <span class="info-value">${ctx.risk_check || '없음'}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                ${c.question ? `
-                <div class="detail-section">
-                    <h3>질문 내용</h3>
-                    <div class="info-box">${c.question}</div>
-                </div>
-                ` : ''}
-                
-                <div class="detail-section">
-                    <h3>메모 작성</h3>
-                    <textarea id="noteInput" class="note-input" placeholder="상담 메모를 입력하세요..."></textarea>
-                    <div class="action-buttons">
-                        <button class="btn btn-secondary" onclick="saveNote('in_call')">통화 시작</button>
-                        <button class="btn btn-success" onclick="saveNote('closed')">전화 완료</button>
-                        <button class="btn btn-primary" onclick="saveNote(null)">메모 저장</button>
-                    </div>
-                </div>
-                
-                ${c.notes && c.notes.length > 0 ? `
-                <div class="detail-section">
-                    <h3>메모 기록</h3>
-                    <div class="notes-history">
-                        ${c.notes.map(n => `
-                            <div class="note-entry">
-                                <div class="note-time">${formatTime(n.ts)} · ${getStatusLabel(n.status)}</div>
-                                <div>${n.note || '(상태 변경)'}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-                ` : ''}
-            `;
+            let html = '';
+            
+            html += '<div class="detail-section">';
+            html += '<div class="name-display">' + (c.name || '이름 없음') + '</div>';
+            html += '<div class="phone-display">' + (c.contact_phone || '전화번호 없음') + '</div>';
+            html += '</div>';
+            
+            html += '<div class="detail-section">';
+            html += '<h3>케이스 정보</h3>';
+            html += '<div class="info-box">';
+            html += '<div class="info-row"><span class="info-label">접수 시간</span><span class="info-value">' + formatTime(c.ts) + '</span></div>';
+            html += '<div class="info-row"><span class="info-label">아기 나이</span><span class="info-value">' + (ctx.baby_age || '미입력') + '</span></div>';
+            html += '<div class="info-row"><span class="info-label">주요 이슈</span><span class="info-value">' + (ctx.main_issue || '미입력') + '</span></div>';
+            html += '<div class="info-row"><span class="info-label">위험 신호</span><span class="info-value">' + (ctx.risk_check || '없음') + '</span></div>';
+            html += '</div>';
+            html += '</div>';
+            
+            if (c.question) {
+                html += '<div class="detail-section">';
+                html += '<h3>질문 요약</h3>';
+                html += '<div class="question-box">' + c.question + '</div>';
+                html += '</div>';
+            }
+            
+            html += '<div class="detail-section">';
+            html += '<h3>상담 메모</h3>';
+            html += '<textarea id="noteInput" class="note-input" placeholder="상담 내용을 기록하세요...">' + (getLatestNote(c) || '') + '</textarea>';
+            html += '</div>';
+            
+            html += '<div class="checkbox-row">';
+            html += '<input type="checkbox" id="resolvedCheck" ' + (isResolved ? 'checked' : '') + '>';
+            html += '<label for="resolvedCheck">해결 완료</label>';
+            html += '</div>';
+            
+            html += '<button class="btn-save" onclick="saveAndComplete()">저장 & 완료</button>';
+            
+            if (c.notes && c.notes.length > 0) {
+                html += '<div class="detail-section" style="margin-top:20px">';
+                html += '<h3>메모 기록</h3>';
+                html += '<div class="notes-history">';
+                c.notes.forEach(function(n) {
+                    html += '<div class="note-entry">';
+                    html += '<div class="note-time">' + formatTime(n.ts) + ' · ' + getStatusLabel(n.status) + '</div>';
+                    html += '<div class="note-text">' + (n.expert_note || n.note || '(상태 변경)') + '</div>';
+                    html += '</div>';
+                });
+                html += '</div>';
+                html += '</div>';
+            }
+            
+            detailEl.innerHTML = html;
         }
         
-        async function saveNote(newStatus) {
+        function getLatestNote(c) {
+            if (!c.notes || c.notes.length === 0) return '';
+            const last = c.notes[c.notes.length - 1];
+            return last.expert_note || last.note || '';
+        }
+        
+        async function saveAndComplete() {
             if (!selectedCase) return;
             
             const noteInput = document.getElementById('noteInput');
-            const note = noteInput ? noteInput.value.trim() : '';
+            const resolvedCheck = document.getElementById('resolvedCheck');
+            
+            const expertNote = noteInput ? noteInput.value.trim() : '';
+            const resolved = resolvedCheck ? resolvedCheck.checked : false;
             
             const body = {
                 case_id: selectedCase.case_id,
-                status: newStatus || selectedCase.status,
-                note: note
+                expert_note: expertNote,
+                resolved: resolved
             };
             
             try {
-                const res = await fetch(`/api/expert/note?key=${encodeURIComponent(EXPERT_KEY)}`, {
+                const res = await fetch('/api/expert/note?key=' + encodeURIComponent(EXPERT_KEY), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
@@ -389,10 +395,10 @@
                 
                 if (!res.ok) throw new Error('Failed');
                 
-                alert('저장되었습니다.');
+                alert(resolved ? '상담이 완료 처리되었습니다.' : '메모가 저장되었습니다.');
                 await loadCases();
                 
-                const idx = cases.findIndex(c => c.case_id === selectedCase.case_id);
+                const idx = cases.findIndex(function(c) { return c.case_id === selectedCase.case_id; });
                 if (idx >= 0) {
                     selectCase(idx);
                 }

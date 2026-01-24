@@ -306,6 +306,7 @@ def is_weekend_seoul():
 def escalate():
     data = request.get_json() or {}
 
+    name = (data.get("name") or "").strip()
     phone = (data.get("contact_phone") or "").strip()
     preferred_time = (data.get("preferred_time") or "").strip()
     context = data.get("context") or {}
@@ -331,6 +332,7 @@ def escalate():
         "source": source,
         "callback_policy": callback_policy,
         "weekend_received": weekend,
+        "name": name,
         "contact_phone": phone,
         "preferred_time": preferred_time,
         "question": question,
@@ -409,17 +411,20 @@ def save_expert_note():
     
     data = request.get_json() or {}
     case_id = data.get("case_id")
-    status = data.get("status")
-    note = data.get("note", "")
+    expert_note = data.get("expert_note", "")
+    resolved = data.get("resolved", False)
     
     if not case_id:
         return jsonify({"error": "missing_case_id"}), 400
+    
+    status = "closed" if resolved else data.get("status", "received")
     
     record = {
         "ts": datetime.utcnow().isoformat() + "Z",
         "case_id": case_id,
         "status": status,
-        "note": note
+        "expert_note": expert_note,
+        "resolved": resolved
     }
     
     os.makedirs("logs", exist_ok=True)
