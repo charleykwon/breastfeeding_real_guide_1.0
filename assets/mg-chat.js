@@ -482,7 +482,6 @@ summary{cursor:pointer;font-weight:800}
 
   btn.onclick = () => {
     chat.classList.add("open");
-    input.focus();
     resetToFirstQuestion();
   };
 
@@ -629,7 +628,6 @@ summary{cursor:pointer;font-weight:800}
 
   window.mgChat.open = () => {
     chat.style.display = "block";
-    input.focus();
     if (!precheck.started && precheck.step === 0) {
       precheck.started = true;
       showPrecheckQuestion();
@@ -638,7 +636,6 @@ summary{cursor:pointer;font-weight:800}
 
   window.mgChat.openWith = (q) => {
     chat.style.display = "block";
-    input.focus();
     if (precheck.step >= precheckQuestions.length && q) {
       input.value = q;
       form.dispatchEvent(
