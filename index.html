@@ -26293,10 +26293,6 @@ init();
     
     <!-- 플로팅 버튼 컨테이너 -->
     <div class="floating-buttons">
-        <!-- SOS 버튼 (긴급 도움말) -->
-        <button class="btn-sos" id="helpToggle" aria-label="긴급 도움말">
-            <span class="sos-icon">SOS</span>
-        </button>
         
         <!-- 맨 위로 버튼 -->
         <button class="btn-scroll-top" id="backToTop" aria-label="맨 위로">
@@ -26304,17 +26300,6 @@ init();
         </button>
     </div>
     
-    <!-- SOS 메뉴 -->
-    <div class="floating-help-menu" id="helpMenu">
-        <button class="help-menu-item" onclick="openModal('specialModal')">
-            <span class="item-icon">🏥</span>
-            <span class="item-text">특수 상황 로드맵</span>
-        </button>
-        <button class="help-menu-item" onclick="openModal('emergencyModal')">
-            <span class="item-icon">🚨</span>
-            <span class="item-text">긴급 문제 해결</span>
-        </button>
-    </div>
     
     <!-- 특수 상황 모달 -->
     <div class="help-modal" id="specialModal">
@@ -26778,21 +26763,18 @@ init();
 }   
     <script>
     // 플로팅 도움말 메뉴 토글
-    document.getElementById('helpToggle').addEventListener('click', function() {
-        document.getElementById('helpMenu').classList.toggle('show');
-    });
     
     // 외부 클릭 시 메뉴 닫기
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.floating-buttons') && !e.target.closest('.floating-help-menu')) {
-            document.getElementById('helpMenu').classList.remove('show');
+            
         }
     });
     
     // 모달 열기/닫기
     function openModal(id) {
         document.getElementById(id).classList.add('show');
-        document.getElementById('helpMenu').classList.remove('show');
+        
         document.body.style.overflow = 'hidden';
     }
     
