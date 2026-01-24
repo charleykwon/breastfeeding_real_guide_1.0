@@ -78,7 +78,7 @@
   box-shadow: 0 6px 14px rgba(0,0,0,.08);
   display:inline-block;
 }
-#mgRoadmapBtn{
+#mgExpertBtn{
   font-size:12px;
   font-weight:800;
   padding:6px 10px;
@@ -87,7 +87,7 @@
   background: rgba(255,255,255,.6);
   cursor:pointer;
 }
-#mgRoadmapBtn:hover{ background: rgba(255,255,255,.85); }
+#mgExpertBtn:hover{ background: rgba(255,255,255,.85); }
 #mgClose{
   width:34px; height:34px;
   border-radius:12px;
@@ -207,7 +207,7 @@ summary{cursor:pointer;font-weight:800}
     <div id="mgHead">
       <span>맘곁 모유수유 동반자</span>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button type="button" id="mgRoadmapBtn">도움 로드맵</button>
+        <button type="button" id="mgExpertBtn">전문가 연결</button>
         <button type="button" id="mgClose">✕</button>
       </div>
     </div>
@@ -436,17 +436,19 @@ summary{cursor:pointer;font-weight:800}
       return;
     }
     
-    if (target.id === "mgRoadmapBtn" || target.closest("#mgRoadmapBtn")) {
+    if (target.id === "mgExpertBtn" || target.closest("#mgExpertBtn")) {
       e.preventDefault();
       e.stopPropagation();
-      chat.classList.remove("open");
-      if (typeof window.openModal === "function") {
-        window.openModal("roadmapModal");
-      } else {
-        location.hash = "#roadmap";
-        const el = document.getElementById("roadmap");
-        if (el) el.scrollIntoView({ behavior: "smooth" });
+      
+      // precheck가 아직 끝나지 않았으면 안내 후 1번 질문부터
+      if (precheck.step < precheckQuestions.length) {
+        add(`<div class="mgCard">먼저 3가지만 확인하면, 더 정확히 연결해드릴 수 있어요.</div>`);
+        showPrecheckQuestion();
+        return;
       }
+      
+      // 전화상담 요청 카드 열기
+      renderPhoneEscalationCard();
     }
   });
 
