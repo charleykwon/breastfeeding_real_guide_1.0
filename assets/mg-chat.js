@@ -32,7 +32,10 @@
   chat.innerHTML = `
     <div id="mgHead">
       <span>맘곁 모유수유 동반자</span>
-      <button id="mgClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">✕</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button id="mgRoadmap" style="border:0;background:transparent;font-size:12px;cursor:pointer;color:#8FAF9A;font-weight:600;">도움 로드맵</button>
+        <button id="mgClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">✕</button>
+      </div>
     </div>
     <div id="mgBody">
       <div class="mgMsg">
@@ -228,6 +231,17 @@
 
   chat.querySelector("#mgClose").onclick = () => {
     chat.style.display = "none";
+  };
+
+  chat.querySelector("#mgRoadmap").onclick = () => {
+    chat.style.display = "none";
+    if (typeof window.openModal === "function") {
+      window.openModal("roadmapModal");
+    } else {
+      location.hash = "#roadmap";
+      const el = document.getElementById("roadmap");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   // body 클릭 핸들러
