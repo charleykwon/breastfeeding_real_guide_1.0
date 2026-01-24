@@ -14,6 +14,9 @@
   #mgSend{padding:10px 12px;border-radius:12px;border:0;cursor:pointer;font-weight:800}
   .mgMsg{margin:10px 0}
   .mgCard{padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.04);margin-top:6px}
+  .mgq{display:inline-block;margin:4px;padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,.15);background:#fff;cursor:pointer}
+  .mgq:hover{background:rgba(0,0,0,.05)}
+  .mgq.pcq{background:#f0f7ff;border-color:#4a90d9}
   details{margin-top:10px}
   summary{cursor:pointer;font-weight:800}
   `;
@@ -31,10 +34,10 @@
       <button id="mgClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">✕</button>
     </div>
     <div id="mgBody">
- add(`<div class="mgMsg">
-지금 상황을 혼자 견디지 않아도 돼요.<br/>
-제가 옆에서 하나씩 같이 볼게요.
-</div>`);
+      <div class="mgMsg">
+        지금 상황을 혼자 견디지 않아도 돼요.<br/>
+        제가 옆에서 하나씩 같이 볼게요.
+      </div>
     </div>
     <form id="mgForm">
       <input id="mgInput" placeholder="예: 초유가 거의 안 나오는 것 같아요" />
@@ -49,49 +52,37 @@
   const body = chat.querySelector("#mgBody");
   const input = chat.querySelector("#mgInput");
   const form = chat.querySelector("#mgForm");
-  
-  // ====== Pre-check Questions (A) ======
-const precheck = {
-  step: 0,
-  answers: {}
-};
 
-const precheckQuestions = [
-  {
-    key: "baby_age",
-    text: "아기가 태어난 지 얼마나 되었나요?",
-    options: ["신생아 (0–4주)", "1–3개월", "4–6개월", "6개월 이상"]
-  },
-  {
-    key: "main_issue",
-    text: "지금 가장 힘든 건 어떤 쪽인가요?",
-    options: ["젖물림/자세", "젖양 걱정", "가슴 통증/열감", "아기 체중/수유량", "기타"]
-  },
-  {
-    key: "risk_check",
-    text: "아래 중 해당되는 것이 있나요?",
-    options: [
-      "38도 이상 발열",
-      "가슴이 심하게 붓고 열감",
-      "아기가 6시간 이상 소변 없음",
-      "너무 불안하거나 눈물이 멈추지 않음",
-      "해당 없음"
-    ]
-  }
-];
+  // ====== Pre-check Questions ======
+  const precheck = {
+    step: 0,
+    answers: {}
+  };
 
-function showPrecheckQuestion() {
-  const q = precheckQuestions[precheck.step];
-  if (!q) return;
+  const precheckQuestions = [
+    {
+      key: "baby_age",
+      text: "아기가 태어난 지 얼마나 되었나요?",
+      options: ["신생아 (0–4주)", "1–3개월", "4–6개월", "6개월 이상"]
+    },
+    {
+      key: "main_issue",
+      text: "지금 가장 힘든 건 어떤 쪽인가요?",
+      options: ["젖물림/자세", "젖양 걱정", "가슴 통증/열감", "아기 체중/수유량", "기타"]
+    },
+    {
+      key: "risk_check",
+      text: "아래 중 해당되는 것이 있나요?",
+      options: [
+        "38도 이상 발열",
+        "가슴이 심하게 붓고 열감",
+        "아기가 6시간 이상 소변 없음",
+        "너무 불안하거나 눈물이 멈추지 않음",
+        "해당 없음"
+      ]
+    }
+  ];
 
-  let html = `<div class="mgMsg"><b>${q.text}</b></div><div class="mgMsg">`;
-  q.options.forEach(opt => {
-    html += `<button class="mgq" data-precheck="${q.key}" data-value="${opt}">${opt}</button>`;
-  });
-  html += `</div>`;
-  add(html);
-}
-}  
   const esc = (s) =>
     (s || "").replace(/[&<>"']/g, (c) => ({
       "&": "&amp;",
@@ -109,120 +100,165 @@ function showPrecheckQuestion() {
     body.scrollTop = body.scrollHeight;
   };
 
- btn.onclick = () => {
-  chat.style.display = "block";
-  input.focus();
+  // (A) precheck 질문 표시 함수 - btn.onclick에서만 호출됨
+  function showPrecheckQuestion() {
+    const q = precheckQuestions[precheck.step];
+    if (!q) return;
 
-  if (precheck.step === 0) {
-    showPrecheckQuestion();
+    let html = `<div class="mgMsg"><b>${q.text}</b></div><div class="mgMsg">`;
+    q.options.forEach(opt => {
+      // (C) precheck 버튼: class="mgq pcq" + data-precheck/data-value
+      html += `<button class="mgq pcq" data-precheck="${q.key}" data-value="${opt}">${opt}</button>`;
+    });
+    html += `</div>`;
+    add(html);
   }
-};
-};
+
+  // (A) precheck는 btn.onclick에서만 시작 - 초기 로드 시 자동 실행 안 함
+  btn.onclick = () => {
+    chat.style.display = "block";
+    input.focus();
+
+    // 첫 번째 클릭 시에만 precheck 시작
+    if (precheck.step === 0) {
+      showPrecheckQuestion();
+    }
+  };
 
   chat.querySelector("#mgClose").onclick = () => {
     chat.style.display = "none";
   };
 
-body.addEventListener("click", (e) => {
-  const b = e.target.closest("button.mgq");
-  if (!b) return;
+  // body 클릭 핸들러
+  body.addEventListener("click", (e) => {
+    const b = e.target.closest("button.mgq");
+    if (!b) return;
 
-  // 1) Precheck 버튼이면: 저장 → 다음 질문
-  const key = b.dataset.precheck;
-  const val = b.dataset.value;
+    // (C) Precheck 버튼인지 확인 (dataset.precheck가 있으면 precheck 버튼)
+    const key = b.dataset.precheck;
+    const val = b.dataset.value;
 
-  if (key) {
-    precheck.answers[key] = val;
+    if (key) {
+      // precheck 버튼: 저장 → step 증가 → 다음 질문 렌더만 (submit 안 함)
+      precheck.answers[key] = val;
 
-    // risk_check에서 "해당 없음" 아니면 고위험 플래그
-    if (key === "risk_check" && val !== "해당 없음") {
-      precheck.answers.risk_flag = true;
-    }
+      // risk_check에서 "해당 없음" 아니면 고위험 플래그
+      if (key === "risk_check" && val !== "해당 없음") {
+        precheck.answers.risk_flag = true;
+      }
 
-    precheck.step += 1;
+      precheck.step += 1;
 
-    // 다음 질문 또는 종료
-    if (precheck.step < precheckQuestions.length) {
-      showPrecheckQuestion();
-    } else {
-      add(`<div class="mgCard">좋아요. 이제 궁금한 점을 편하게 적어주세요.</div>`);
-      // (선택) 빠른 질문 버튼 다시 보여주고 싶으면 여기서 add로 렌더
-      // add(`<div class="mgMsg">...</div>`);
-    }
-    return;
-  }
-
-  // 2) 일반 질문 버튼이면: 기존대로 질문 submit
-  const q = b.dataset.q || b.textContent.trim();
-  if (!q) return;
-
-});
-// ✅ precheck가 끝나기 전엔 질문을 보내지 않음
-if (precheck.step < precheckQuestions.length) {
-  add(`<div class="mgCard">답변 전에 3가지만 먼저 확인할게요.</div>`);
-  showPrecheckQuestion();
-  return;
-}
-
-  input.value = q;
-  form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-
-async function ask(q) {
-    add(`<b>나</b><div>${esc(q)}</div>`);
-    add(`<b>맘곁</b><div class="mgCard">찾는 중…</div>`);
-
-    const res = await fetch(MG_BASE + "/query", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-  text: q,
-  context: precheck.answers,
-  source: "ebook"
-})
-    });
-
-    const data = await res.json();
-    body.lastChild.remove();
-
-    if (!data || !data.picked) {
-      add(`<div class="mgCard">관련 내용을 찾지 못했어요.</div>`);
+      // 다음 질문 또는 종료
+      if (precheck.step < precheckQuestions.length) {
+        showPrecheckQuestion();
+      } else {
+        add(`<div class="mgCard">좋아요. 이제 궁금한 점을 편하게 적어주세요.</div>`);
+        // 빠른 질문 버튼 표시 (일반 질문 버튼: class="mgq" + data-q)
+        add(`<div class="mgMsg">
+          <button class="mgq" data-q="초유가 안 나와요">초유가 안 나와요</button>
+          <button class="mgq" data-q="젖물림이 안 돼요">젖물림이 안 돼요</button>
+          <button class="mgq" data-q="젖양이 부족한 것 같아요">젖양이 부족한 것 같아요</button>
+        </div>`);
+      }
       return;
     }
 
-    const p = data.picked;
-    add(`
-      <div class="mgCard">
-        <b>${esc(p.title)}</b>
-        <div>${esc(p.content)}</div>
-      </div>
-    `);
+    // (B) precheck가 끝나기 전에는 질문 전송하지 않음 (가드)
+    if (precheck.step < precheckQuestions.length) {
+      add(`<div class="mgCard">답변 전에 3가지만 먼저 확인할게요.</div>`);
+      showPrecheckQuestion();
+      return;
+    }
+
+    // (C) 일반 질문 버튼: class="mgq" + data-q 사용
+    const q = b.dataset.q || b.textContent.trim();
+    if (!q) return;
+
+    // precheck 완료 후에만 submit dispatch
+    input.value = q;
+    form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+  });
+
+  async function ask(q) {
+    add(`<b>나</b><div>${esc(q)}</div>`);
+    add(`<b>맘곁</b><div class="mgCard">찾는 중…</div>`);
+
+    try {
+      const res = await fetch(MG_BASE + "/query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: q,
+          context: precheck.answers,
+          source: "ebook"
+        })
+      });
+
+      const data = await res.json();
+      body.lastChild.remove();
+
+      if (!data || !data.picked) {
+        add(`<div class="mgCard">관련 내용을 찾지 못했어요.</div>`);
+        return;
+      }
+
+      const p = data.picked;
+      add(`
+        <div class="mgCard">
+          <b>${esc(p.title)}</b>
+          <div>${esc(p.content)}</div>
+        </div>
+      `);
+    } catch (err) {
+      body.lastChild.remove();
+      add(`<div class="mgCard">연결에 문제가 있어요. 잠시 후 다시 시도해주세요.</div>`);
+    }
   }
 
+  // form submit 핸들러
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    // (B) precheck가 끝나기 전에는 질문 전송하지 않음
+    if (precheck.step < precheckQuestions.length) {
+      add(`<div class="mgCard">답변 전에 3가지만 먼저 확인할게요.</div>`);
+      showPrecheckQuestion();
+      return;
+    }
+
     const q = input.value.trim();
     if (!q) return;
     input.value = "";
     ask(q);
   });
+
+  // ===============================
+  // 외부(전자책/SOS 버튼)에서 챗봇 제어용 API
+  // ===============================
+  window.mgChat = window.mgChat || {};
+
+  window.mgChat.open = () => {
+    chat.style.display = "block";
+    input.focus();
+    // precheck 시작 (아직 안 했으면)
+    if (precheck.step === 0) {
+      showPrecheckQuestion();
+    }
+  };
+
+  window.mgChat.openWith = (q) => {
+    chat.style.display = "block";
+    input.focus();
+    // precheck 완료 후에만 질문 전송
+    if (precheck.step >= precheckQuestions.length && q) {
+      input.value = q;
+      form.dispatchEvent(
+        new Event("submit", { cancelable: true, bubbles: true })
+      );
+    } else if (precheck.step === 0) {
+      // precheck 먼저 진행
+      showPrecheckQuestion();
+    }
+  };
 })();
-// ===============================
-// 외부(전자책/SOS 버튼)에서 챗봇 제어용 API
-// ===============================
-window.mgChat = window.mgChat || {};
-
-window.mgChat.open = () => {
-  chat.style.display = "block";
-  input.focus();
-};
-
-window.mgChat.openWith = (q) => {
-  chat.style.display = "block";
-  input.focus();
-  if (q) {
-    input.value = q;
-    form.dispatchEvent(
-      new Event("submit", { cancelable: true, bubbles: true })
-    );
-  }
-};
