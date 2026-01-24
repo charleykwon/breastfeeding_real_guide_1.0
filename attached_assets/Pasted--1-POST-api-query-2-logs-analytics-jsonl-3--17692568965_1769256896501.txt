@@ -1,4 +1,41 @@
-from flask import Flask, jsonify, request, send_file, send_from_directory
+
+
+오늘의 목표
+	1.	POST /api/query가 항상 구조화된 답변을 반환하게 만들기
+	2.	매 요청마다 익명 분석 로그를 logs/analytics.jsonl에 쌓기
+	3.	GitHub 위젯은 그대로 두고 바로 체감 개선 만들기
+
+⸻
+
+STEP 1) Replit 서버 응답을 “구조화 답변”으로 고정
+
+지금 picked=None 같은 임시 응답이 나오면 위젯은 답을 못해.
+그래서 서버가 최소한 아래 형태로 항상 내려주게 만들자.
+
+✅ 서버 응답 스펙 (위젯이 먹기 좋은 형태)
+
+{
+  "answer": {
+    "empathy": "공감 한 문장",
+    "summary": "상황 요약 1~2문장",
+    "do_now": ["지금 해볼 것 1", "지금 해볼 것 2"],
+    "watch": ["주의 신호 1"]
+  },
+  "confidence": "low|medium|high",
+  "suggest_escalation": false
+}
+
+
+⸻
+
+STEP 2) 지금 당장 붙여넣을 Replit main.py 코드
+
+아래를 Replit의 main.py에서 /api/query 부분을 통째로 교체하면 돼.
+(기존 /api/health는 유지)
+
+조건: 파일 상단에 import json from datetime import datetime가 있어야 함.
+
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 import os
@@ -7,6 +44,7 @@ import uuid
 
 app = Flask(__name__)
 
+# ✅ CORS: GitHub Pages + momgyeot 관련 도메인 허용 (필요한 것만)
 CORS(app, resources={r"/api/*": {"origins": [
     "https://charleykwon.github.io",
     "https://charleykwon.github.io/breastfeeding_real_guide_1.0",
@@ -14,18 +52,18 @@ CORS(app, resources={r"/api/*": {"origins": [
     "https://www.momgyeot.com"
 ]}})
 
-@app.route("/")
-def index():
-    return send_file("index.html")
-
-@app.route("/assets/<path:filename>")
-def assets(filename):
-    return send_from_directory("assets", filename)
+@app.get("/")
+def root():
+    return "OK", 200
 
 @app.get("/api/health")
 def health():
     return jsonify({"status": "ok", "service": "momgyeot-breastfeeding-api"}), 200
 
+
+# =========================
+# 1) 분석 로그 (가벼운 MVP)
+# =========================
 def log_analytics(payload: dict):
     os.makedirs("logs", exist_ok=True)
     log = {
@@ -43,6 +81,10 @@ def log_analytics(payload: dict):
     with open("logs/analytics.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(log, ensure_ascii=False) + "\n")
 
+
+# =========================
+# 2) 고위험 판단 (MVP)
+# =========================
 RISK_TRIGGERS = {
     "38도 이상 발열",
     "가슴이 심하게 붓고 열감",
@@ -52,17 +94,23 @@ RISK_TRIGGERS = {
 
 def detect_high_risk(context: dict) -> bool:
     rc = context.get("risk_check")
+    # 위젯에서 문자열 하나만 올 수도, 배열로 올 수도 있음 → 둘 다 처리
     if isinstance(rc, list):
         hits = [x for x in rc if x in RISK_TRIGGERS]
-        return len(hits) >= 2
+        return len(hits) >= 2  # ✅ 2개 이상이면 escalation 권장
     if isinstance(rc, str):
-        return (rc in RISK_TRIGGERS)
+        return (rc in RISK_TRIGGERS)  # 단일일 땐 "주의"로만 쓸 수도 있음
     return False
 
+
+# =========================
+# 3) 답변 템플릿 (룰 기반)
+# =========================
 def build_answer(text: str, context: dict):
     baby_age = context.get("baby_age", "미입력")
     main_issue = context.get("main_issue", "미입력")
 
+    # 기본 톤: 차분한 상담사
     empathy = "지금 상황을 혼자 견디지 않아도 돼요. 제가 옆에서 하나씩 같이 볼게요."
     summary = f"아기 시기: {baby_age} · 가장 힘든 점: {main_issue}로 정리돼요."
 
@@ -72,6 +120,7 @@ def build_answer(text: str, context: dict):
     topic = "기본 안내"
     confidence = "medium"
 
+    # ---- main_issue 기반 룰 (MVP 3대 케이스) ----
     if "젖물림" in main_issue or "자세" in main_issue or "젖물림" in text:
         topic = "젖물림/자세"
         do_now = [
@@ -82,7 +131,7 @@ def build_answer(text: str, context: dict):
         topic = "젖양 걱정"
         do_now = [
             "가능하면 수유/유축 간격을 짧게(자주) 가져가며 자극 횟수를 늘려보세요.",
-            "'젖이 얼마나 나오나'보다 '아기 기저귀/수유 후 반응'으로 먼저 확인해보세요."
+            "‘젖이 얼마나 나오나’보다 ‘아기 기저귀/수유 후 반응’으로 먼저 확인해보세요."
         ]
     elif "가슴 통증" in main_issue or "열감" in main_issue or "딱딱" in text or "젖몸살" in text:
         topic = "가슴 통증/울혈"
@@ -91,16 +140,11 @@ def build_answer(text: str, context: dict):
             "아기가 잘 비워주는 방향으로 자세를 바꿔가며 자주 물려보세요."
         ]
         confidence = "high"
-    elif "체중" in main_issue or "수유량" in main_issue or "체중" in text:
-        topic = "아기 체중/수유량"
-        do_now = [
-            "하루 소변 6회 이상, 대변 3~4회 이상이면 충분히 먹고 있는 거예요.",
-            "신생아는 첫 주에 출생 체중의 7~10% 감소가 정상이에요."
-        ]
     else:
+        # 못 맞춘 경우도 '답변'은 항상 준다
         confidence = "low"
         do_now = [
-            "지금 상황을 조금 더 정확히 보기 위해 '통증/열감/수유 간격/아기 소변 횟수' 중 하나만 알려주세요.",
+            "지금 상황을 조금 더 정확히 보기 위해 ‘통증/열감/수유 간격/아기 소변 횟수’ 중 하나만 알려주세요.",
             "원하시면 관련 가이드를 함께 찾아서 단계별로 정리해볼게요."
         ]
 
@@ -115,14 +159,16 @@ def build_answer(text: str, context: dict):
         "confidence": confidence
     }
 
+
 @app.post("/api/query")
-def api_query():
+def query():
     data = request.get_json() or {}
     text = (data.get("text") or "").strip()
     context = data.get("context") or {}
     source = data.get("source") or "ebook"
-    session_id = data.get("session_id")
+    session_id = data.get("session_id")  # 있으면 사용, 없으면 로그에서 anon 생성
 
+    # 빈 질문 방어
     if not text:
         resp = {
             "answer": {
@@ -137,6 +183,7 @@ def api_query():
         return jsonify(resp), 200
 
     high_risk = detect_high_risk(context)
+
     built = build_answer(text, context)
     resp = {
         "answer": built["answer"],
@@ -144,6 +191,7 @@ def api_query():
         "suggest_escalation": True if high_risk else False
     }
 
+    # 분석 로그 저장 (개인정보 없음)
     log_analytics({
         "session_id": session_id,
         "source": source,
@@ -156,49 +204,53 @@ def api_query():
 
     return jsonify(resp), 200
 
-@app.post("/query")
-def query_legacy():
-    data = request.get_json() or {}
-    text = (data.get("text") or "").strip()
-    context = data.get("context") or {}
+✅ 이 코드를 넣으면 “답변을 못하는 상태”는 즉시 끝나고, 최소한 항상 상담형 답변이 나와.
 
-    if not text:
-        return jsonify({
-            "answer": {
-                "empathy": "괜찮아요. 지금 가장 궁금한 한 가지만 적어주시면 돼요.",
-                "summary": "짧게라도 좋으니 지금 상황을 알려주세요.",
-                "do_now": ["예: 젖물림이 아파요", "예: 가슴이 딱딱해요"],
-                "watch": []
-            },
-            "confidence": "low",
-            "suggest_escalation": False
-        }), 200
+⸻
 
-    high_risk = detect_high_risk(context)
-    built = build_answer(text, context)
+STEP 3) 위젯(mg-chat.js)이 서버 응답을 표시하도록 확인
 
-    return jsonify({
-        "answer": built["answer"],
-        "confidence": built["confidence"],
-        "suggest_escalation": True if high_risk else False
-    }), 200
+지금 위젯이 picked 기반 출력만 하고 있다면,
+서버가 answer.empathy/summary/do_now/watch로 주는 걸 출력하도록 바꾸는 10줄 패치가 필요해.
 
-@app.post("/api/escalate")
-def escalate():
-    data = request.get_json() or {}
-    context = data.get("context", {})
-    reason = data.get("reason", "사용자 요청")
+✅ mg-chat.js에서 data.picked만 보는 부분이 있으면 이렇게 바꿔
 
-    return jsonify({
-        "message": "전문가 연결이 필요한 상황으로 기록되었습니다.",
-        "action": "nearest_ibclc",
-        "context_summary": {
-            "baby_age": context.get("baby_age", "미입력"),
-            "main_issue": context.get("main_issue", "미입력"),
-            "risk_factors": context.get("risk_check", "해당 없음")
-        },
-        "reason": reason
-    }), 200
+(가장 단순한 형태)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+// 기존: if (!data || !data.picked) ...
+// 변경:
+if (!data || !data.answer) {
+  add('<div class="mgCard">지금 이 질문은 조금 더 살펴볼게요.</div>');
+  return;
+}
+
+const a = data.answer;
+add(`
+  <div class="mgCard">
+    <div><b>맘곁</b></div>
+    <div style="margin-top:6px;">${esc(a.empathy || "")}</div>
+    <div style="margin-top:10px; opacity:.9;">${esc(a.summary || "")}</div>
+    <div style="margin-top:10px;"><b>지금 해볼 수 있는 것</b></div>
+    <ul style="margin:6px 0 0 18px;">
+      ${(a.do_now || []).map(x => `<li>${esc(x)}</li>`).join("")}
+    </ul>
+    <div style="margin-top:10px;"><b>주의 신호</b></div>
+    <ul style="margin:6px 0 0 18px;">
+      ${(a.watch || []).map(x => `<li>${esc(x)}</li>`).join("")}
+    </ul>
+  </div>
+`);
+
+
+⸻
+
+STEP 4) “가볍게 테스트” 체크리스트
+
+이것만 통과하면 오늘 목표 달성이다.
+	1.	precheck 3문항 완료
+	2.	“가슴이 딱딱하고 아파요” 입력
+	3.	답변이 항상 나오고, do_now/watch 리스트가 표시됨
+	4.	logs/analytics.jsonl에 줄이 쌓임
+
+⸻
+

@@ -198,16 +198,25 @@
       const data = await res.json();
       body.lastChild.remove();
 
-      if (!data || !data.picked) {
-        add(`<div class="mgCard">관련 내용을 찾지 못했어요.</div>`);
+      if (!data || !data.answer) {
+        add(`<div class="mgCard">지금 이 질문은 조금 더 살펴볼게요.</div>`);
         return;
       }
 
-      const p = data.picked;
+      const a = data.answer;
       add(`
         <div class="mgCard">
-          <b>${esc(p.title)}</b>
-          <div>${esc(p.content)}</div>
+          <div><b>맘곁</b></div>
+          <div style="margin-top:6px;">${esc(a.empathy || "")}</div>
+          <div style="margin-top:10px; opacity:.9;">${esc(a.summary || "")}</div>
+          <div style="margin-top:10px;"><b>지금 해볼 수 있는 것</b></div>
+          <ul style="margin:6px 0 0 18px;">
+            ${(a.do_now || []).map(x => '<li>' + esc(x) + '</li>').join("")}
+          </ul>
+          <div style="margin-top:10px;"><b>주의 신호</b></div>
+          <ul style="margin:6px 0 0 18px;">
+            ${(a.watch || []).map(x => '<li>' + esc(x) + '</li>').join("")}
+          </ul>
         </div>
       `);
     } catch (err) {
