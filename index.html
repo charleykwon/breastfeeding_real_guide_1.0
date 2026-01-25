@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="모유수유 리얼 가이드 1.0 - 25년 현장 경험과 IBCLC 전문 지식이 만든 실전 가이드">
     <meta name="keywords" content="모유수유, 육아, 신생아, IBCLC, 수유, 출산, 조리원">
-    <meta name="author" content="권의철, 최소라 (바비즈코리아·mothersbaby)">
+    <meta name="author" content="권의철 · 최소라 (바비즈코리아 · 마더스베이비 CEO), 박보림 국제모유수유전문가(IBCLC)">
     <title>모유수유 리얼 가이드 1.0</title>
     
     <!-- 구글 폰트 -->
@@ -504,60 +504,6 @@
     }
 }
 
-
-/* iPhone Pro 최적화 (393-430px) */
-@media (max-width: 430px) {
-    body {
-        font-size: 15px !important;
-        -webkit-text-size-adjust: 100%;
-    }
-    
-    .container, .part-intro, .chapter-content {
-        padding: 16px !important;
-    }
-    
-    h1 { font-size: 1.4rem !important; }
-    h2 { font-size: 1.2rem !important; }
-    h3 { font-size: 1.05rem !important; }
-    
-    /* 터치 영역 확대 */
-    .chapter-item, .part-header, .btn-primary, .btn-part {
-        min-height: 48px;
-        padding: 14px 16px !important;
-    }
-    
-    /* 입력 필드 */
-    input, textarea, select {
-        font-size: 16px !important;
-        padding: 14px !important;
-        border-radius: 12px !important;
-    }
-    
-    /* 버튼 */
-    button, .btn-primary, .btn-ghost {
-        padding: 14px 20px !important;
-        font-size: 15px !important;
-        border-radius: 12px !important;
-    }
-    
-    /* 카드/박스 */
-    .info-box, .tip-box, .warning-box, .mission-box {
-        padding: 16px !important;
-        border-radius: 14px !important;
-    }
-    
-    /* Safe area 지원 */
-    .book-nav {
-        padding-top: max(12px, env(safe-area-inset-top)) !important;
-        padding-left: max(16px, env(safe-area-inset-left)) !important;
-        padding-right: max(16px, env(safe-area-inset-right)) !important;
-    }
-    
-    .scroll-top-btn {
-        right: max(16px, env(safe-area-inset-right)) !important;
-        bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px)) !important;
-    }
-}
 /* 체크박스 리스트 - 클릭 가능하게 + 짙은 차콜 브라운 */
 .checkbox-list li {
     cursor: pointer;
@@ -642,7 +588,231 @@ div .mission-box .checkbox-list li {
 }
 
 
-    </style>
+    /* ========== 새로운 사이드바 스타일 ========== */
+
+/* 사이드바 기본 */
+.global-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    max-width: 340px;
+    height: 100vh;
+    background: #F8FAF9;
+    z-index: 10001;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+}
+
+.global-sidebar.open {
+    left: 0;
+}
+
+/* 사이드바 헤더 */
+.sidebar-header {
+    background: linear-gradient(135deg, #7C9B8B 0%, #5A7D6E 100%);
+    padding: 0.9rem 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.sidebar-header h3 {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.sidebar-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.sidebar-close:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* 사이드바 콘텐츠 */
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 퀵 링크 */
+.quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #E8F4F0;
+}
+
+.quick-link {
+    background: #fff;
+    border: 1px solid #E8F4F0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.72rem;
+    color: #5A7D6E;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.quick-link:active {
+    background: #E8F4F0;
+}
+
+.quick-link.sos-link {
+    background: linear-gradient(135deg, #FFE5E5 0%, #FFCDD2 100%);
+    color: #C62828;
+    border-color: #FFCDD2;
+    font-weight: 600;
+}
+
+/* PART 카드 */
+.part-card {
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.part-header {
+    padding: 0.65rem 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.part-header:active {
+    background: #F8FAF9;
+}
+
+.part-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+/* PART별 색상 */
+.part-1 .part-badge { background: linear-gradient(135deg, #E6D5F5 0%, #C9B3E6 100%); color: #6B4E8D; }
+.part-2 .part-badge { background: linear-gradient(135deg, #FFE5E5 0%, #FFC9C9 100%); color: #C44D4D; }
+.part-3 .part-badge { background: linear-gradient(135deg, #E5F0FF 0%, #C9DEFF 100%); color: #4D7CC4; }
+.part-4 .part-badge { background: linear-gradient(135deg, #E5FFE5 0%, #C9FFC9 100%); color: #4DC44D; }
+.part-5 .part-badge { background: linear-gradient(135deg, #FFF5E5 0%, #FFE5C9 100%); color: #C49A4D; }
+.part-6 .part-badge { background: linear-gradient(135deg, #FFE5F5 0%, #FFC9E6 100%); color: #C44D8D; }
+.part-7 .part-badge { background: linear-gradient(135deg, #E5FFFF 0%, #C9FFFF 100%); color: #4DC4C4; }
+.part-appendix .part-badge { background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%); color: #666; font-size: 0.85rem; }
+
+.part-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.part-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2D3436;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.part-desc {
+    font-size: 0.7rem;
+    color: #7C9B8B;
+    margin-top: 0.1rem;
+}
+
+.part-arrow {
+    font-size: 0.6rem;
+    color: #7C9B8B;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+}
+
+.part-card.open .part-arrow {
+    transform: rotate(180deg);
+}
+
+/* 챕터 리스트 */
+.chapter-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: #FAFCFB;
+}
+
+.part-card.open .chapter-list {
+    max-height: 1000px;
+}
+
+.chapter-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.85rem;
+    text-decoration: none;
+    color: inherit;
+    border-top: 1px solid #EDF3F0;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+
+.chapter-item:active {
+    background: #E8F4F0;
+}
+
+.ch-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: #EDF3F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #7C9B8B;
+    flex-shrink: 0;
+}
+
+.ch-title {
+    font-size: 0.78rem;
+    color: #2D3436;
+    line-height: 1.35;
+}
+
+
+</style>
     
     <!-- 전역 기능 스크립트 (체크박스, 다크모드) -->
     <script>
@@ -1015,7 +1185,7 @@ div .mission-box .checkbox-list li {
 
 .content-list.what-we-say li::before {
     content: "▪" !important;
-    color: #FF9AA2 !important;
+    color: #7C9B8B !important;
 }
 
 .content-list.what-we-dont li::before {
@@ -1203,7 +1373,7 @@ div .mission-box .checkbox-list li {
     right: 0;
     background: rgba(255,255,255,0.97);
     backdrop-filter: blur(10px);
-    border-bottom: 2px solid #FFD4D4;
+    border-bottom: 2px solid #D4E8E0;
     z-index: 9999;
     padding: 0.7rem 1rem;
     display: flex;
@@ -1225,7 +1395,7 @@ div .mission-box .checkbox-list li {
 }
 
 .global-nav button {
-    background: #FFE5E5;
+    background: #E8F4F0;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -1237,7 +1407,7 @@ div .mission-box .checkbox-list li {
 }
 
 .global-nav button:hover {
-    background: #FFD4D4;
+    background: #D4E8E0;
     transform: translateY(-1px);
 }
 
@@ -1248,13 +1418,13 @@ div .mission-box .checkbox-list li {
     left: 0;
     right: 0;
     height: 4px;
-    background: #FFE5E5;
+    background: #E8F4F0;
     z-index: 9998;
 }
 
 .global-progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #FF9AA2, #FF7B89);
+    background: linear-gradient(90deg, #7C9B8B, #5A7D6E);
     width: 0%;
     transition: width 0.15s ease;
 }
@@ -1267,7 +1437,7 @@ div .mission-box .checkbox-list li {
     width: 350px;
     height: 100vh;
     background: #fff;
-    border-right: 2px solid #FFD4D4;
+    border-right: 2px solid #D4E8E0;
     z-index: 10001;
     overflow-y: auto;
     transition: left 0.3s ease;
@@ -1282,7 +1452,7 @@ div .mission-box .checkbox-list li {
 .global-sidebar-header {
     position: sticky;
     top: 0;
-    background: linear-gradient(135deg, #FF9AA2, #FF7B89);
+    background: linear-gradient(135deg, #7C9B8B, #5A7D6E);
     color: white;
     padding: 1.2rem 1.5rem;
     display: flex;
@@ -1331,14 +1501,14 @@ div .mission-box .checkbox-list li {
 }
 
 .global-toc a:hover {
-    background: #FFE5E5;
+    background: #E8F4F0;
 }
 
 .global-toc a.toc-part {
     font-weight: 700;
     margin-top: 1rem;
     padding-left: 0.8rem;
-    border-left: 4px solid #FF9AA2;
+    border-left: 4px solid #7C9B8B;
     background: #FFF5F5;
     color: #333;
 }
@@ -1353,6 +1523,26 @@ div .mission-box .checkbox-list li {
 .global-toc a.toc-special {
     font-weight: 500;
     color: #666;
+}
+
+.global-toc a.toc-sos {
+    background: linear-gradient(135deg, #E8F4F0 0%, #FFCDD2 100%);
+    color: #C62828 !important;
+    font-weight: 600 !important;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    padding: 0.85rem 1rem !important;
+    border-left: 4px solid #E53935;
+    animation: sosPulse 2s infinite;
+}
+
+.global-toc a.toc-sos:active {
+    background: #FFCDD2;
+}
+
+@keyframes sosPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(229, 57, 53, 0); }
 }
 
 /* 오버레이 */
@@ -1378,7 +1568,7 @@ div .mission-box .checkbox-list li {
 
 /* 섹션 스타일 */
 .book-section {
-    border-bottom: 3px solid #FFE5E5;
+    border-bottom: 3px solid #E8F4F0;
     margin-bottom: 0;
 }
 
@@ -1479,7 +1669,7 @@ div .mission-box .checkbox-list li {
 
 .content-list.what-we-say li::before {
     content: "▪";
-    color: #FF9AA2;
+    color: #7C9B8B;
     position: absolute;
     left: 0;
     font-weight: bold;
@@ -1507,7 +1697,7 @@ div .mission-box .checkbox-list li {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #FFE5E5 0%, #F3E5F5 50%, #FFE5E5 100%);
+            background: linear-gradient(135deg, #E8F4F0 0%, #F3E5F5 50%, #E8F4F0 100%);
             padding: 2rem;
             font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
         }
@@ -1524,7 +1714,7 @@ div .mission-box .checkbox-list li {
         
         .cover-top-bar {
             height: 10px;
-            background: linear-gradient(90deg, #FF9AA2, #E1BEE7, #FF9AA2);
+            background: linear-gradient(90deg, #7C9B8B, #C8DDD4, #7C9B8B);
         }
         
         .cover-inner {
@@ -1533,14 +1723,14 @@ div .mission-box .checkbox-list li {
         
         .cover-h1 {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 900;
             color: #333333;
             margin-bottom: 0.5rem;
             line-height: 1.3;
         }
         
-        .cover-h1 .pink { color: #FF9AA2; }
+        .cover-h1 .pink { color: #7C9B8B; }
         
         .cover-tagline {
             font-size: 0.95rem;
@@ -1553,11 +1743,11 @@ div .mission-box .checkbox-list li {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, #FFE5E5, #F3E5F5);
+            background: linear-gradient(135deg, #E8F4F0, #F3E5F5);
             padding: 0.7rem 1.2rem;
             border-radius: 25px;
             margin-bottom: 1.5rem;
-            border: 2px solid #FFD4D4;
+            border: 2px solid #D4E8E0;
             font-size: 0.9rem;
             font-weight: 600;
             color: #333333;
@@ -1566,7 +1756,7 @@ div .mission-box .checkbox-list li {
         .cover-divider {
             width: 50px;
             height: 3px;
-            background: linear-gradient(90deg, #FF9AA2, #E1BEE7);
+            background: linear-gradient(90deg, #7C9B8B, #C8DDD4);
             margin: 1.2rem auto;
             border-radius: 2px;
         }
@@ -1625,7 +1815,7 @@ div .mission-box .checkbox-list li {
         }
         
         .cover-btn-start {
-            background: linear-gradient(135deg, #FF9AA2, #FF7B89);
+            background: linear-gradient(135deg, #7C9B8B, #5A7D6E);
             color: white;
             box-shadow: 0 5px 15px rgba(255,154,162,0.4);
         }
@@ -1638,18 +1828,18 @@ div .mission-box .checkbox-list li {
         .cover-btn-toc {
             background: white;
             color: #333333;
-            border: 2px solid #FFD4D4;
+            border: 2px solid #D4E8E0;
         }
         
         .cover-btn-toc:hover {
-            background: #FFE5E5;
+            background: #E8F4F0;
             transform: translateY(-2px);
         }
         
         .cover-copyright {
             margin-top: 1.5rem;
             padding-top: 1rem;
-            border-top: 1px solid #FFE5E5;
+            border-top: 1px solid #E8F4F0;
             font-size: 0.75rem;
             color: #999999;
         }
@@ -1665,9 +1855,9 @@ div .mission-box .checkbox-list li {
 /* ========== From: 2_prologue.html ========== */
 
         :root {
-            --pink-light: #FFE5E5;
-            --pink-medium: #FFD4D4;
-            --pink-accent: #FF9AA2;
+            --green-light: #E8F4F0;
+            --green-medium: #D4E8E0;
+            --green-accent: #7C9B8B;
             --purple-light: #F3E5F5;
             --text-dark: #2C1C12;
             --text-light: #5A5A5A;
@@ -1682,7 +1872,7 @@ div .mission-box .checkbox-list li {
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(180deg, var(--pink-light) 0%, var(--white) 30%);
+            background: linear-gradient(180deg, var(--green-light) 0%, var(--white) 30%);
             color: var(--text-dark);
             line-height: 1.8;
             min-height: 100vh;
@@ -1699,12 +1889,12 @@ div .mission-box .checkbox-list li {
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 2rem;
-            border-bottom: 2px solid var(--pink-medium);
+            border-bottom: 2px solid var(--green-medium);
         }
         
         .prologue-label {
             font-size: 0.85rem;
-            color: var(--pink-accent);
+            color: var(--green-accent);
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -1746,7 +1936,7 @@ div .mission-box .checkbox-list li {
             color: var(--text-dark);
             margin: 2.5rem 0 1.2rem 0;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--pink-light);
+            border-bottom: 1px solid var(--green-light);
         }
         
         .prologue-content p {
@@ -1757,7 +1947,7 @@ div .mission-box .checkbox-list li {
         /* 인용문 스타일 */
         .quote-block {
             background: var(--cream);
-            border-left: 4px solid var(--pink-accent);
+            border-left: 4px solid var(--green-accent);
             padding: 1.2rem 1.5rem;
             margin: 1.5rem 0;
             border-radius: 0 12px 12px 0;
@@ -1775,7 +1965,7 @@ div .mission-box .checkbox-list li {
         
         /* 강조 박스 */
         .highlight-box {
-            background: linear-gradient(135deg, var(--pink-light), var(--purple-light));
+            background: linear-gradient(135deg, var(--green-light), var(--purple-light));
             padding: 1.5rem;
             border-radius: 12px;
             margin: 1.5rem 0;
@@ -1792,7 +1982,7 @@ div .mission-box .checkbox-list li {
         /* 리스트 스타일 */
         .content-list {
             background: var(--white);
-            border: 1px solid var(--pink-medium);
+            border: 1px solid var(--green-medium);
             border-radius: 12px;
             padding: 1.5rem 1.5rem 1.5rem 2.5rem;
             margin: 1.5rem 0;
@@ -1809,7 +1999,7 @@ div .mission-box .checkbox-list li {
         
         .content-list.what-we-say li::marker {
             content: "▪ ";
-            color: var(--pink-accent);
+            color: var(--green-accent);
         }
         
         .content-list.what-we-dont li::marker {
@@ -1864,7 +2054,7 @@ div .mission-box .checkbox-list li {
         .divider {
             text-align: center;
             margin: 2rem 0;
-            color: var(--pink-medium);
+            color: var(--green-medium);
         }
         
         /* 강조 텍스트 */
@@ -1873,8 +2063,8 @@ div .mission-box .checkbox-list li {
             color: var(--text-dark);
         }
         
-        .pink-emphasis {
-            color: var(--pink-accent);
+        .green-emphasis {
+            color: var(--green-accent);
             font-weight: 600;
         }
         
@@ -1954,7 +2144,7 @@ div .mission-box .checkbox-list li {
         .prologue-footer {
             margin-top: 3rem;
             padding-top: 2rem;
-            border-top: 2px solid var(--pink-medium);
+            border-top: 2px solid var(--green-medium);
             text-align: center;
         }
         
@@ -1978,7 +2168,7 @@ div .mission-box .checkbox-list li {
         }
         
         .nav-btn-primary {
-            background: linear-gradient(135deg, var(--pink-accent), #FF7B89);
+            background: linear-gradient(135deg, var(--green-accent), #5A7D6E);
             color: white;
             box-shadow: 0 4px 15px rgba(255,154,162,0.4);
         }
@@ -1991,11 +2181,11 @@ div .mission-box .checkbox-list li {
         .nav-btn-secondary {
             background: white;
             color: var(--text-dark);
-            border: 2px solid var(--pink-medium);
+            border: 2px solid var(--green-medium);
         }
         
         .nav-btn-secondary:hover {
-            background: var(--pink-light);
+            background: var(--green-light);
         }
         
         .copyright {
@@ -2052,7 +2242,7 @@ div .mission-box .checkbox-list li {
 
         :root {
             /* 파스텔 컬러 팔레트 */
-            --part1-color: #FFE5E8; --part1-accent: #FF9AA2;
+            --part1-color: #FFE5E8; --part1-accent: #7C9B8B;
             --part2-color: #FFF0E5; --part2-accent: #FFBE98;
             --part3-color: #FFF8E7; --part3-accent: #F6C66F;
             --part4-color: #E8F5E9; --part4-accent: #B5E6B3;
@@ -2070,7 +2260,7 @@ div .mission-box .checkbox-list li {
         .toc-header h1 { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: #3A2A1E; font-weight: 700; }
         .toc-header p { color: #8C6F5A; font-size: 0.95rem; }
         .progress-container { background: rgba(255,255,255,0.2); border-radius: 10px; height: 8px; margin-top: 1rem; overflow: hidden; }
-        .progress-bar { background: linear-gradient(90deg, #FFB6C1, #FF9AA2); height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+        .progress-bar { background: linear-gradient(90deg, #FFB6C1, #7C9B8B); height: 100%; border-radius: 10px; transition: width 0.5s ease; }
         .progress-text { margin-top: 0.5rem; font-size: 0.85rem; }
         .search-container { padding: 1rem 2rem; background: var(--bg-white); border-bottom: 1px solid var(--border-color); position: sticky; top: 120px; z-index: 99; }
         .search-box { display: flex; gap: 0.5rem; max-width: 600px; margin: 0 auto; }
@@ -2131,7 +2321,7 @@ div .mission-box .checkbox-list li {
 
         :root {
             /* 파스텔 컬러 팔레트 (타임라인) */
-            --part1-color: #FF9AA2;
+            --part1-color: #7C9B8B;
             --part2-color: #FFBE98;
             --part3-color: #F6C66F;
             --part4-color: #B5E6B3;
@@ -2705,7 +2895,7 @@ div .mission-box .checkbox-list li {
             --baby-bg: #F0F8FF;
             --mom-color: #D4A5D4;
             --mom-bg: #FDF5FD;
-            --urgent-color: #FF9AA2;
+            --urgent-color: #7C9B8B;
             --urgent-bg: #FFF5F5;
             --text-dark: #2C1C12;
             --text-light: #5A5A5A;
@@ -3056,7 +3246,7 @@ div .mission-box .checkbox-list li {
 
         :root {
             --part1-bg: #FFF5F5;
-            --part1-accent: #FF9AA2;
+            --part1-accent: #7C9B8B;
             --part1-dark: #E88A92;
             --text-dark: #2C1C12;
             --text-light: #5A5A5A;
@@ -3087,7 +3277,7 @@ div .mission-box .checkbox-list li {
         
         .part-number {
             display: inline-block;
-            background: linear-gradient(135deg, #FF9AA2, #E88A92);
+            background: linear-gradient(135deg, #7C9B8B, #E88A92);
             color: white;
             padding: 0.5rem 1.5rem;
             border-radius: 30px;
@@ -3099,13 +3289,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -3195,7 +3386,7 @@ div .mission-box .checkbox-list li {
         }
         
         .chapter-item:hover {
-            background: #FFD4D4;
+            background: #D4E8E0;
             border-left-color: var(--part1-accent);
             transform: translateX(5px);
         }
@@ -3245,7 +3436,7 @@ div .mission-box .checkbox-list li {
         }
         
         .nav-btn-primary {
-            background: linear-gradient(135deg, #FF9AA2, #E88A92);
+            background: linear-gradient(135deg, #7C9B8B, #E88A92);
             color: white;
             box-shadow: 0 4px 15px rgba(229,115,115,0.4);
         }
@@ -3258,7 +3449,7 @@ div .mission-box .checkbox-list li {
         /* 반응형 */
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
         }
@@ -4485,13 +4676,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -4684,7 +4876,7 @@ div .mission-box .checkbox-list li {
         /* 반응형 */
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
         }
@@ -6254,13 +6446,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -6417,7 +6610,7 @@ div .mission-box .checkbox-list li {
         
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
             .chapter-item { flex-wrap: wrap; }
@@ -6485,7 +6678,7 @@ div .mission-box .checkbox-list li {
 
         h1 {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             color: var(--heading-color);
             margin-bottom: 2rem;
             font-weight: 700;
@@ -7493,7 +7686,7 @@ div .mission-box .checkbox-list li {
 
         h1 {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             color: var(--heading-color);
             margin-bottom: 2rem;
             font-weight: 700;
@@ -7692,7 +7885,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(255,224,130,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -7707,7 +7900,7 @@ div .mission-box .checkbox-list li {
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #66BB6A; }
         .info-box.red { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF5350; }
         .info-box.blue { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-color: #42A5F5; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #AB47BC; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #AB47BC; }
         .info-box.gray { background: linear-gradient(135deg, #FFFDF5 0%, #FFF8E1 100%); border-color: #FFE082; }
         
         
@@ -7754,7 +7947,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(255,224,130,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -7769,7 +7962,7 @@ div .mission-box .checkbox-list li {
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #66BB6A; }
         .info-box.red { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF5350; }
         .info-box.blue { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-color: #42A5F5; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #AB47BC; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #AB47BC; }
         .info-box.gray { background: linear-gradient(135deg, #FFFDF5 0%, #FFF8E1 100%); border-color: #FFE082; }
         
         
@@ -7816,7 +8009,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(255,224,130,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -7831,7 +8024,7 @@ div .mission-box .checkbox-list li {
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #66BB6A; }
         .info-box.red { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF5350; }
         .info-box.blue { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-color: #42A5F5; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #AB47BC; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #AB47BC; }
         .info-box.gray { background: linear-gradient(135deg, #FFFDF5 0%, #FFF8E1 100%); border-color: #FFE082; }
         
         
@@ -7869,7 +8062,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(255,224,130,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -7883,7 +8076,7 @@ div .mission-box .checkbox-list li {
         .info-box.cream { background: linear-gradient(135deg, #FFFDF5 0%, #FFF8E1 100%); border-color: #FFD54F; }
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #66BB6A; }
         .info-box.blue { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-color: #42A5F5; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #AB47BC; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #AB47BC; }
         .info-box.pink { background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%); border-color: #EC407A; }
         
         
@@ -7956,13 +8149,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -8122,7 +8316,7 @@ div .mission-box .checkbox-list li {
         
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
             .chapter-num { min-width: 85px; }
@@ -8148,7 +8342,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(129,199,132,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8163,7 +8357,7 @@ div .mission-box .checkbox-list li {
         .info-box.blue { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-color: #42A5F5; }
         .info-box.yellow { background: linear-gradient(135deg, #FFF9E5 0%, #FFF0B3 100%); border-color: #FFE082; }
         .info-box.red { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF5350; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #AB47BC; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #AB47BC; }
         
         
         
@@ -8207,7 +8401,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(129,199,132,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8264,7 +8458,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(129,199,132,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8328,7 +8522,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(129,199,132,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8422,13 +8616,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -8610,7 +8805,7 @@ div .mission-box .checkbox-list li {
         
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
             .chapter-num { min-width: 85px; }
@@ -8636,7 +8831,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(100,181,246,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8691,7 +8886,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(100,181,246,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8752,7 +8947,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(100,181,246,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         p { margin-bottom: 1.2rem; color: var(--text-dark); font-size: 1.05rem; }
@@ -8811,7 +9006,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(100,181,246,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 2rem; font-weight: 700; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
         h4 { font-size: 1.1rem; color: var(--text-dark); margin: 1.5rem 0 0.8rem; font-weight: 600; }
@@ -8826,7 +9021,7 @@ div .mission-box .checkbox-list li {
         .info-box.cream { background: linear-gradient(135deg, #F5F9FF 0%, #E3F2FD 100%); border-color: #90CAF9; }
         .info-box.yellow { background: linear-gradient(135deg, #FFF9E5 0%, #FFF0B3 100%); border-color: #FFE082; }
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #81C784; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #BA68C8; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #BA68C8; }
         
         
         
@@ -8853,7 +9048,7 @@ div .mission-box .checkbox-list li {
         
         .dad-section h3 { margin-top: 0; color: #1565C0; }
         
-        .power-pumping-box { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 5px solid #BA68C8; }
+        .power-pumping-box { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 5px solid #BA68C8; }
         
         .highlight-text { background: linear-gradient(transparent 60%, #BBDEFB 40%); padding: 0 0.3rem; }
         
@@ -8909,13 +9104,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -9062,7 +9258,7 @@ div .mission-box .checkbox-list li {
         }
         
         .chapter-item:hover {
-            background: #E1BEE7;
+            background: #C8DDD4;
             border-left-color: var(--part6-dark);
             transform: translateX(5px);
         }
@@ -9169,7 +9365,7 @@ div .mission-box .checkbox-list li {
         
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
             .chapter-num { min-width: 85px; }
@@ -9188,7 +9384,7 @@ div .mission-box .checkbox-list li {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --light-purple: #F3E5F5; --medium-purple: #E1BEE7; --accent-purple: #BA68C8;
+            --light-purple: #F3E5F5; --medium-purple: #C8DDD4; --accent-purple: #BA68C8;
             --deep-purple: #9C27B0; --warm-cream: #FDF5FF; --text-dark: #4A3327;
             --border-soft: #BA68C8; --container-bg: #FFFFFF; --table-hover: #FDF5FF;
         }
@@ -9197,7 +9393,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(186,104,200,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -9211,8 +9407,8 @@ div .mission-box .checkbox-list li {
         .mission-box h3 { margin-top: 0; font-size: 1.4rem; margin-bottom: 1.5rem; }
         .mission-badge { display: inline-block; background: linear-gradient(135deg, #E8A87C, #D4956A); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; margin-bottom: 1rem; }
         .info-box { padding: 1.8rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #BA68C8; }
-        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #CE93D8; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #BA68C8; }
+        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #8FBC9C; }
         .info-box.yellow { background: linear-gradient(135deg, #FFF9E5 0%, #FFF0B3 100%); border-color: #FFE082; }
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #81C784; }
         
@@ -9242,9 +9438,9 @@ div .mission-box .checkbox-list li {
         .memo-box h4 { margin-top: 0; }
         .memo-input { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 1rem; margin: 0.5rem 0; background: rgba(255,255,255,0.7); }
         
-        .highlight-text { background: linear-gradient(transparent 60%, #E1BEE7 40%); padding: 0 0.3rem; }
+        .highlight-text { background: linear-gradient(transparent 60%, #C8DDD4 40%); padding: 0 0.3rem; }
         
-        .redefine-box { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border: 3px solid var(--accent-purple); text-align: center; }
+        .redefine-box { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border: 3px solid var(--accent-purple); text-align: center; }
         
         .redefine-box h4 { margin-top: 0; color: var(--text-dark); font-size: 1.3rem; }
         @media (max-width: 768px) { .container { padding: 1.5rem; } h1 { font-size: 1.6rem; } h2 { font-size: 1.3rem; }  }
@@ -9254,7 +9450,7 @@ div .mission-box .checkbox-list li {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --light-purple: #F3E5F5; --medium-purple: #E1BEE7; --accent-purple: #BA68C8;
+            --light-purple: #F3E5F5; --medium-purple: #C8DDD4; --accent-purple: #BA68C8;
             --deep-purple: #9C27B0; --warm-cream: #FDF5FF; --text-dark: #4A3327;
             --border-soft: #BA68C8; --container-bg: #FFFFFF; --table-hover: #FDF5FF;
         }
@@ -9263,7 +9459,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(186,104,200,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -9276,8 +9472,8 @@ div .mission-box .checkbox-list li {
         
         .mission-box h3 { margin-top: 0; font-size: 1.4rem; margin-bottom: 1.5rem; }
         .info-box { padding: 1.8rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #BA68C8; }
-        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #CE93D8; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #BA68C8; }
+        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #8FBC9C; }
         .info-box.yellow { background: linear-gradient(135deg, #FFF9E5 0%, #FFF0B3 100%); border-color: #FFE082; }
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #81C784; }
         .info-box.red { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF5350; }
@@ -9300,7 +9496,7 @@ div .mission-box .checkbox-list li {
         .signal-card { background: var(--warm-cream); border: 2px solid var(--border-soft); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; }
         
         .signal-card h4 { margin: 0 0 1rem 0; }
-        .conclusion-box { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 2rem; border-radius: 15px; margin: 1.5rem 0; border: 2px solid var(--accent-purple); }
+        .conclusion-box { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); padding: 2rem; border-radius: 15px; margin: 1.5rem 0; border: 2px solid var(--accent-purple); }
         
         .conclusion-box h4 { margin-top: 0; font-size: 1.2rem; }
         .checklist-section { background: var(--warm-cream); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--border-soft); }
@@ -9310,7 +9506,7 @@ div .mission-box .checkbox-list li {
         .memo-box h4 { margin-top: 0; }
         .memo-input { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 1rem; margin: 0.5rem 0; background: rgba(255,255,255,0.7); }
         
-        .highlight-text { background: linear-gradient(transparent 60%, #E1BEE7 40%); padding: 0 0.3rem; }
+        .highlight-text { background: linear-gradient(transparent 60%, #C8DDD4 40%); padding: 0 0.3rem; }
         
         .situation-box { background: var(--warm-cream); border-left: 4px solid var(--accent-purple); padding: 1.5rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0; }
         
@@ -9325,7 +9521,7 @@ div .mission-box .checkbox-list li {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --light-purple: #F3E5F5; --medium-purple: #E1BEE7; --accent-purple: #BA68C8;
+            --light-purple: #F3E5F5; --medium-purple: #C8DDD4; --accent-purple: #BA68C8;
             --deep-purple: #9C27B0; --warm-cream: #FDF5FF; --text-dark: #4A3327;
             --border-soft: #BA68C8; --container-bg: #FFFFFF; --table-hover: #FDF5FF;
         }
@@ -9334,7 +9530,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(186,104,200,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -9347,8 +9543,8 @@ div .mission-box .checkbox-list li {
         .mission-box h3 { margin-top: 0; font-size: 1.4rem; margin-bottom: 1.5rem; }
         .mission-badge { display: inline-block; background: #EF5350; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; margin-bottom: 1rem; }
         .info-box { padding: 1.8rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #BA68C8; }
-        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #CE93D8; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #BA68C8; }
+        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #8FBC9C; }
         .info-box.yellow { background: linear-gradient(135deg, #FFF9E5 0%, #FFF0B3 100%); border-color: #FFE082; }
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #81C784; }
         .info-box.red { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF5350; }
@@ -9371,9 +9567,9 @@ div .mission-box .checkbox-list li {
         .plan-table th { background: var(--light-purple); font-weight: 600; }
         .plan-table td { background: var(--container-bg); }
         
-        .highlight-text { background: linear-gradient(transparent 60%, #E1BEE7 40%); padding: 0 0.3rem; }
+        .highlight-text { background: linear-gradient(transparent 60%, #C8DDD4 40%); padding: 0 0.3rem; }
         
-        .principle-box { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--accent-purple); }
+        .principle-box { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--accent-purple); }
         
         .principle-box h4 { margin-top: 0; }
         .emergency-box { background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border: 3px solid #EF5350; }
@@ -9383,7 +9579,7 @@ div .mission-box .checkbox-list li {
         .method-card { background: var(--warm-cream); border: 2px solid var(--border-soft); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
         
         .method-card h4 { margin: 0 0 1rem 0; }
-        .dad-section { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 5px solid #9C27B0; }
+        .dad-section { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 5px solid #9C27B0; }
         
         .dad-section h3 { margin-top: 0; }
         .warning-list { background: #FFF3E0; border-left: 4px solid #FF9800; padding: 1rem 1.5rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
@@ -9395,7 +9591,7 @@ div .mission-box .checkbox-list li {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --light-purple: #F3E5F5; --medium-purple: #E1BEE7; --accent-purple: #BA68C8;
+            --light-purple: #F3E5F5; --medium-purple: #C8DDD4; --accent-purple: #BA68C8;
             --deep-purple: #9C27B0; --warm-cream: #FDF5FF; --text-dark: #4A3327;
             --border-soft: #BA68C8; --container-bg: #FFFFFF; --table-hover: #FDF5FF;
         }
@@ -9404,7 +9600,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(186,104,200,0.15); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -9416,8 +9612,8 @@ div .mission-box .checkbox-list li {
         
         .mission-box h3 { margin-top: 0; font-size: 1.4rem; margin-bottom: 1.5rem; }
         .info-box { padding: 1.8rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid; }
-        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-color: #BA68C8; }
-        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #CE93D8; }
+        .info-box.purple { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); border-color: #BA68C8; }
+        .info-box.cream { background: linear-gradient(135deg, #FDF5FF 0%, #F3E5F5 100%); border-color: #8FBC9C; }
         .info-box.yellow { background: linear-gradient(135deg, #FFF9E5 0%, #FFF0B3 100%); border-color: #FFE082; }
         .info-box.green { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #81C784; }
         
@@ -9433,13 +9629,13 @@ div .mission-box .checkbox-list li {
         .closing-message { background: linear-gradient(135deg, #FDF5FF 0%, #F5E8F5 100%); color: #2C1C12; padding: 2.5rem; border-radius: 15px; margin: 2rem 0; text-align: center; }
         .closing-message p { color: #FFFFFF; font-size: 1.1rem; margin-bottom: 1rem; }
         .closing-message p:last-child { margin-bottom: 0; }
-        .highlight-text { background: linear-gradient(transparent 60%, #E1BEE7 40%); padding: 0 0.3rem; }
+        .highlight-text { background: linear-gradient(transparent 60%, #C8DDD4 40%); padding: 0 0.3rem; }
         
         .path-card { background: var(--warm-cream); border: 2px solid var(--border-soft); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; }
         
         .path-card h4 { margin: 0 0 1rem 0; font-size: 1.2rem; }
         .path-number { display: inline-block; width: 30px; height: 30px; background: linear-gradient(135deg, #E8A87C, #D4956A); color: white; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; margin-right: 0.5rem; }
-        .role-box { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--accent-purple); }
+        .role-box { background: linear-gradient(135deg, #F3E5F5 0%, #C8DDD4 100%); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--accent-purple); }
         
         .role-box h4 { margin-top: 0; }
         .checklist-section { background: var(--warm-cream); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 2px solid var(--border-soft); }
@@ -9503,13 +9699,14 @@ div .mission-box .checkbox-list li {
         
         .part-title {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
         
         .part-subtitle {
+            font-size: 0.85rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
@@ -9805,7 +10002,7 @@ div .mission-box .checkbox-list li {
         
         @media (max-width: 640px) {
             .part-intro { padding: 2rem 1.5rem; }
-            .part-title { font-size: 1.8rem; }
+            .part-title { font-size: 1.3rem; }
             .part-nav { flex-direction: column; }
             .nav-btn { width: 100%; justify-content: center; }
             .chapter-num { min-width: auto; margin-right: 0; margin-bottom: 0.3rem; }
@@ -9835,7 +10032,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -9901,7 +10098,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -9984,7 +10181,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -10057,7 +10254,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -10117,7 +10314,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -10186,7 +10383,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -10257,7 +10454,7 @@ div .mission-box .checkbox-list li {
         
         
         .container { max-width: 900px; margin: 0 auto; background: var(--container-bg); padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 60px rgba(141,110,99,0.12); }
-        h1 { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
+        h1 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; font-weight: 700; }
         .subtitle { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 1rem; font-weight: 500; }
         h2 { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; color: var(--text-dark); margin: 3rem 0 1.5rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 3px solid var(--border-soft); }
         h3 { font-size: 1.25rem; color: var(--text-dark); margin: 2rem 0 1rem; font-weight: 600; }
@@ -10325,11 +10522,11 @@ div .mission-box .checkbox-list li {
 /* ========== From: 49_epilogue.html ========== */
 
         :root {
-            --pink-light: #FFE5E5;
-            --pink-medium: #FFD4D4;
-            --pink-accent: #FF9AA2;
+            --green-light: #E8F4F0;
+            --green-medium: #D4E8E0;
+            --green-accent: #7C9B8B;
             --purple-light: #F3E5F5;
-            --purple-medium: #E1BEE7;
+            --purple-medium: #C8DDD4;
             --text-dark: #2C1C12;
             --text-light: #5A5A5A;
             --text-gray: #999999;
@@ -10343,7 +10540,7 @@ div .mission-box .checkbox-list li {
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(180deg, var(--purple-light) 0%, var(--pink-light) 50%, var(--white) 100%);
+            background: linear-gradient(180deg, var(--purple-light) 0%, var(--green-light) 50%, var(--white) 100%);
             color: var(--text-dark);
             line-height: 1.8;
             min-height: 100vh;
@@ -10365,7 +10562,7 @@ div .mission-box .checkbox-list li {
         
         .epilogue-label {
             font-size: 0.85rem;
-            color: var(--pink-accent);
+            color: var(--green-accent);
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -10441,7 +10638,7 @@ div .mission-box .checkbox-list li {
         
         /* 강조 박스 */
         .highlight-box {
-            background: linear-gradient(135deg, var(--pink-light), var(--purple-light));
+            background: linear-gradient(135deg, var(--green-light), var(--purple-light));
             padding: 1.5rem;
             border-radius: 12px;
             margin: 1.5rem 0;
@@ -10472,7 +10669,7 @@ div .mission-box .checkbox-list li {
         
         .meaning-list li::before {
             content: "▪";
-            color: var(--pink-accent);
+            color: var(--green-accent);
             position: absolute;
             left: 0;
         }
@@ -10487,8 +10684,8 @@ div .mission-box .checkbox-list li {
             color: var(--text-dark);
         }
         
-        .pink-emphasis {
-            color: var(--pink-accent);
+        .green-emphasis {
+            color: var(--green-accent);
             font-weight: 600;
         }
         
@@ -10597,7 +10794,7 @@ div .mission-box .checkbox-list li {
         }
         
         .nav-btn-primary {
-            background: linear-gradient(135deg, var(--pink-accent), #FF7B89);
+            background: linear-gradient(135deg, var(--green-accent), #5A7D6E);
             color: white;
             box-shadow: 0 4px 15px rgba(255,154,162,0.4);
         }
@@ -11221,7 +11418,12 @@ div .mission-box .checkbox-list li {
         .book-title {
             font-size: 1rem;
             font-weight: 600;
+            color: #2C1C12 !important;
             margin-bottom: 0.2rem;
+        }
+        
+        .book-card .book-title {
+            color: #2C1C12 !important;
         }
         
         .book-meta {
@@ -11826,83 +12028,298 @@ div .mission-box .checkbox-list li {
     <!-- 오버레이 -->
     <div class="global-overlay" id="overlay"></div>
     
-    <!-- 사이드바 목차 -->
+<!-- 사이드바 목차 -->
     <aside class="global-sidebar" id="sidebar">
-        <div class="global-sidebar-header">
+        <div class="sidebar-header">
             <h3>📚 전체 목차</h3>
-            <button class="global-sidebar-close" id="sidebarClose">&times;</button>
+            <button class="sidebar-close" id="sidebarClose">&times;</button>
         </div>
-        <nav class="global-toc">
-            <a href="#cover" class="toc-special">📕 표지</a>
-            <a href="#prologue" class="toc-special">💌 프롤로그</a>
-            <a href="#toc" class="toc-special">📋 전체 목차</a>
-            <a href="#timeline" class="toc-special">⏰ 여정 타임라인</a>
-            <a href="#roadmap" class="toc-special">🗺️ 특수 상황 로드맵</a>
-            
-            <a href="#part1" class="toc-part">PART 1. 출산 전 준비</a>
-            <a href="#chapter-1" class="toc-chapter">Ch.1 출산 전 알아야할 5가지</a>
-            <a href="#chapter-2" class="toc-chapter">Ch.2 모유수유 선택</a>
-            <a href="#chapter-3" class="toc-chapter">Ch.3 초보 엄마 TOP 10 질문</a>
-            <a href="#chapter-4" class="toc-chapter">Ch.4 우리 가족 수유 계획</a>
-            
-            <a href="#part2" class="toc-part">PART 2. 생존 모드 (출산 후 1주)</a>
-            <a href="#chapter-5" class="toc-chapter">Ch.5 출산직후 72시간의 현실</a>
-            <a href="#chapter-6" class="toc-chapter">Ch.6 모자동실, 꼭 해야 하나요?</a>
-            <a href="#chapter-7" class="toc-chapter">Ch.7 첫 수유자세 4가지 마스터</a>
-            <a href="#chapter-8" class="toc-chapter">Ch.8 함몰/편평유두 수유 방법</a>
-            
-            <a href="#part3" class="toc-part">PART 3. 적응기 (2주~3개월)</a>
-            <a href="#chapter-9" class="toc-chapter">Ch.9 집에서 돌아온 첫 3일</a>
-            <a href="#chapter-10" class="toc-chapter">Ch.10 아기 수유 리듬과 수면</a>
-            <a href="#chapter-11" class="toc-chapter">Ch.11 모유가 부족한 걸까?</a>
-            <a href="#chapter-12" class="toc-chapter">Ch.12 체중/기저귀로 보는 성장</a>
-            <a href="#chapter-13" class="toc-chapter">Ch.13 유두 통증 해결하기</a>
-            <a href="#chapter-14" class="toc-chapter">Ch.14 유선염/울혈/뭉침 대처</a>
-            <a href="#chapter-15" class="toc-chapter">Ch.15 유두 혼란 극복 방법</a>
-            <a href="#chapter-16" class="toc-chapter">Ch.16 모유 보관/해동 관리법</a>
-            <a href="#chapter-17" class="toc-chapter">Ch.17 수유 아이템 리스트</a>
-            
-            <a href="#part4" class="toc-part">PART 4. 안정기 (3~6개월)</a>
-            <a href="#chapter-18" class="toc-chapter">Ch.18 낮과 밤 수유 패턴</a>
-            <a href="#chapter-19" class="toc-chapter">Ch.19 수면 리그레션 대처법</a>
-            <a href="#chapter-20" class="toc-chapter">Ch.20 첫 이유식 시작</a>
-            <a href="#chapter-21" class="toc-chapter">Ch.21 이유식 초기 모유수유 조정</a>
-            
-            <a href="#part5" class="toc-part">PART 5. 직장맘 복직 전략</a>
-            <a href="#chapter-22" class="toc-chapter">Ch.22 복직시 모유수유 병행</a>
-            <a href="#chapter-23" class="toc-chapter">Ch.23 직장 내 유축 루틴</a>
-            <a href="#chapter-24" class="toc-chapter">Ch.24 외출/여행 수유 전략</a>
-            <a href="#chapter-25" class="toc-chapter">Ch.25 복직후 모유량 유지</a>
-            
-            <a href="#part6" class="toc-part">PART 6. 단유 가이드</a>
-            <a href="#chapter-26" class="toc-chapter">Ch.26 완모에 집착하지 않아도</a>
-            <a href="#chapter-27" class="toc-chapter">Ch.27 계획된 단유</a>
-            <a href="#chapter-28" class="toc-chapter">Ch.28 갑작스러운 단유</a>
-            <a href="#chapter-29" class="toc-chapter">Ch.29 단유 후 회복하기</a>
-            
-            <a href="#part7" class="toc-part">PART 7. 특수 상황 완전 정복</a>
-            <a href="#chapter-30" class="toc-chapter">Ch.30 이른둥이 아기 수유</a>
-            <a href="#chapter-31" class="toc-chapter">Ch.31 쌍둥이 모유수유</a>
-            <a href="#chapter-32" class="toc-chapter">Ch.32 아기가 아플 때</a>
-            <a href="#chapter-33" class="toc-chapter">Ch.33 엄마 약물/치료와 수유</a>
-            <a href="#chapter-34" class="toc-chapter">Ch.34 구순구개열 아기 수유</a>
-            <a href="#chapter-35" class="toc-chapter">Ch.35 재임신/피임과 수유</a>
-            <a href="#chapter-36" class="toc-chapter">Ch.36 엄마의 정신건강</a>
-            
-            <a href="#epilogue" class="toc-part">💚 에필로그</a>
-            
-            <a href="#appendix-a" class="toc-part">📎 부록</a>
-            <a href="#appendix-a" class="toc-chapter">부록 A. 상황별 인덱스</a>
-            <a href="#appendix-b" class="toc-chapter">부록 B. 참고문헌</a>
-            <a href="#appendix-c" class="toc-chapter">부록 C. IBCLC 찾기</a>
-            <a href="#appendix-d" class="toc-chapter">부록 D. 기록 체크리스트</a>
-            
-            <a href="#checklist-1" class="toc-part">📝 체크리스트</a>
-            <a href="#checklist-1" class="toc-chapter">1. 배변 체크리스트</a>
-            <a href="#checklist-2" class="toc-chapter">2. 수유량 체크리스트</a>
-            <a href="#checklist-3" class="toc-chapter">3. 수면 체크리스트</a>
-            <a href="#checklist-4" class="toc-chapter">4. 모유 보관 요약</a>
-            <a href="#checklist-5" class="toc-chapter">5. 상담 전 기록 템플릿</a>
+        
+        <nav class="sidebar-content">
+            <!-- 퀵 링크 -->
+            <div class="quick-links">
+                <a href="#cover" class="quick-link" onclick="closeSidebar()">📕 표지</a>
+                <a href="#prologue" class="quick-link" onclick="closeSidebar()">💌 프롤로그</a>
+                <a href="#sos-help" class="quick-link sos-link" onclick="openSosMenu(event)">🚨 SOS</a>
+                <a href="#timeline" class="quick-link" onclick="closeSidebar()">⏰ 타임라인</a>
+                <a href="#roadmap" class="quick-link" onclick="closeSidebar()">🗺️ 로드맵</a>
+            </div>
+
+            <!-- PART 1 -->
+            <div class="part-card part-1">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P1</div>
+                    <div class="part-info">
+                        <div class="part-title">출산 전 준비</div>
+                        <div class="part-desc">임신 중 4가지 체크</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-1" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">01</span>
+                        <span class="ch-title">출산 전 알아야 할 5가지</span>
+                    </a>
+                    <a href="#chapter-2" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">02</span>
+                        <span class="ch-title">모유수유 선택, 엄마의 결정이 우선</span>
+                    </a>
+                    <a href="#chapter-3" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">03</span>
+                        <span class="ch-title">초보 엄마 TOP 10 질문과 답변</span>
+                    </a>
+                    <a href="#chapter-4" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">04</span>
+                        <span class="ch-title">우리 가족 수유 계획 세우기</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PART 2 -->
+            <div class="part-card part-2">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P2</div>
+                    <div class="part-info">
+                        <div class="part-title">생존 모드 (출산 후 1주)</div>
+                        <div class="part-desc">병원 · 조리원</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-5" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">05</span>
+                        <span class="ch-title">출산 직후 72시간의 현실</span>
+                    </a>
+                    <a href="#chapter-6" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">06</span>
+                        <span class="ch-title">모자동실, 꼭 해야 하나요?</span>
+                    </a>
+                    <a href="#chapter-7" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">07</span>
+                        <span class="ch-title">첫 수유자세 4가지 마스터</span>
+                    </a>
+                    <a href="#chapter-8" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">08</span>
+                        <span class="ch-title">함몰유두 · 편평유두 수유 방법</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PART 3 -->
+            <div class="part-card part-3">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P3</div>
+                    <div class="part-info">
+                        <div class="part-title">적응기 (2주~3개월)</div>
+                        <div class="part-desc">수유 리듬 확립</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-9" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">09</span>
+                        <span class="ch-title">집에서 돌아온 첫 3일</span>
+                    </a>
+                    <a href="#chapter-10" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">10</span>
+                        <span class="ch-title">아기 수유 리듬과 신생아 수면</span>
+                    </a>
+                    <a href="#chapter-11" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">11</span>
+                        <span class="ch-title">"모유가 부족한 걸까?"</span>
+                    </a>
+                    <a href="#chapter-12" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">12</span>
+                        <span class="ch-title">체중 · 기저귀로 보는 성장 신호</span>
+                    </a>
+                    <a href="#chapter-13" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">13</span>
+                        <span class="ch-title">유두 통증 해결하기</span>
+                    </a>
+                    <a href="#chapter-14" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">14</span>
+                        <span class="ch-title">유선염 · 울혈 · 뭉침 대처</span>
+                    </a>
+                    <a href="#chapter-15" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">15</span>
+                        <span class="ch-title">유두 혼란과 극복 방법</span>
+                    </a>
+                    <a href="#chapter-16" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">16</span>
+                        <span class="ch-title">모유 보관 · 해동 관리법</span>
+                    </a>
+                    <a href="#chapter-17" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">17</span>
+                        <span class="ch-title">수유 아이템 리스트</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PART 4 -->
+            <div class="part-card part-4">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P4</div>
+                    <div class="part-info">
+                        <div class="part-title">안정기 (3~6개월)</div>
+                        <div class="part-desc">이유식 시작과 수유 조정</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-18" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">18</span>
+                        <span class="ch-title">낮과 밤 수유 패턴 다듬기</span>
+                    </a>
+                    <a href="#chapter-19" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">19</span>
+                        <span class="ch-title">수면 리그레션 대처법</span>
+                    </a>
+                    <a href="#chapter-20" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">20</span>
+                        <span class="ch-title">첫 이유식 시작 시기와 준비물</span>
+                    </a>
+                    <a href="#chapter-21" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">21</span>
+                        <span class="ch-title">이유식 초기 모유수유 조정법</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PART 5 -->
+            <div class="part-card part-5">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P5</div>
+                    <div class="part-info">
+                        <div class="part-title">직장맘 복직 전략</div>
+                        <div class="part-desc">유축 · 외출 · 어린이집</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-22" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">22</span>
+                        <span class="ch-title">복직 시 모유수유 병행</span>
+                    </a>
+                    <a href="#chapter-23" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">23</span>
+                        <span class="ch-title">직장 내 유축 루틴 만들기</span>
+                    </a>
+                    <a href="#chapter-24" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">24</span>
+                        <span class="ch-title">외출 · 여행 · 외식 수유 전략</span>
+                    </a>
+                    <a href="#chapter-25" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">25</span>
+                        <span class="ch-title">복직 후 모유량 유지 전략</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PART 6 -->
+            <div class="part-card part-6">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P6</div>
+                    <div class="part-info">
+                        <div class="part-title">단유 가이드</div>
+                        <div class="part-desc">선택과 방법</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-26" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">26</span>
+                        <span class="ch-title">완모에 집착하지 않아도 괜찮아요</span>
+                    </a>
+                    <a href="#chapter-27" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">27</span>
+                        <span class="ch-title">계획하는 단유: 시기와 방법</span>
+                    </a>
+                    <a href="#chapter-28" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">28</span>
+                        <span class="ch-title">갑작스러운 단유, 어쩔 수 없는 단유</span>
+                    </a>
+                    <a href="#chapter-29" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">29</span>
+                        <span class="ch-title">단유 후 몸 · 마음 회복하기</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PART 7 -->
+            <div class="part-card part-7">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">P7</div>
+                    <div class="part-info">
+                        <div class="part-title">특수 상황</div>
+                        <div class="part-desc">질환 · 조산 · 다둥이</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#chapter-30" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">30</span>
+                        <span class="ch-title">이른둥이 · NICU 아기 수유</span>
+                    </a>
+                    <a href="#chapter-31" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">31</span>
+                        <span class="ch-title">쌍둥이 · 다둥이 수유 설계</span>
+                    </a>
+                    <a href="#chapter-32" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">32</span>
+                        <span class="ch-title">아기의 질환 · 입원과 모유수유</span>
+                    </a>
+                    <a href="#chapter-33" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">33</span>
+                        <span class="ch-title">엄마의 질병 · 약물 · 치과 치료</span>
+                    </a>
+                    <a href="#chapter-34" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">34</span>
+                        <span class="ch-title">구순구개열 아기 수유</span>
+                    </a>
+                    <a href="#chapter-35" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">35</span>
+                        <span class="ch-title">재임신 · 피임과 수유</span>
+                    </a>
+                    <a href="#chapter-36" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">36</span>
+                        <span class="ch-title">엄마의 정신건강과 모유수유</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 부록 -->
+            <div class="part-card part-appendix">
+                <div class="part-header" onclick="togglePartCard(this)">
+                    <div class="part-badge">📎</div>
+                    <div class="part-info">
+                        <div class="part-title">부록</div>
+                        <div class="part-desc">참고자료 · 체크리스트</div>
+                    </div>
+                    <div class="part-arrow">▼</div>
+                </div>
+                <div class="chapter-list">
+                    <a href="#epilogue" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">💚</span>
+                        <span class="ch-title">에필로그</span>
+                    </a>
+                    <a href="#appendix-a" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">A</span>
+                        <span class="ch-title">상황별 바로찾기 인덱스</span>
+                    </a>
+                    <a href="#appendix-b" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">B</span>
+                        <span class="ch-title">참고문헌 · 근거 자료</span>
+                    </a>
+                    <a href="#appendix-c" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">C</span>
+                        <span class="ch-title">IBCLC 찾기</span>
+                    </a>
+                    <a href="#appendix-d" class="chapter-item" onclick="closeSidebar()">
+                        <span class="ch-num">D</span>
+                        <span class="ch-title">A4 기록 체크리스트</span>
+                    </a>
+                </div>
+            </div>
         </nav>
     </aside>
     
@@ -11922,7 +12339,7 @@ div .mission-box .checkbox-list li {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #FFE5E5 0%, #F3E5F5 50%, #FFE5E5 100%);
+            background: linear-gradient(135deg, #E8F4F0 0%, #F3E5F5 50%, #E8F4F0 100%);
             padding: 2rem;
             font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
         }
@@ -11939,7 +12356,7 @@ div .mission-box .checkbox-list li {
         
         .cover-top-bar {
             height: 10px;
-            background: linear-gradient(90deg, #FF9AA2, #E1BEE7, #FF9AA2);
+            background: linear-gradient(90deg, #7C9B8B, #C8DDD4, #7C9B8B);
         }
         
         .cover-inner {
@@ -11948,14 +12365,14 @@ div .mission-box .checkbox-list li {
         
         .cover-h1 {
             font-family: 'Noto Serif KR', serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 900;
             color: #333333;
             margin-bottom: 0.5rem;
             line-height: 1.3;
         }
         
-        .cover-h1 .pink { color: #FF9AA2; }
+        .cover-h1 .pink { color: #7C9B8B; }
         
         .cover-tagline {
             font-size: 0.95rem;
@@ -11968,11 +12385,11 @@ div .mission-box .checkbox-list li {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, #FFE5E5, #F3E5F5);
+            background: linear-gradient(135deg, #E8F4F0, #F3E5F5);
             padding: 0.7rem 1.2rem;
             border-radius: 25px;
             margin-bottom: 1.5rem;
-            border: 2px solid #FFD4D4;
+            border: 2px solid #D4E8E0;
             font-size: 0.9rem;
             font-weight: 600;
             color: #333333;
@@ -11981,7 +12398,7 @@ div .mission-box .checkbox-list li {
         .cover-divider {
             width: 50px;
             height: 3px;
-            background: linear-gradient(90deg, #FF9AA2, #E1BEE7);
+            background: linear-gradient(90deg, #7C9B8B, #C8DDD4);
             margin: 1.2rem auto;
             border-radius: 2px;
         }
@@ -12040,7 +12457,7 @@ div .mission-box .checkbox-list li {
         }
         
         .cover-btn-start {
-            background: linear-gradient(135deg, #FF9AA2, #FF7B89);
+            background: linear-gradient(135deg, #7C9B8B, #5A7D6E);
             color: white;
             box-shadow: 0 5px 15px rgba(255,154,162,0.4);
         }
@@ -12053,18 +12470,18 @@ div .mission-box .checkbox-list li {
         .cover-btn-toc {
             background: white;
             color: #333333;
-            border: 2px solid #FFD4D4;
+            border: 2px solid #D4E8E0;
         }
         
         .cover-btn-toc:hover {
-            background: #FFE5E5;
+            background: #E8F4F0;
             transform: translateY(-2px);
         }
         
         .cover-copyright {
             margin-top: 1.5rem;
             padding-top: 1rem;
-            border-top: 1px solid #FFE5E5;
+            border-top: 1px solid #E8F4F0;
             font-size: 0.75rem;
             color: #999999;
         }
@@ -12202,14 +12619,14 @@ div .mission-box .checkbox-list li {
             
             <p class="cover-author-label">저자</p>
             <p class="cover-author-name">권의철 · 최소라</p>
-            <p class="cover-author-org">(바비즈코리아·mothersbaby CEO)</p>
+            <p class="cover-author-org">(바비즈코리아 · 마더스베이비 CEO)</p>
             <p class="cover-author-co">
                 <span class="icon">💚</span>
                 박보림 국제모유수유전문가(IBCLC) 공저
             </p>
             
             <div class="cover-buttons">
-                <a href="#timeline" class="btn-primary" style="background: linear-gradient(135deg, #FF9AA2, #E88A92) !important;">🗺️ 지금 내 상황에서 시작하기</a>
+                <a href="#timeline" class="btn-primary" style="background: linear-gradient(135deg, #7C9B8B, #E88A92) !important;">🗺️ 지금 내 상황에서 시작하기</a>
                 <a href="javascript:void(0)" onclick="document.getElementById('menuToggle').click()" class="btn-ghost">📋 전체 목차에서 고르기</a>
             </div>
         </div>
@@ -12283,8 +12700,8 @@ div .mission-box .checkbox-list li {
             </p>
             
             <p style="text-align: right; margin-top: 2rem; color: #555;">
-                <strong>권의철, 최소라</strong><br>
-                <span style="font-size: 0.9rem; color: #888;">바비즈코리아·mothersbaby CEO</span>
+                <strong>권의철 · 최소라</strong><br>
+                <span style="font-size: 0.9rem; color: #888;">바비즈코리아 · 마더스베이비 CEO</span>
             </p>
             
         </div>
@@ -12312,7 +12729,7 @@ div .mission-box .checkbox-list li {
                 
                 <p>육아도, 모유수유도 이와 같습니다. 당장은 내 자유만 사라지는 것 같고 밑 빠진 독에 물 붓기처럼 느껴지겠지만, 엄마가 쏟아부은 그 정성은 결코 헛되지 않습니다.</p>
                 
-                <p style="background: #FFF; padding: 1rem 1.2rem; border-radius: 12px; margin: 1.5rem 0; border-left: 3px solid #E91E63;">
+                <p style="background: #FFF; padding: 1rem 1.2rem; border-radius: 12px; margin: 1.5rem 0; border-left: 3px solid #5A7D6E;">
                     아기가 엄마의 살결을 느끼며 신뢰를 배우는 그 찰나의 순간들이 모여,<br>
                     아이가 평생을 살아갈 사랑의 뿌리가 됩니다.
                 </p>
@@ -12335,7 +12752,7 @@ div .mission-box .checkbox-list li {
         <footer class="prologue-footer" style="max-width: 680px; margin: 2rem auto; text-align: center;">
             <div class="nav-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem;">
                 <a href="#toc" class="btn-ghost" style="padding: 0.8rem 1.5rem; border: 2px solid #FFB6C1; border-radius: 25px; color: #2C1C12; text-decoration: none;">📋 목차 보기</a>
-                <a href="#chapter-1" class="btn-primary" style="padding: 0.8rem 1.5rem; background: linear-gradient(135deg, #FF9AA2, #E91E63); border-radius: 25px; color: white; text-decoration: none;">📖 CHAPTER 1 시작하기</a>
+                <a href="#chapter-1" class="btn-primary" style="padding: 0.8rem 1.5rem; background: linear-gradient(135deg, #7C9B8B, #5A7D6E); border-radius: 25px; color: white; text-decoration: none;">📖 CHAPTER 1 시작하기</a>
             </div>
         </footer>
     </section>
@@ -12343,366 +12760,849 @@ div .mission-box .checkbox-list li {
 </section>
 
 <!-- ==================== 3_table-of-contents.html ==================== -->
-<section id="toc" class="book-section" data-source="3_table-of-contents.html">
-
-    <header class="toc-header">
-        <h1>📚 모유수유 리얼 가이드 1.0</h1>
-        <p>25년 경험과 IBCLC 전문 지식</p>
-        <div class="progress-container"><div class="progress-bar" id="progressBar" style="width: 0%"></div></div>
-        <p class="progress-text">읽기 진행률: <span id="progressText">0/36</span> 챕터 완료</p>
-    </header>
-    <div class="search-container">
-        <div class="search-box" style="display: flex; gap: 0.5rem; max-width: 650px; margin: 0 auto; align-items: center;">
-            <input type="text" class="search-input" id="searchInput" placeholder="🔍 챕터 검색... (예: 유두, 단유, 직장)" style="flex: 1;">
-            <button id="searchBtn" style="padding: 0.8rem 1.2rem; background: linear-gradient(135deg, #C89A7A, #D4A98A); color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 500; white-space: nowrap;">검색</button>
-            <button class="search-clear" id="searchClear" style="display: none;">✕</button>
-        </div>
-    </div>
-    <main class="toc-container" id="tocContainer">
-        <!-- PART 1 -->
-        <section class="part-section" data-part="1">
-            <div class="part-header part1" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 1</span><span class="part-title">출산 전 준비 (임신 중 4가지 체크)</span></div>
-                <div class="part-meta"><span class="part-count">4개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="1" onclick="goToChapter(1)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 1</div><div class="chapter-title">출산 전 알아야할 5가지</div></div></div>
-                <div class="chapter-item" data-chapter="2" onclick="goToChapter(2)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 2</div><div class="chapter-title">모유수유 선택, 엄마의 결정이 우선입니다</div></div></div>
-                <div class="chapter-item" data-chapter="3" onclick="goToChapter(3)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 3</div><div class="chapter-title">초보 엄마 TOP 10 질문과 답변</div></div></div>
-                <div class="chapter-item" data-chapter="4" onclick="goToChapter(4)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 4</div><div class="chapter-title">우리 가족 수유 계획 세우기</div></div></div>
-            </div>
-        </section>
-        <!-- PART 2 -->
-        <section class="part-section" data-part="2">
-            <div class="part-header part2" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 2</span><span class="part-title">생존 모드: 출산 후 1주 (병원·조리원)</span></div>
-                <div class="part-meta"><span class="part-count">4개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="5" onclick="goToChapter(5)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 5</div><div class="chapter-title">"이게 정상인가요?" 출산 직후 72시간의 현실</div></div></div>
-                <div class="chapter-item" data-chapter="6" onclick="goToChapter(6)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 6</div><div class="chapter-title">모자동실, 꼭 해야 하나요?</div></div></div>
-                <div class="chapter-item" data-chapter="7" onclick="goToChapter(7)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 7</div><div class="chapter-title">첫 수유자세 4가지 마스터</div></div></div>
-                <div class="chapter-item" data-chapter="8" onclick="goToChapter(8)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 8</div><div class="chapter-title">함몰유두, 편평유두 수유 방법</div></div></div>
-            </div>
-        </section>
-        <!-- PART 3 -->
-        <section class="part-section" data-part="3">
-            <div class="part-header part3" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 3</span><span class="part-title">적응기: 2주~3개월 (수유 리듬 확립)</span></div>
-                <div class="part-meta"><span class="part-count">9개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="section-header">섹션 A: 수유 리듬과 성장 관찰</div>
-                <div class="chapter-item" data-chapter="9" onclick="goToChapter(9)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 9</div><div class="chapter-title">집에서 돌아온 첫 3일, 무엇을 보고 챙길까?</div></div></div>
-                <div class="chapter-item" data-chapter="10" onclick="goToChapter(10)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 10</div><div class="chapter-title">아기 수유 리듬과 정상적인 신생아 수면</div></div></div>
-                <div class="chapter-item" data-chapter="11" onclick="goToChapter(11)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 11</div><div class="chapter-title">"모유가 부족한 걸까?" 확인하는 3가지 방법</div></div></div>
-                <div class="chapter-item" data-chapter="12" onclick="goToChapter(12)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 12</div><div class="chapter-title">체중, 기저귀, 배변으로 보는 성장 신호</div></div></div>
-                <div class="section-header">섹션 B: 수유 방법과 문제 해결</div>
-                <div class="chapter-item" data-chapter="13" onclick="goToChapter(13)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 13</div><div class="chapter-title">유두 통증이 너무 심할때: 포기하지 않고 해결하기</div></div></div>
-                <div class="chapter-item" data-chapter="14" onclick="goToChapter(14)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 14</div><div class="chapter-title"><span class="urgent">🚨</span> 유선염, 울혈, 뭉침, 응급이 되기 전 대처</div></div></div>
-                <div class="chapter-item" data-chapter="15" onclick="goToChapter(15)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 15</div><div class="chapter-title">유두 혼란과 극복 방법</div></div></div>
-                <div class="section-header">섹션 C: 실전 도구</div>
-                <div class="chapter-item" data-chapter="16" onclick="goToChapter(16)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 16</div><div class="chapter-title">모유 보관·해동 외출시 관리법</div></div></div>
-                <div class="chapter-item" data-chapter="17" onclick="goToChapter(17)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 17</div><div class="chapter-title">수유 아이템 리스트</div></div></div>
-            </div>
-        </section>
-        <!-- PART 4 -->
-        <section class="part-section" data-part="4">
-            <div class="part-header part4" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 4</span><span class="part-title">3~6개월 안정기 (이유식 시작과 수유 조정)</span></div>
-                <div class="part-meta"><span class="part-count">4개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="18" onclick="goToChapter(18)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 18</div><div class="chapter-title">낮과 밤 수유 패턴 다듬기</div></div></div>
-                <div class="chapter-item" data-chapter="19" onclick="goToChapter(19)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 19</div><div class="chapter-title">"갑자기 왜 안자지?" 수면 리그레션 대처법</div></div></div>
-                <div class="chapter-item" data-chapter="20" onclick="goToChapter(20)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 20</div><div class="chapter-title">첫 이유식 시작: 시기와 준비물</div></div></div>
-                <div class="chapter-item" data-chapter="21" onclick="goToChapter(21)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 21</div><div class="chapter-title">이유식 초기, 모유수유 조정법</div></div></div>
-            </div>
-        </section>
-        <!-- PART 5 -->
-        <section class="part-section" data-part="5">
-            <div class="part-header part5" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 5</span><span class="part-title">직장맘 복직 전략 (유축·외출·어린이집)</span></div>
-                <div class="part-meta"><span class="part-count">4개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="22" onclick="goToChapter(22)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 22</div><div class="chapter-title">복직시 어린이집 모유수유 병행</div></div></div>
-                <div class="chapter-item" data-chapter="23" onclick="goToChapter(23)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 23</div><div class="chapter-title">직장 내 유축 루틴 만들기</div></div></div>
-                <div class="chapter-item" data-chapter="24" onclick="goToChapter(24)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 24</div><div class="chapter-title">외출·여행·외식할 때의 수유 전략</div></div></div>
-                <div class="chapter-item" data-chapter="25" onclick="goToChapter(25)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 25</div><div class="chapter-title">복직 후 모유량 유지 전략</div></div></div>
-            </div>
-        </section>
-        <!-- PART 6 -->
-        <section class="part-section" data-part="6">
-            <div class="part-header part6" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 6</span><span class="part-title">단유 가이드 (선택과 방법)</span></div>
-                <div class="part-meta"><span class="part-count">4개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="26" onclick="goToChapter(26)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 26</div><div class="chapter-title">완모에 집착하지 않아도 괜찮아요</div></div></div>
-                <div class="chapter-item" data-chapter="27" onclick="goToChapter(27)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 27</div><div class="chapter-title">계획하는 단유: 시기와 방법</div></div></div>
-                <div class="chapter-item" data-chapter="28" onclick="goToChapter(28)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 28</div><div class="chapter-title">갑작스러운 단유, 어쩔 수 없는 단유</div></div></div>
-                <div class="chapter-item" data-chapter="29" onclick="goToChapter(29)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 29</div><div class="chapter-title">단유 후 엄마와 아기의 몸, 마음 회복하기</div></div></div>
-            </div>
-        </section>
-        <!-- PART 7 -->
-        <section class="part-section" data-part="7">
-            <div class="part-header part7" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">PART 7</span><span class="part-title">특수 상황 완전 정복 (질환·조산·다둥이)</span></div>
-                <div class="part-meta"><span class="part-count">7개 챕터</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="30" onclick="goToChapter(30)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 30</div><div class="chapter-title">이른둥이, 신생아 집중 치료실 아기 수유</div></div></div>
-                <div class="chapter-item" data-chapter="31" onclick="goToChapter(31)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 31</div><div class="chapter-title">쌍둥이, 다둥이 수유 설계</div></div></div>
-                <div class="chapter-item" data-chapter="32" onclick="goToChapter(32)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 32</div><div class="chapter-title"><span class="urgent">🚨</span> 아기의 질환, 입원과 모유수유</div></div></div>
-                <div class="chapter-item" data-chapter="33" onclick="goToChapter(33)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 33</div><div class="chapter-title">엄마의 질병·약물·치과 치료와 수유</div></div></div>
-                <div class="chapter-item" data-chapter="34" onclick="goToChapter(34)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 34</div><div class="chapter-title">구순구개열 등 구강 구조 이슈가 있는 아기</div></div></div>
-                <div class="chapter-item" data-chapter="35" onclick="goToChapter(35)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 35</div><div class="chapter-title">재임신, 피임, 다음 아기를 준비할 때의 수유</div></div></div>
-                <div class="chapter-item" data-chapter="36" onclick="goToChapter(36)"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">CHAPTER 36</div><div class="chapter-title"><span class="urgent">🚨</span> 엄마의 정신건강과 모유수유</div></div></div>
-            </div>
-        </section>
-        <!-- 부록 -->
-        <section class="part-section" data-part="appendix">
-            <div class="part-header appendix" onclick="togglePart(this)">
-                <div class="part-info"><span class="part-number">부록</span><span class="part-title">참고 자료 및 체크리스트</span></div>
-                <div class="part-meta"><span class="part-count">4개 항목</span><span class="part-toggle">▼</span></div>
-            </div>
-            <div class="chapter-list">
-                <div class="chapter-item" data-chapter="A" onclick="goToChapter('A')"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">부록 A</div><div class="chapter-title">상황별 바로찾기 인덱스</div></div></div>
-                <div class="chapter-item" data-chapter="B" onclick="goToChapter('B')"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">부록 B</div><div class="chapter-title">참고문헌 & 근거 자료</div></div></div>
-                <div class="chapter-item" data-chapter="C" onclick="goToChapter('C')"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">부록 C</div><div class="chapter-title">국제 모유수유 전문가(IBCLC) 찾기</div></div></div>
-                <div class="chapter-item" data-chapter="D" onclick="goToChapter('D')"><span class="chapter-status unread"></span><div class="chapter-content"><div class="chapter-number">부록 D</div><div class="chapter-title">A4 기록 체크리스트</div></div></div>
-            </div>
-        </section>
-        <div class="no-results" id="noResults"><div class="no-results-icon">🔍</div><p>검색 결과가 없습니다.</p><p>다른 키워드로 검색해 보세요.</p></div>
-    </main>
-    <footer class="toc-footer">
-        <p>© mothersbaby</p>
-        <p>권의철, 최소라 (바비즈코리아·mothersbaby CEO), 박보림 (국제모유수유전문가 IBCLC) 공저</p>
-    </footer>
-    <script>
-        let readChapters = JSON.parse(localStorage.getItem('readChapters') || '[]');
-        let currentChapter = localStorage.getItem('currentChapter') || null;
-        function init() { updateReadStatus(); updateProgress(); setupSearch(); }
-        function updateReadStatus() {
-            document.querySelectorAll('.chapter-item').forEach(item => {
-                const chapter = item.dataset.chapter;
-                const status = item.querySelector('.chapter-status');
-                status.classList.remove('read', 'unread', 'current');
-                item.classList.remove('read', 'active');
-                if (chapter === currentChapter) { status.classList.add('current'); item.classList.add('active'); }
-                else if (readChapters.includes(chapter)) { status.classList.add('read'); item.classList.add('read'); }
-                else { status.classList.add('unread'); }
-            });
-        }
-        function updateProgress() {
-            const total = 36;
-            const read = readChapters.filter(c => !isNaN(c) && parseInt(c) <= 36).length;
-            const percent = Math.round((read / total) * 100);
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            if (progressBar) progressBar.style.width = percent + '%';
-            if (progressText) progressText.textContent = `${read}/${total}`;
-        }
-        
-        // 스크롤 시 현재 보고 있는 챕터 자동 읽음 처리
-        function trackReadingProgress() {
-            const chapters = document.querySelectorAll('[id^="chapter-"]');
-            const scrollPosition = window.scrollY + window.innerHeight / 2;
-            
-            chapters.forEach(chapter => {
-                const chapterTop = chapter.offsetTop;
-                const chapterBottom = chapterTop + chapter.offsetHeight;
-                
-                if (scrollPosition >= chapterTop && scrollPosition <= chapterBottom) {
-                    const chapterNum = chapter.id.replace('chapter-', '');
-                    if (!isNaN(chapterNum) && !readChapters.includes(chapterNum)) {
-                        readChapters.push(chapterNum);
-                        localStorage.setItem('readChapters', JSON.stringify(readChapters));
-                        updateProgress();
-                        updateReadStatus();
-                    }
-                }
-            });
-        }
-        
-        // 스크롤 이벤트 (throttle 적용)
-        let scrollTimeout;
-        window.addEventListener('scroll', function() {
-            if (scrollTimeout) return;
-            scrollTimeout = setTimeout(function() {
-                trackReadingProgress();
-                scrollTimeout = null;
-            }, 200);
-        }, { passive: true });
-        
-        function goToChapter(chapter) {
-            currentChapter = String(chapter);
-            localStorage.setItem('currentChapter', currentChapter);
-            if (!readChapters.includes(currentChapter)) {
-                readChapters.push(currentChapter);
-                localStorage.setItem('readChapters', JSON.stringify(readChapters));
-            }
-            updateReadStatus(); updateProgress();
-            
-            // 실제 챕터로 이동
-            let targetId;
-            if (chapter === 'A') targetId = 'appendix-a';
-            else if (chapter === 'B') targetId = 'appendix-b';
-            else if (chapter === 'C') targetId = 'appendix-c';
-            else if (chapter === 'D') targetId = 'appendix-d';
-            else targetId = 'chapter-' + chapter;
-            
-            const target = document.getElementById(targetId);
-            if (target) {
-                const offsetTop = target.offsetTop - 70;
-                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                history.pushState(null, null, '#' + targetId);
-            }
-        }
-        function togglePart(header) { header.closest('.part-section').classList.toggle('collapsed'); }
-        
-        // 전체 챕터 검색 데이터
-        const chapterSearchData = [
-            { chapter: 1, title: "출산 전 알아야할 5가지", keywords: "출산 임신 준비 골든타임 초유 병원 계획서 유두 유방", part: 1 },
-            { chapter: 2, title: "모유수유 선택", keywords: "선택 결정 완모 혼합 분유 압박", part: 1 },
-            { chapter: 3, title: "초보 엄마 TOP 10 질문과 답변", keywords: "질문 답변 FAQ 초보 궁금 상담", part: 1 },
-            { chapter: 4, title: "우리 가족 수유 계획 세우기", keywords: "계획 가족 아빠 체크리스트 준비", part: 1 },
-            { chapter: 5, title: "출산 직후 72시간의 현실", keywords: "출산 72시간 직후 현실 병원 초유 젖양", part: 2 },
-            { chapter: 6, title: "모자동실 꼭 해야 하나요", keywords: "모자동실 신생아실 병원 선택", part: 2 },
-            { chapter: 7, title: "첫 수유자세 4가지 마스터", keywords: "수유자세 자세 요람 풋볼 옆으로 안기 래치", part: 2 },
-            { chapter: 8, title: "함몰유두 편평유두 수유 방법", keywords: "함몰유두 편평유두 유두 유두보호기 끌어내기", part: 2 },
-            { chapter: 9, title: "집에서 돌아온 첫 3일", keywords: "퇴원 집 조리원 적응 3일", part: 3 },
-            { chapter: 10, title: "아기 수유 리듬과 신생아 수면", keywords: "리듬 수면 패턴 신생아 밤낮 각성", part: 3 },
-            { chapter: 11, title: "모유가 부족한 걸까 확인하는 3가지", keywords: "부족 젖양 모유량 확인 기저귀 체중", part: 3 },
-            { chapter: 12, title: "체중 기저귀 배변으로 보는 성장 신호", keywords: "체중 기저귀 배변 대변 소변 성장", part: 3 },
-            { chapter: 13, title: "유두 통증이 심할 때 해결하기", keywords: "유두 통증 아픔 상처 갈라짐 피 출혈", part: 3 },
-            { chapter: 14, title: "유선염 울혈 뭉침 응급 대처", keywords: "유선염 울혈 뭉침 열 덩어리 막힘 응급", part: 3 },
-            { chapter: 15, title: "유두 혼란과 극복 방법", keywords: "유두혼란 젖병 거부 젖꼭지 혼란", part: 3 },
-            { chapter: 16, title: "모유 보관 해동 외출시 관리법", keywords: "보관 해동 냉장 냉동 외출 온도", part: 3 },
-            { chapter: 17, title: "수유 아이템 리스트", keywords: "아이템 용품 준비물 유축기 수유쿠션", part: 3 },
-            { chapter: 18, title: "낮과 밤 수유 패턴 다듬기", keywords: "낮 밤 패턴 수면 야간수유 통잠", part: 4 },
-            { chapter: 19, title: "수면 리그레션 대처법", keywords: "수면 리그레션 퇴행 잠 안자 4개월", part: 4 },
-            { chapter: 20, title: "첫 이유식 시작 시기와 준비물", keywords: "이유식 시작 6개월 준비물 시기", part: 4 },
-            { chapter: 21, title: "이유식 초기 모유수유 조정법", keywords: "이유식 초기 조정 병행 양", part: 4 },
-            { chapter: 22, title: "복직시 어린이집 모유수유 병행", keywords: "복직 어린이집 직장 병행 워킹맘", part: 5 },
-            { chapter: 23, title: "직장 내 유축 루틴 만들기", keywords: "직장 유축 회사 루틴 펌핑", part: 5 },
-            { chapter: 24, title: "외출 여행 외식할 때 수유 전략", keywords: "외출 여행 외식 수유실 이동", part: 5 },
-            { chapter: 25, title: "복직 후 모유량 유지 전략", keywords: "복직 모유량 유지 감소 줄어듬", part: 5 },
-            { chapter: 26, title: "완모에 집착하지 않아도 괜찮아요", keywords: "완모 집착 혼합 괜찮아 죄책감", part: 6 },
-            { chapter: 27, title: "계획하는 단유 시기와 방법", keywords: "단유 계획 시기 방법 젖떼기", part: 6 },
-            { chapter: 28, title: "갑작스러운 단유 어쩔 수 없는 단유", keywords: "갑작스런 단유 응급 불가피 약물", part: 6 },
-            { chapter: 29, title: "단유 후 엄마와 아기의 회복", keywords: "단유 후 회복 마음 몸 울적", part: 6 },
-            { chapter: 30, title: "이른둥이 신생아집중치료실 아기 수유", keywords: "이른둥이 조산 NICU 미숙아 36주", part: 7 },
-            { chapter: 31, title: "쌍둥이 다둥이 수유 설계", keywords: "쌍둥이 다둥이 twins 동시수유", part: 7 },
-            { chapter: 32, title: "아기의 질환 입원과 모유수유", keywords: "아기 질환 입원 아플때 병원", part: 7 },
-            { chapter: 33, title: "엄마의 질병 약물 치과 치료와 수유", keywords: "엄마 질병 약물 치과 약 복용", part: 7 },
-            { chapter: 34, title: "구순구개열 등 구강 구조 이슈", keywords: "구순구개열 구강 입술 입천장 특수", part: 7 },
-            { chapter: 35, title: "재임신 피임 다음 아기 준비", keywords: "재임신 피임 임신 다음 둘째", part: 7 },
-            { chapter: 36, title: "엄마의 정신건강과 모유수유", keywords: "정신건강 우울 불안 산후우울증 멘탈", part: 7 }
-        ];
-        
-        function performSearch() {
-            const input = document.getElementById('searchInput');
-            const query = input.value.toLowerCase().trim();
-            const clearBtn = document.getElementById('searchClear');
-            const noResults = document.getElementById('noResults');
-            
-            clearBtn.style.display = query ? 'block' : 'none';
-            if (!query) { resetSearch(); return; }
-            
-            let hasResults = false;
-            
-            // 1. 목차 검색 (기존)
-            document.querySelectorAll('.part-section').forEach(section => {
-                let sectionHasMatch = false;
-                section.querySelectorAll('.chapter-item').forEach(item => {
-                    const title = item.querySelector('.chapter-title').textContent.toLowerCase();
-                    const matches = title.includes(query);
-                    item.style.display = matches ? 'flex' : 'none';
-                    if (matches) { sectionHasMatch = true; hasResults = true; }
-                });
-                section.style.display = sectionHasMatch ? 'block' : 'none';
-                if (sectionHasMatch) { section.classList.remove('collapsed'); }
-            });
-            
-            // 2. 키워드 검색 (확장)
-            const matchedChapters = chapterSearchData.filter(ch => 
-                ch.title.toLowerCase().includes(query) || 
-                ch.keywords.toLowerCase().includes(query)
-            );
-            
-            if (matchedChapters.length > 0) {
-                hasResults = true;
-                matchedChapters.forEach(ch => {
-                    const partSection = document.querySelector(`.part-section[data-part="${ch.part}"]`);
-                    if (partSection) {
-                        partSection.style.display = 'block';
-                        partSection.classList.remove('collapsed');
-                        const chapterItem = partSection.querySelector(`[data-chapter="${ch.chapter}"]`);
-                        if (chapterItem) {
-                            chapterItem.style.display = 'flex';
-                            chapterItem.style.background = '#FFF9E6';
-                        }
-                    }
-                });
-            }
-            
-            noResults.style.display = hasResults ? 'none' : 'block';
-            
-            // 검색 결과 개수 표시
-            if (hasResults) {
-                const visibleChapters = document.querySelectorAll('.chapter-item[style*="flex"]').length;
-                console.log(`검색 결과: ${visibleChapters}개 챕터`);
-            }
-        }
-        
-        function setupSearch() {
-            const input = document.getElementById('searchInput');
-            const clearBtn = document.getElementById('searchClear');
-            const searchBtn = document.getElementById('searchBtn');
-            
-            // 입력 시 실시간 검색
-            input.addEventListener('input', performSearch);
-            
-            // 검색 버튼 클릭
-            if (searchBtn) {
-                searchBtn.addEventListener('click', performSearch);
-            }
-            
-            // 엔터키로 검색
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-            
-            // 클리어 버튼
-            clearBtn.addEventListener('click', function() { 
-                input.value = ''; 
-                clearBtn.style.display = 'none'; 
-                resetSearch(); 
-            });
-        }
-        function resetSearch() {
-            document.querySelectorAll('.part-section').forEach(s => s.style.display = 'block');
-            document.querySelectorAll('.chapter-item').forEach(i => {
-                i.style.display = 'flex';
-                i.style.background = '';
-            });
-            document.getElementById('noResults').style.display = 'none';
-        }
-        init();
-    26756
-        
-
-</section>
+<section id="toc" class="book-section toc-section-visible">
 <style>
-/* 목차 섹션은 본문에서 숨김 - 사이드바에서만 표시 */
-#toc.book-section {
-    display: none !important;
+/* 목차 페이지 전용 스타일 */
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(180deg, #F8FAF9 0%, #EDF3F0 100%);
+            color: #2D3436;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* 헤더 */
+        .toc-page-header {
+            background: linear-gradient(135deg, #7C9B8B 0%, #5A7D6E 100%);
+            padding: 3rem 1.5rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toc-page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: shimmer 8s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toc-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .book-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .book-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 400;
+        }
+
+        .book-version {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #fff;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 메인 컨텐츠 */
+        .toc-main-content {
+            padding: 1.5rem 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* 퀵 네비게이션 */
+        .quick-nav {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 0 1rem;
+            margin-bottom: 1rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .quick-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .quick-nav-item {
+            flex-shrink: 0;
+            background: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #5A7D6E;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-nav-item:active {
+            transform: scale(0.95);
+            background: #7C9B8B;
+            color: #fff;
+        }
+
+        /* 섹션 타이틀 */
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #7C9B8B;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 1.5rem 0 0.75rem;
+            padding-left: 0.25rem;
+        }
+
+        /* PART 카드 */
+        .part-card {
+            background: #fff;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .part-header {
+            padding: 1.25rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .part-header:active {
+            background: #F8FAF9;
+        }
+
+        .part-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .part-1 .part-number { background: linear-gradient(135deg, #E6D5F5 0%, #C9B3E6 100%); color: #6B4E8D; }
+        .part-2 .part-number { background: linear-gradient(135deg, #FFE5E5 0%, #FFC9C9 100%); color: #C44D4D; }
+        .part-3 .part-number { background: linear-gradient(135deg, #E5F0FF 0%, #C9DEFF 100%); color: #4D7CC4; }
+        .part-4 .part-number { background: linear-gradient(135deg, #E5FFE5 0%, #C9FFC9 100%); color: #4DC44D; }
+        .part-5 .part-number { background: linear-gradient(135deg, #FFF5E5 0%, #FFE5C9 100%); color: #C49A4D; }
+        .part-6 .part-number { background: linear-gradient(135deg, #FFE5F5 0%, #FFC9E6 100%); color: #C44D8D; }
+        .part-7 .part-number { background: linear-gradient(135deg, #E5FFFF 0%, #C9FFFF 100%); color: #4DC4C4; }
+
+        .part-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .part-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2D3436;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        .part-desc {
+            font-size: 0.8rem;
+            color: #636E72;
+            line-height: 1.4;
+        }
+
+        .part-toggle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #F0F4F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .part-toggle svg {
+            width: 14px;
+            height: 14px;
+            fill: #7C9B8B;
+        }
+
+        .part-card.open .part-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* 챕터 리스트 */
+        .chapter-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: #FAFCFB;
+        }
+
+        .part-card.open .chapter-list {
+            max-height: 2000px;
+        }
+
+        .chapter-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.875rem 1rem 0.875rem 1rem;
+            border-top: 1px solid #EDF3F0;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s ease;
+            gap: 0.75rem;
+        }
+
+        .chapter-item:active {
+            background: #EDF3F0;
+        }
+
+        .chapter-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: #EDF3F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #7C9B8B;
+            flex-shrink: 0;
+        }
+
+        .chapter-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chapter-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2D3436;
+            line-height: 1.45;
+            word-break: keep-all;
+        }
+
+        .chapter-subtitle {
+            font-size: 0.75rem;
+            color: #939B9F;
+            margin-top: 0.2rem;
+        }
+
+        /* 부록 */
+        .appendix-section {
+            margin-top: 1.5rem;
+        }
+
+        .appendix-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .appendix-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #F0F4F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .appendix-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2D3436;
+        }
+
+        /* 푸터 */
+        .toc-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 1rem;
+        }
+
+        .toc-footer-logo {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #7C9B8B;
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-footer-text {
+            font-size: 0.75rem;
+            color: #939B9F;
+            line-height: 1.6;
+        }
+
+        .toc-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .toc-footer-link {
+            font-size: 0.75rem;
+            color: #7C9B8B;
+            text-decoration: none;
+        }
+
+        /* 읽기 시작 버튼 */
+        .start-reading {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #7C9B8B 0%, #5A7D6E 100%);
+            color: #fff;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(90, 125, 110, 0.35);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.2s ease;
+        }
+
+        .start-reading:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        /* 스크롤 시 버튼 숨김 */
+        .start-reading.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(20px);
+        }
+
+        /* 안전 영역 */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .toc-footer {
+                padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+            }
+            .start-reading {
+                bottom: calc(1.5rem + env(safe-area-inset-bottom));
+            }
+        }
+
+/* toc 섹션 표시 */
+#toc.toc-section-visible {
+    display: block !important;
 }
 </style>
+
+<!-- 헤더 -->
+    <header class="toc-page-header">
+        <div class="toc-header-content">
+            <span class="book-icon">🤱</span>
+            <h1 class="book-title">모유수유 리얼 가이드</h1>
+            <p class="book-subtitle">15년 경험과 IBCLC 전문 지식</p>
+            <span class="book-version">Version 1.0</span>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="toc-main-content">
+        <!-- 퀵 네비게이션 -->
+        <div class="quick-nav">
+            <button class="quick-nav-item" data-target="part-1">출산 전</button>
+            <button class="quick-nav-item" data-target="part-2">출산 직후</button>
+            <button class="quick-nav-item" data-target="part-3">2주~3개월</button>
+            <button class="quick-nav-item" data-target="part-4">3~6개월</button>
+            <button class="quick-nav-item" data-target="part-5">직장맘</button>
+            <button class="quick-nav-item" data-target="part-6">단유</button>
+            <button class="quick-nav-item" data-target="part-7">특수상황</button>
+        </div>
+
+        <p class="section-title">📖 목차</p>
+
+        <!-- PART 1 -->
+        <div class="part-card part-1" id="part-1">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P1</div>
+                <div class="part-info">
+                    <div class="part-title">출산 전 준비</div>
+                    <div class="part-desc">임신 중 4가지 체크</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-1" class="chapter-item">
+                    <span class="chapter-num">01</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">출산 전 알아야 할 5가지</div>
+                    </div>
+                </a>
+                <a href="#chapter-2" class="chapter-item">
+                    <span class="chapter-num">02</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">모유수유 선택,<br>엄마의 결정이 우선입니다</div>
+                        <div class="chapter-subtitle">압박 없는 시작</div>
+                    </div>
+                </a>
+                <a href="#chapter-3" class="chapter-item">
+                    <span class="chapter-num">03</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">초보 엄마 TOP 10<br>질문과 답변</div>
+                        <div class="chapter-subtitle">병원에서 꼭 물어보기</div>
+                    </div>
+                </a>
+                <a href="#chapter-4" class="chapter-item">
+                    <span class="chapter-num">04</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">우리 가족 수유 계획 세우기</div>
+                        <div class="chapter-subtitle">아빠와 함께 작성하는 체크리스트</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- PART 2 -->
+        <div class="part-card part-2" id="part-2">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P2</div>
+                <div class="part-info">
+                    <div class="part-title">생존 모드:<br>출산 후 1주</div>
+                    <div class="part-desc">병원 · 조리원</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-5" class="chapter-item">
+                    <span class="chapter-num">05</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">"이게 정상인가요?"<br>출산 직후 72시간의 현실</div>
+                    </div>
+                </a>
+                <a href="#chapter-6" class="chapter-item">
+                    <span class="chapter-num">06</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">모자동실,<br>꼭 해야 하나요?</div>
+                    </div>
+                </a>
+                <a href="#chapter-7" class="chapter-item">
+                    <span class="chapter-num">07</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">첫 수유자세 4가지 마스터</div>
+                    </div>
+                </a>
+                <a href="#chapter-8" class="chapter-item">
+                    <span class="chapter-num">08</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">함몰유두 · 편평유두<br>수유 방법</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- PART 3 -->
+        <div class="part-card part-3" id="part-3">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P3</div>
+                <div class="part-info">
+                    <div class="part-title">적응기: 2주~3개월</div>
+                    <div class="part-desc">수유 리듬 확립</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-9" class="chapter-item">
+                    <span class="chapter-num">09</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">집에서 돌아온 첫 3일,<br>무엇을 보고 챙길까</div>
+                    </div>
+                </a>
+                <a href="#chapter-10" class="chapter-item">
+                    <span class="chapter-num">10</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">아기 수유 리듬과<br>정상적인 신생아 수면</div>
+                    </div>
+                </a>
+                <a href="#chapter-11" class="chapter-item">
+                    <span class="chapter-num">11</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">"모유가 부족한 걸까?"<br>확인하는 3가지 방법</div>
+                    </div>
+                </a>
+                <a href="#chapter-12" class="chapter-item">
+                    <span class="chapter-num">12</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">체중 · 기저귀 · 배변으로<br>보는 성장 신호</div>
+                    </div>
+                </a>
+                <a href="#chapter-13" class="chapter-item">
+                    <span class="chapter-num">13</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">유두 통증이 너무 심할 때<br>포기하지 않고 해결하기</div>
+                    </div>
+                </a>
+                <a href="#chapter-14" class="chapter-item">
+                    <span class="chapter-num">14</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">유선염 · 울혈 · 뭉침<br>응급이 되기 전 대처</div>
+                    </div>
+                </a>
+                <a href="#chapter-15" class="chapter-item">
+                    <span class="chapter-num">15</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">유두 혼란과 극복 방법</div>
+                    </div>
+                </a>
+                <a href="#chapter-16" class="chapter-item">
+                    <span class="chapter-num">16</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">모유 보관 · 해동 ·<br>외출 시 관리법</div>
+                    </div>
+                </a>
+                <a href="#chapter-17" class="chapter-item">
+                    <span class="chapter-num">17</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">수유 아이템 리스트</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- PART 4 -->
+        <div class="part-card part-4" id="part-4">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P4</div>
+                <div class="part-info">
+                    <div class="part-title">안정기: 3~6개월</div>
+                    <div class="part-desc">이유식 시작과 수유 조정</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-18" class="chapter-item">
+                    <span class="chapter-num">18</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">낮과 밤 수유 패턴 다듬기</div>
+                    </div>
+                </a>
+                <a href="#chapter-19" class="chapter-item">
+                    <span class="chapter-num">19</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">"갑자기 왜 안 자지?"<br>수면 리그레션 대처법</div>
+                    </div>
+                </a>
+                <a href="#chapter-20" class="chapter-item">
+                    <span class="chapter-num">20</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">첫 이유식 시작 시기와<br>준비물</div>
+                    </div>
+                </a>
+                <a href="#chapter-21" class="chapter-item">
+                    <span class="chapter-num">21</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">이유식 초기,<br>모유수유 조정법</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- PART 5 -->
+        <div class="part-card part-5" id="part-5">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P5</div>
+                <div class="part-info">
+                    <div class="part-title">직장맘 복직 전략</div>
+                    <div class="part-desc">유축 · 외출 · 어린이집</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-22" class="chapter-item">
+                    <span class="chapter-num">22</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">복직 시 어린이집<br>모유수유 병행</div>
+                    </div>
+                </a>
+                <a href="#chapter-23" class="chapter-item">
+                    <span class="chapter-num">23</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">직장 내 유축 루틴 만들기</div>
+                    </div>
+                </a>
+                <a href="#chapter-24" class="chapter-item">
+                    <span class="chapter-num">24</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">외출 · 여행 · 외식할 때의<br>수유 전략</div>
+                    </div>
+                </a>
+                <a href="#chapter-25" class="chapter-item">
+                    <span class="chapter-num">25</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">복직 후 모유량 유지 전략</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- PART 6 -->
+        <div class="part-card part-6" id="part-6">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P6</div>
+                <div class="part-info">
+                    <div class="part-title">단유 가이드</div>
+                    <div class="part-desc">선택과 방법</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-26" class="chapter-item">
+                    <span class="chapter-num">26</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">완모에 집착하지 않아도<br>괜찮아요</div>
+                    </div>
+                </a>
+                <a href="#chapter-27" class="chapter-item">
+                    <span class="chapter-num">27</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">계획하는 단유:<br>시기와 방법</div>
+                    </div>
+                </a>
+                <a href="#chapter-28" class="chapter-item">
+                    <span class="chapter-num">28</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">갑작스러운 단유,<br>어쩔 수 없는 단유</div>
+                    </div>
+                </a>
+                <a href="#chapter-29" class="chapter-item">
+                    <span class="chapter-num">29</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">단유 후 엄마와 아기의<br>몸 · 마음 회복하기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- PART 7 -->
+        <div class="part-card part-7" id="part-7">
+            <div class="part-header" onclick="toggleTocPart(this)">
+                <div class="part-number">P7</div>
+                <div class="part-info">
+                    <div class="part-title">특수 상황 완전 정복</div>
+                    <div class="part-desc">질환 · 조산 · 다둥이</div>
+                </div>
+                <div class="part-toggle">
+                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+            <div class="chapter-list">
+                <a href="#chapter-30" class="chapter-item">
+                    <span class="chapter-num">30</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">이른둥이 ·<br>신생아 집중치료실 아기 수유</div>
+                    </div>
+                </a>
+                <a href="#chapter-31" class="chapter-item">
+                    <span class="chapter-num">31</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">쌍둥이 · 다둥이 수유 설계</div>
+                    </div>
+                </a>
+                <a href="#chapter-32" class="chapter-item">
+                    <span class="chapter-num">32</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">아기의 질환 · 입원과<br>모유수유</div>
+                    </div>
+                </a>
+                <a href="#chapter-33" class="chapter-item">
+                    <span class="chapter-num">33</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">엄마의 질병 · 약물 ·<br>치과 치료와 수유</div>
+                    </div>
+                </a>
+                <a href="#chapter-34" class="chapter-item">
+                    <span class="chapter-num">34</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">구순구개열 등<br>구강 구조 이슈가 있는 아기</div>
+                    </div>
+                </a>
+                <a href="#chapter-35" class="chapter-item">
+                    <span class="chapter-num">35</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">재임신 · 피임 ·<br>다음 아기를 준비할 때의 수유</div>
+                    </div>
+                </a>
+                <a href="#chapter-36" class="chapter-item">
+                    <span class="chapter-num">36</span>
+                    <div class="chapter-content">
+                        <div class="chapter-title">엄마의 정신건강과<br>모유수유</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 부록 -->
+        <p class="section-title appendix-section">📎 부록</p>
+
+        <a href="#appendix-a" class="appendix-card">
+            <div class="appendix-icon">🔍</div>
+            <div class="appendix-title">상황별 바로찾기 인덱스</div>
+        </a>
+
+        <a href="#appendix-b" class="appendix-card">
+            <div class="appendix-icon">📚</div>
+            <div class="appendix-title">참고문헌 · 근거 자료</div>
+        </a>
+
+        <a href="#appendix-c" class="appendix-card">
+            <div class="appendix-icon">👩‍⚕️</div>
+            <div class="appendix-title">국제 모유수유 전문가(IBCLC) 찾기</div>
+        </a>
+
+        <a href="#appendix-d" class="appendix-card">
+            <div class="appendix-icon">📋</div>
+            <div class="appendix-title">A4 기록 체크리스트</div>
+        </a>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="toc-footer">
+        <p class="footer-text">
+            권의철 · 최소라 (바비즈코리아 · 마더스베이비 CEO)<br>
+            박보림 국제모유수유전문가(IBCLC) 공동 제작
+        </p>
+        <div class="footer-links">
+            <a href="https://mothersbaby.co.kr" class="footer-link">홈페이지</a>
+            <a href="index.html" class="footer-link">본문 읽기</a>
+        </div>
+    </footer>
+
+    <!-- 읽기 시작 버튼 -->
+    <button class="start-reading" onclick="closeTocAndGoTo('#part1')">
+        📖 읽기 시작하기
+    </button>
+
+<script>
+// PART 토글
+        function toggleTocPart(header) {
+            const card = header.parentElement;
+            card.classList.toggle('open');
+        }
+
+        // 퀵 네비게이션
+        document.querySelectorAll('.quick-nav-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.dataset.target;
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // 자동으로 열기
+                    setTimeout(() => {
+                        if (!target.classList.contains('open')) {
+                            target.classList.add('open');
+                        }
+                    }, 300);
+                }
+            });
+        });
+
+        // 스크롤 시 버튼 숨김
+        let lastScroll = 0;
+        const startBtn = document.querySelector('.start-reading');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 300) {
+                startBtn.classList.add('hidden');
+            } else {
+                startBtn.classList.remove('hidden');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // 첫 번째 PART 자동 열기
+        document.querySelector('.part-card').classList.add('open');
+
+// 목차에서 챕터 클릭 시
+function closeTocAndGoTo(target) {
+    window.location.href = target;
+}
+</script>
+</section>
+
 
 <!-- ==================== 4_timeline.html ==================== -->
 <section id="timeline" class="book-section" data-source="4_timeline.html">
@@ -14910,7 +15810,7 @@ div .mission-box .checkbox-list li {
             A. 괜찮아요. 초유는 원래 몇 방울만 나옵니다. 1회 수유량은 5-7ml(티스푼 1개)이면 충분해요. 신생아 위 크기가 체리만 하기 때문에 몇 방울만 나와도 충분합니다.</p>
 
             <p><strong>Q. 아기가 계속 자는데 괜찮나요? 깨워서 먹여야 하나요?</strong><br>
-            A. 괜찮아요. 신생아는 원래 하루 16-20시간을 자요. 단, 6-8시간 이상 깨지 않거나, 깨워도 반응이 없으면 의료진과 상담하세요.</p>
+            A. 괜찮아요. 신생아는 원래 하루 16-20시간을 자요. 단, 3-4시간 이상 깨지 않거나, 깨워도 반응이 없으면 의료진과 상담하세요.</p>
 
             <p><strong>Q. 소변에 주황색 얼룩이 있는데 괜찮은가요?</strong><br>
             A. 첫 2-3일 동안은 흔해요. 요산염 결정입니다. 셋째 날 이후에도 계속 보이면 알려주세요.</p>
@@ -16435,10 +17335,10 @@ div .mission-box .checkbox-list li {
             <h4><span class="emoji">💬</span>Q&A</h4>
 
             <p><strong>Q. 함몰유두는 평생 보호기를 써야 하나요?</strong><br>
-            A. 대부분 초기 2~4주 동안만 보호기가 필요하며, 이후 아기가 적응하면서 직수로 전환할 수 있습니다. 수유 자극을 받으면 유두가 점차 돌출되는 경우도 많습니다.</p>
+            A. 대부분 초기 2~4주 정도 보호기가 필요하며, 이후 아기가 적응하면서 직수로 전환할 수 있습니다. 수유 자극을 받으면 유두가 점차 돌출되는 경우도 많습니다.</p>
 
             <p><strong>Q. 임신 중에 유두를 자극해서 미리 돌출시켜야 하나요?</strong><br>
-            A. 임신 중 유두 자극은 권장되지 않습니다. 자극이 자궁 수축을 유발할 수 있으며, 대부분 임신과 출산 과정만으로도 유두가 점차 돌출됩니다.</p>
+            A. 임신 중 유두 자극은 권장되지 않습니다. 자극이 자궁 수축을 유발할 수 있으며, 대부분 임신과 출산 과정만으로도 유두가 점차 돌출됩니다. (37주 이후는 가능)</p>
 
             <p><strong>Q. 유두가 편평한데 아기가 잘 빨고 있어요. 문제가 생길까요?</strong><br>
             A. 현재 수유가 잘 이루어지고 있다면 걱정하지 않으셔도 됩니다. 유두 형태보다 중요한 것은 깊은 물림이 제대로 이루어지는지입니다.</p>
@@ -17321,7 +18221,7 @@ div .mission-box .checkbox-list li {
             </ul>
         </div>
 
-        <h3>대변 (더러운 기저귀)</h3>
+        <h3>대변</h3>
         <table>
             <thead>
                 <tr>
@@ -17420,7 +18320,7 @@ div .mission-box .checkbox-list li {
         <div class="info-box green">
             <h4><span class="emoji">✅</span>잘 먹고 있는 아기의 모습</h4>
             <ul class="checkbox-list">
-                <li>수유 중 '꿀꺽꿀꺽' 삼키는 소리가 들려요</li>
+                <li>꿀꺽 꿀꺽 소리가 나면서 턱이 잘 움직이면 잘먹는 신호에요.</li>
                 <li>수유 후 짧게라도 편안해 보이거나 잠드는 시간이 있어요</li>
                 <li>하루 8~12회 정도 수유하고 있어요</li>
                 <li>깨어있을 때 기운이 있고 눈빛이 또렷해요</li>
@@ -19061,7 +19961,7 @@ div .mission-box .checkbox-list li {
         <div class="checklist-section">
             <h4>🥄 리듬 변화 vs 모유량 감소 체크</h4>
             <ul class="checkbox-list">
-                <li>24시간 전체 수유 횟수가 6–8회 이상 유지되고 있나요?</li>
+                <li>24시간 전체 수유 횟수가 6~7회 이상 유지되고 있나요?</li>
                 <li>젖은 기저귀와 대변 패턴이 3개월 때와 크게 달라지지 않았나요?</li>
                 <li>최근 1–2달간 체중 증가 추세가 WHO 성장곡선 안에서 안정적인가요?</li>
                 <li>수유 전후로 아기 행동에 큰 변화가 있나요?</li>
@@ -19331,7 +20231,7 @@ div .mission-box .checkbox-list li {
             <h4>🥄 지금 확인해볼 것 – 4–6개월 리듬과 엄마 회복</h4>
             <p><strong>○ 정상 범위에 해당하는 상황</strong></p>
             <ul>
-                <li>오늘 24시간 동안 수유 횟수가 6–8회 이상이었어요</li>
+                <li>오늘 24시간 동안 수유 횟수가 6~7회 이상이었어요</li>
                 <li>낮에 2–3번 정도 규칙적인 낮잠 구간이 있어요</li>
                 <li>기저귀, 체중이 지난달과 비교해 큰 이상은 없어요</li>
                 <li>엄마가 하루 중 최소 1회, 120-180분의 연속 수면을 확보하고 있어요</li>
@@ -24795,7 +25695,7 @@ div .mission-box .checkbox-list li {
                 <h3>💌 이 책에 대한 의견을 들려주세요</h3>
                 <p>이 가이드가 도움이 되었는지, 어떤 부분이 특히 유용했는지, 또는 더 보완되었으면 하는 내용이 있다면 언제든 알려주세요.</p>
                 <p>당신의 목소리가 다음 엄마들에게 더 나은 가이드를 만드는 데 큰 도움이 됩니다.</p>
-                <p><span class="email">연락처: info@momgyeot.com</span></p>
+                <p><span class="email">연락처: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5b36342f333e2928393a39221b3c363a323775383436">[email&#160;protected]</a></span></p>
             </div>
         </div>
         
@@ -25267,7 +26167,7 @@ div .mission-box .checkbox-list li {
         </nav>
     </div>
     
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         function toggleCategory(header) {
             const section = header.closest('.category-section');
             section.classList.toggle('open');
@@ -25535,7 +26435,7 @@ div .mission-box .checkbox-list li {
             <div class="book-card">
                 <span class="book-icon">📕</span>
                 <div class="book-info">
-                    <div class="book-title">엄마 소젖은 싫어요</div>
+                    <div class="book-title" style="color: #2C1C12 !important;">엄마 소젖은 싫어요</div>
                     <div class="book-meta">나눔사 · 1999</div>
                 </div>
             </div>
@@ -25543,7 +26443,7 @@ div .mission-box .checkbox-list li {
             <div class="book-card">
                 <span class="book-icon">📗</span>
                 <div class="book-info">
-                    <div class="book-title">모유수유가 처음인 너에게</div>
+                    <div class="book-title" style="color: #2C1C12 !important;">모유수유가 처음인 너에게</div>
                     <div class="book-meta">샨티 · 2020</div>
                 </div>
             </div>
@@ -25551,7 +26451,7 @@ div .mission-box .checkbox-list li {
             <div class="book-card">
                 <span class="book-icon">📘</span>
                 <div class="book-info">
-                    <div class="book-title">초보 엄마 아빠를 위한 모유수유 육아 백과</div>
+                    <div class="book-title" style="color: #2C1C12 !important;">초보 엄마 아빠를 위한 모유수유 육아 백과</div>
                     <div class="book-meta">이덴슬리벨 · 2008</div>
                 </div>
             </div>
@@ -25559,7 +26459,7 @@ div .mission-box .checkbox-list li {
             <div class="book-card">
                 <span class="book-icon">📙</span>
                 <div class="book-info">
-                    <div class="book-title">느림보 수면교육</div>
+                    <div class="book-title" style="color: #2C1C12 !important;">느림보 수면교육</div>
                     <div class="book-meta">폭스코너 · 2016</div>
                 </div>
             </div>
@@ -25567,7 +26467,7 @@ div .mission-box .checkbox-list li {
             <div class="book-card">
                 <span class="book-icon">📓</span>
                 <div class="book-info">
-                    <div class="book-title">황금빛 똥을 누는 아기</div>
+                    <div class="book-title" style="color: #2C1C12 !important;">황금빛 똥을 누는 아기</div>
                     <div class="book-meta">21세기북스 · 2007</div>
                 </div>
             </div>
@@ -25630,6 +26530,7 @@ div .mission-box .checkbox-list li {
                 <div class="card-header"><div class="card-name">IBLCE 글로벌 공식 레지스트리</div></div>
                 <div class="card-desc">전 세계 IBCLC 자격 확인 및 검색 (한국어 지원)</div>
                 <div class="card-info">🌐 iblce.org / ibclc-commission.org</div>
+                <a href="https://iblce.org/find-an-ibclc/" class="card-link" target="_blank">🔗 IBCLC 찾기 바로가기</a>
                 <div class="card-howto"><strong>이용 방법:</strong> 웹사이트 접속 → "Find an IBCLC" 또는 "Public Registry" → 이름·지역 검색</div>
             </div>
         </section>
@@ -25647,6 +26548,7 @@ div .mission-box .checkbox-list li {
                 <div class="card-header"><div class="card-name">서울시 "찾아가는 행복수유 서비스"</div><span class="card-badge">무료</span></div>
                 <div class="card-desc">산모 가정 방문 1:1 모유수유 지원 (서울시 거주자)</div>
                 <div class="card-info">🌐 seoul-agi.seoul.go.kr</div>
+                <a href="https://seoul-agi.seoul.go.kr" class="card-link" target="_blank">🔗 웹사이트 바로가기</a>
                 <div class="card-howto"><strong>내용:</strong> IBCLC가 직접 가정 방문, 유방울혈·통증 관리, 수유 자세 교정</div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem; font-size: 1rem;">🏥 보건소 모유수유 클리닉</h4>
@@ -25671,7 +26573,7 @@ div .mission-box .checkbox-list li {
             <div class="card hospital"><div class="card-name">삼성서울병원 모아집중치료센터</div><div class="card-desc">IBCLC 상주</div><div class="card-info">📞 1599-3114 → 산부인과</div></div>
             <div class="card hospital"><div class="card-name">서울성모병원 산후관리 클리닉</div><div class="card-desc">퇴원 1-2주 후 산후 관리 + 모유수유 상담</div><div class="card-info">📞 1661-7575</div></div>
             <div class="card hospital"><div class="card-name">청담마리 산부인과 모유수유센터</div><div class="card-desc">유두 상처, 유선염, 함몰유두, 직장맘 관리</div><div class="card-info">📍 서울 강남구 삼성로 712</div></div>
-            <div class="card hospital"><div class="card-name">삼성미래여성병원 모유수유 클리닉</div><div class="card-desc">유니세프 인증 병원</div><div class="card-info">🌐 samsungmirae.co.kr</div></div>
+            <div class="card hospital"><div class="card-name">삼성미래여성병원 모유수유 클리닉</div><div class="card-desc">유니세프 인증 병원</div><div class="card-info">🌐 samsungmirae.co.kr</div><a href="http://www.samsungmirae.co.kr" class="card-link" target="_blank">🔗 웹사이트 바로가기</a></div>
         </section>
         
         <section class="section">
@@ -26293,13 +27195,11 @@ init();
     
     <!-- 플로팅 버튼 컨테이너 -->
     <div class="floating-buttons">
-        
         <!-- 맨 위로 버튼 -->
         <button class="btn-scroll-top" id="backToTop" aria-label="맨 위로">
             <span class="scroll-icon">↑</span>
         </button>
     </div>
-    
     
     <!-- 특수 상황 모달 -->
     <div class="help-modal" id="specialModal">
@@ -26418,51 +27318,12 @@ init();
         align-items: center;
     }
     
-    /* SOS 버튼 - 긴급/위험 느낌 (정원) */
-    .btn-sos {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: #FF4B4B;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 20px rgba(255, 75, 75, 0.4);
-        transition: all 0.3s;
-        animation: sosPulse 2s infinite;
-    }
-    
-    @keyframes sosPulse {
-        0%, 100% {
-            box-shadow: 0 4px 20px rgba(255, 75, 75, 0.4);
-        }
-        50% {
-            box-shadow: 0 4px 30px rgba(255, 75, 75, 0.6);
-        }
-    }
-    
-    .btn-sos:hover {
-        background: #E53935;
-        transform: scale(1.08);
-        box-shadow: 0 6px 25px rgba(255, 75, 75, 0.5);
-        animation: none;
-    }
-    
-    .btn-sos .sos-icon {
-        color: #FFFFFF;
-        font-size: 0.85rem;
-        font-weight: 800;
-        letter-spacing: 1px;
-    }
-    
     /* 위로가기 버튼 - 보조 (타원/알약 형태) */
     .btn-scroll-top {
         width: 44px;
         height: 52px;
         border-radius: 22px;
-        background: #FFC9D9;
+        background: #B8D4C8;
         border: 2px solid rgba(255, 255, 255, 0.5);
         cursor: pointer;
         display: none;
@@ -26477,7 +27338,7 @@ init();
     }
     
     .btn-scroll-top:hover {
-        background: #FFB6C9;
+        background: #A8C8B8;
         transform: translateY(-3px);
         box-shadow: 0 5px 20px rgba(255, 182, 201, 0.4);
     }
@@ -26489,59 +27350,7 @@ init();
         text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
     
-    /* SOS 메뉴 */
-    .floating-help-menu {
-        position: fixed;
-        bottom: 8rem;
-        right: 1.5rem;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 5px 30px rgba(0,0,0,0.15);
-        overflow: hidden;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-        transition: all 0.3s;
-        z-index: 9501;
-    }
-    
-    .floating-help-menu.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    
-    .help-menu-item {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        padding: 1rem 1.2rem;
-        border: none;
-        background: white;
-        width: 100%;
-        text-align: left;
-        cursor: pointer;
-        transition: background 0.2s;
-        white-space: nowrap;
-    }
-    
-    .help-menu-item:hover {
-        background: #FFF5F5;
-    }
-    
-    .help-menu-item:not(:last-child) {
-        border-bottom: 1px solid #F0E8E8;
-    }
-    
-    .item-icon {
-        font-size: 1.2rem;
-    }
-    
-    .item-text {
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: #2C1C12;
-    }
+    /* 도움말 모달 */
     
     /* 모달 스타일 */
     .help-modal {
@@ -26582,7 +27391,7 @@ init();
     }
     
     .modal-content.emergency {
-        border-top: 5px solid #FF9AA2;
+        border-top: 5px solid #7C9B8B;
     }
     
     .modal-close {
@@ -26625,7 +27434,7 @@ init();
         margin-bottom: 1rem;
         color: #2C1C12;
         padding-bottom: 0.5rem;
-        border-bottom: 2px solid #FFE5E5;
+        border-bottom: 2px solid #E8F4F0;
     }
     
     .modal-grid {
@@ -26647,7 +27456,7 @@ init();
     }
     
     .modal-card:hover {
-        border-color: #FF9AA2;
+        border-color: #7C9B8B;
         transform: translateY(-2px);
     }
     
@@ -26684,7 +27493,7 @@ init();
         border-radius: 12px;
         text-decoration: none;
         transition: all 0.2s;
-        border-left: 4px solid #FF9AA2;
+        border-left: 4px solid #7C9B8B;
     }
     
     .emergency-card:hover {
@@ -26737,50 +27546,47 @@ init();
             gap: 8px;
         }
         
-        .btn-sos {
-            width: 50px;
-            height: 50px;
-        }
-        
-        .btn-sos .sos-icon {
-            font-size: 0.75rem;
-        }
-        
         .btn-scroll-top {
             width: 40px;
             height: 46px;
         }
-        
-        .floating-help-menu {
-            bottom: 6rem;
-            right: 1rem;
-        }
     }
     </style>
-    /* ✅ 전자책 페이지의 바깥 SOS 플로팅 버튼 숨김 */
-#sosBtn, .sos-btn, .floating-sos, .btn-sos, .sos {
-  display: none !important;
-}   
+    
     <script>
-    // 플로팅 도움말 메뉴 토글
-    
-    // 외부 클릭 시 메뉴 닫기
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.floating-buttons') && !e.target.closest('.floating-help-menu')) {
-            
-        }
-    });
-    
     // 모달 열기/닫기
     function openModal(id) {
         document.getElementById(id).classList.add('show');
-        
         document.body.style.overflow = 'hidden';
     }
     
     function closeModal(id) {
         document.getElementById(id).classList.remove('show');
         document.body.style.overflow = '';
+    }
+    
+    // SOS 메뉴 열기 (사이드바에서)
+    function openSosMenu(event) {
+        event.preventDefault();
+        // 사이드바 닫기
+        closeSidebar();
+        // 긴급 문제 해결 모달 열기
+        setTimeout(function() {
+            openModal('emergencyModal');
+        }, 300);
+    }
+    
+    // 사이드바 닫기 함수
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('show');
+        document.body.style.overflow = '';
+    }
+    
+    // PART 카드 토글 함수
+    function togglePartCard(header) {
+        const card = header.parentElement;
+        card.classList.toggle('open');
     }
     
     // ESC 키로 모달 닫기
@@ -26793,7 +27599,101 @@ init();
         }
     });
     </script>
+    
     <!-- JavaScript -->
-<script src="./assets/mg-chat.js?v=1769267856"></script>
+    <script>
+    (function() {
+        // DOM 요소
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const progressBar = document.getElementById('progressBar');
+        const backToTop = document.getElementById('backToTop');
+        const toTopBtn = document.getElementById('toTopBtn');
+        
+        // 사이드바 토글
+        function toggleSidebar() {
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('show');
+                document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+            }
+        }
+        
+        function closeSidebar() {
+            if (sidebar && overlay) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // 이벤트 리스너 등록 (null 체크)
+        if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+        if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+        
+        // 목차 클릭 시 사이드바 닫기
+        document.querySelectorAll('.global-toc a').forEach(link => {
+            link.addEventListener('click', function() {
+                closeSidebar();
+            });
+        });
+        
+        // 스크롤 진행률
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            if (progressBar) progressBar.style.width = progress + '%';
+            
+            // 맨 위로 버튼 표시
+            if (backToTop) {
+                if (scrollTop > 500) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        
+        // 맨 위로 이동
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        if (backToTop) backToTop.addEventListener('click', scrollToTop);
+        if (toTopBtn) toTopBtn.addEventListener('click', scrollToTop);
+        
+        // 부드러운 스크롤 (앵커)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#') {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        const offsetTop = target.offsetTop - 60;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // 초기화
+        updateProgress();
+        
+        // 키보드
+     </script>
+
+<!-- Mothers Baby 챗봇 -->
+<script src="./assets/mg-chat.js"></script>
+
 </body>
-</html>    
+</html>
